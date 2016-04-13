@@ -1,45 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
-<service-builder package-path="com.liferay.sample">
-	<author>Melfina</author>
-	<namespace>SAMPLE</namespace>
+<service-builder package-path="edu.uoc.eventreg">
+	<author>Ana Mendoza</author>
+	<namespace>EVENTREG</namespace>
 
-	<entity name="Foo" local-service="true" remote-service="true">
+	<entity name="RegEvent" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-
-		<column name="fooId" type="long" primary="true" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
+		<column name="id" type="long" primary="true" />
 
 		<!-- Other fields -->
-
-		<column name="field1" type="String" />
-		<column name="field2" type="boolean" />
-		<column name="field3" type="int" />
-		<column name="field4" type="Date" />
-		<column name="field5" type="String" />
-
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="title" type="String" />
+		<column name="description" type="String" />
+		<column name="address" type="String" />
+		<column name="location" type="String" />
+		<column name="coordX" type="String" />
+		<column name="coordY" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="requiresApproval" type="boolean" />
+		<column name="status" type="int" />
+		<column name="createdBy" type="Collection" entity="com.liferay.portal.User" />
+		
 		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="field1" />
+		<order by="desc">
+			<order-column name="createDate" />
 		</order>
 
-		<!-- Finder methods -->
+	</entity>
+	
+	<entity name="EventOption" local-service="true" remote-service="true">
 
-		<finder name="Field2" return-type="Collection">
-			<finder-column name="field2" />
-		</finder>
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true" />
+
+		<!-- Other fields -->
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="startDate" type="Date" />
+		<column name="endDate" type="Date" />
+		<column name="price" type="double" />
+		<column name="event" type="Collection" entity="Event" />
+
+		<!-- Order -->
+		<order by="desc">
+			<order-column name="startDate" />
+		</order>
+
+	</entity>
+	
+	<entity name="Attendee" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true" />
+
+		<!-- Other fields -->
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="name" type="String" />
+		<column name="surname" type="String" />
+		<column name="company" type="String" />
+		<column name="email" type="String" />
+		<column name="phone" type="String" />
+		<column name="registerDate" type="Date" />
+		<column name="reservationCode" type="String" />
+		<column name="status" type="int" />
+		<column name="eventOptionId" type="Collection" entity="EventOption" />
+		<column name="managedBy" type="Collection" entity="com.liferay.portal.User" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="surname" />
+		</order>
+
+	</entity>
+	
+	<entity name="Image" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true" />
+
+		<!-- Other fields -->
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="event" type="Collection" entity="Event" />
+		<column name="dlFileEntry" type="Collection" entity="com.liferay.portlet.documentlibrary.model.DLFileEntry" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="id" />
+		</order>
+
 	</entity>
 </service-builder>

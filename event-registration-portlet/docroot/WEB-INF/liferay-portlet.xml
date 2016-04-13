@@ -9,6 +9,21 @@
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>event-registration-portlet</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>event-registration-management</portlet-name>
+		<icon>/img/icon.png</icon>
+		<control-panel-entry-category>
+			Event Registration Management
+		</control-panel-entry-category>
+		<control-panel-entry-weight>1.5</control-panel-entry-weight>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>
+			regevent-management-portlet
+		</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
