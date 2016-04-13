@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="edu.uoc.eventreg.model.impl.AttendeeModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="name" />
+			<basic name="surname" />
+			<basic name="company" />
+			<basic name="email" />
+			<basic name="phone" />
+			<basic name="registerDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="reservationCode" />
+			<basic name="status" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="edu.uoc.eventreg.model.impl.EventOptionModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="startDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="endDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="price" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="edu.uoc.eventreg.model.impl.ImageModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="edu.uoc.eventreg.model.impl.RegEventModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="title" />
+			<basic name="description" />
+			<basic name="address" />
+			<basic name="location" />
+			<basic name="coordX" />
+			<basic name="coordY" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="requiresApproval" />
+			<basic name="status" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="edu.uoc.eventreg.model.impl.AttendeeImpl" name="Attendee">
+		<table name="EVENTREG_Attendee" />
+		<attributes />
+	</entity>
+	<entity class="edu.uoc.eventreg.model.impl.EventOptionImpl" name="EventOption">
+		<table name="EVENTREG_EventOption" />
+		<attributes />
+	</entity>
+	<entity class="edu.uoc.eventreg.model.impl.ImageImpl" name="Image">
+		<table name="EVENTREG_Image" />
+		<attributes />
+	</entity>
+	<entity class="edu.uoc.eventreg.model.impl.RegEventImpl" name="RegEvent">
+		<table name="EVENTREG_RegEvent" />
+		<attributes />
+	</entity>
+</entity-mappings>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="edu.uoc.eventreg.model.Attendee">
+		<field name="id" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="surname" type="String" />
+		<field name="company" type="String" />
+		<field name="email" type="String" />
+		<field name="phone" type="String" />
+		<field name="registerDate" type="Date" />
+		<field name="reservationCode" type="String" />
+		<field name="status" type="int" />
+	</model>
+	<model name="edu.uoc.eventreg.model.EventOption">
+		<field name="id" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+		<field name="price" type="double" />
+	</model>
+	<model name="edu.uoc.eventreg.model.Image">
+		<field name="id" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+	</model>
+	<model name="edu.uoc.eventreg.model.RegEvent">
+		<field name="id" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="title" type="String" />
+		<field name="description" type="String" />
+		<field name="address" type="String" />
+		<field name="location" type="String" />
+		<field name="coordX" type="String" />
+		<field name="coordY" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="requiresApproval" type="boolean" />
+		<field name="status" type="int" />
+	</model>
+</model-hints>
