@@ -2,6 +2,7 @@ package edu.uoc.eventreg.portlet;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -11,7 +12,9 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -29,6 +32,16 @@ import edu.uoc.eventreg.service.EventLocalServiceUtil;
 public class EventRegistrationManagementPortlet extends MVCPortlet {
  
 	public void doView (RenderRequest request, RenderResponse response) {
+		
+		List<Event> events = null;
+		try {
+			events = EventLocalServiceUtil.getEvents(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		} catch (SystemException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		request.setAttribute("events", events);
 		
 		try {
 			super.doView(request, response);
@@ -79,8 +92,8 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 			
 		}
 		
-		response.setRenderParameter("mvcPath",
-                "/html/management/view.jsp");
+		SessionMessages.add(request, "event-added-successfuly");
+		
 	}
 
 }
