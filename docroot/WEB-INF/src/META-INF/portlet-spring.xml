@@ -4,13 +4,13 @@
 	<bean id="edu.uoc.eventreg.service.AttendeeLocalService" class="edu.uoc.eventreg.service.impl.AttendeeLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.AttendeeService" class="edu.uoc.eventreg.service.impl.AttendeeServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.AttendeePersistence" class="edu.uoc.eventreg.service.persistence.AttendeePersistenceImpl" parent="basePersistence" />
+	<bean id="edu.uoc.eventreg.service.EventLocalService" class="edu.uoc.eventreg.service.impl.EventLocalServiceImpl" />
+	<bean id="edu.uoc.eventreg.service.EventService" class="edu.uoc.eventreg.service.impl.EventServiceImpl" />
+	<bean id="edu.uoc.eventreg.service.persistence.EventPersistence" class="edu.uoc.eventreg.service.persistence.EventPersistenceImpl" parent="basePersistence" />
 	<bean id="edu.uoc.eventreg.service.EventOptionLocalService" class="edu.uoc.eventreg.service.impl.EventOptionLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.EventOptionService" class="edu.uoc.eventreg.service.impl.EventOptionServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.EventOptionPersistence" class="edu.uoc.eventreg.service.persistence.EventOptionPersistenceImpl" parent="basePersistence" />
 	<bean id="edu.uoc.eventreg.service.ImageLocalService" class="edu.uoc.eventreg.service.impl.ImageLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.ImageService" class="edu.uoc.eventreg.service.impl.ImageServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.ImagePersistence" class="edu.uoc.eventreg.service.persistence.ImagePersistenceImpl" parent="basePersistence" />
-	<bean id="edu.uoc.eventreg.service.RegEventLocalService" class="edu.uoc.eventreg.service.impl.RegEventLocalServiceImpl" />
-	<bean id="edu.uoc.eventreg.service.RegEventService" class="edu.uoc.eventreg.service.impl.RegEventServiceImpl" />
-	<bean id="edu.uoc.eventreg.service.persistence.RegEventPersistence" class="edu.uoc.eventreg.service.persistence.RegEventPersistenceImpl" parent="basePersistence" />
 </beans>

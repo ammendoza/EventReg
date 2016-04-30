@@ -3,13 +3,13 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="edu.uoc.eventreg.model.Attendee" />
+	<import class="edu.uoc.eventreg.model.Event" />
 	<import class="edu.uoc.eventreg.model.EventOption" />
 	<import class="edu.uoc.eventreg.model.Image" />
-	<import class="edu.uoc.eventreg.model.RegEvent" />
 	<class name="edu.uoc.eventreg.model.impl.AttendeeImpl" table="EVENTREG_Attendee">
 		<cache usage="read-write" />
 		<id name="id" column="id_" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -21,30 +21,12 @@
 		<property name="registerDate" type="org.hibernate.type.TimestampType" />
 		<property name="reservationCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="managedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="edu.uoc.eventreg.model.impl.EventOptionImpl" table="EVENTREG_EventOption">
+	<class name="edu.uoc.eventreg.model.impl.EventImpl" table="EVENTREG_Event">
 		<cache usage="read-write" />
 		<id name="id" column="id_" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="startDate" type="org.hibernate.type.TimestampType" />
-		<property name="endDate" type="org.hibernate.type.TimestampType" />
-		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-	</class>
-	<class name="edu.uoc.eventreg.model.impl.ImageImpl" table="EVENTREG_Image">
-		<cache usage="read-write" />
-		<id name="id" column="id_" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
-	<class name="edu.uoc.eventreg.model.impl.RegEventImpl" table="EVENTREG_RegEvent">
-		<cache usage="read-write" />
-		<id name="id" column="id_" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -58,5 +40,25 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="requiresApproval" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="edu.uoc.eventreg.model.impl.EventOptionImpl" table="EVENTREG_EventOption">
+		<cache usage="read-write" />
+		<id name="id" column="id_" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="startDate" type="org.hibernate.type.TimestampType" />
+		<property name="endDate" type="org.hibernate.type.TimestampType" />
+		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="edu.uoc.eventreg.model.impl.ImageImpl" table="EVENTREG_Image">
+		<cache usage="read-write" />
+		<id name="id" column="id_" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

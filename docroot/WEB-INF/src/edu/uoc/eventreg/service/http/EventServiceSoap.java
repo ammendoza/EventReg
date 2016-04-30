@@ -16,7 +16,7 @@ package edu.uoc.eventreg.service.http;
 
 /**
  * Provides the SOAP utility for the
- * {@link edu.uoc.eventreg.service.RegEventServiceUtil} service utility. The
+ * {@link edu.uoc.eventreg.service.EventServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -24,10 +24,10 @@ package edu.uoc.eventreg.service.http;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link edu.uoc.eventreg.model.RegEventSoap}.
+ * is translated to an array of {@link edu.uoc.eventreg.model.EventSoap}.
  * If the method in the service utility returns a
- * {@link edu.uoc.eventreg.model.RegEvent}, that is translated to a
- * {@link edu.uoc.eventreg.model.RegEventSoap}. Methods that SOAP cannot
+ * {@link edu.uoc.eventreg.model.Event}, that is translated to a
+ * {@link edu.uoc.eventreg.model.EventSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -49,10 +49,10 @@ package edu.uoc.eventreg.service.http;
  * </p>
  *
  * @author Ana Mendoza
- * @see RegEventServiceHttp
- * @see edu.uoc.eventreg.model.RegEventSoap
- * @see edu.uoc.eventreg.service.RegEventServiceUtil
+ * @see EventServiceHttp
+ * @see edu.uoc.eventreg.model.EventSoap
+ * @see edu.uoc.eventreg.service.EventServiceUtil
  * @generated
  */
-public class RegEventServiceSoap {
+public class EventServiceSoap {
 }

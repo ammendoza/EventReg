@@ -74,9 +74,10 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 			{ "phone", Types.VARCHAR },
 			{ "registerDate", Types.TIMESTAMP },
 			{ "reservationCode", Types.VARCHAR },
-			{ "status", Types.INTEGER }
+			{ "status", Types.INTEGER },
+			{ "managedBy", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Attendee (id_ LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,surname VARCHAR(75) null,company VARCHAR(75) null,email VARCHAR(75) null,phone VARCHAR(75) null,registerDate DATE null,reservationCode VARCHAR(75) null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Attendee (id_ LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,surname VARCHAR(75) null,company VARCHAR(75) null,email VARCHAR(75) null,phone VARCHAR(75) null,registerDate DATE null,reservationCode VARCHAR(75) null,status INTEGER,managedBy LONG)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_Attendee";
 	public static final String ORDER_BY_JPQL = " ORDER BY attendee.surname ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Attendee.surname ASC";
@@ -115,6 +116,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		model.setRegisterDate(soapModel.getRegisterDate());
 		model.setReservationCode(soapModel.getReservationCode());
 		model.setStatus(soapModel.getStatus());
+		model.setManagedBy(soapModel.getManagedBy());
 
 		return model;
 	}
@@ -190,6 +192,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		attributes.put("registerDate", getRegisterDate());
 		attributes.put("reservationCode", getReservationCode());
 		attributes.put("status", getStatus());
+		attributes.put("managedBy", getManagedBy());
 
 		return attributes;
 	}
@@ -260,6 +263,12 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long managedBy = (Long)attributes.get("managedBy");
+
+		if (managedBy != null) {
+			setManagedBy(managedBy);
 		}
 	}
 
@@ -414,6 +423,17 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		_status = status;
 	}
 
+	@JSON
+	@Override
+	public long getManagedBy() {
+		return _managedBy;
+	}
+
+	@Override
+	public void setManagedBy(long managedBy) {
+		_managedBy = managedBy;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -452,6 +472,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		attendeeImpl.setRegisterDate(getRegisterDate());
 		attendeeImpl.setReservationCode(getReservationCode());
 		attendeeImpl.setStatus(getStatus());
+		attendeeImpl.setManagedBy(getManagedBy());
 
 		attendeeImpl.resetOriginalValues();
 
@@ -571,12 +592,14 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 		attendeeCacheModel.status = getStatus();
 
+		attendeeCacheModel.managedBy = getManagedBy();
+
 		return attendeeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -600,6 +623,8 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		sb.append(getReservationCode());
 		sb.append(", status=");
 		sb.append(getStatus());
+		sb.append(", managedBy=");
+		sb.append(getManagedBy());
 		sb.append("}");
 
 		return sb.toString();
@@ -607,7 +632,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Attendee");
@@ -657,6 +682,10 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>managedBy</column-name><column-value><![CDATA[");
+		sb.append(getManagedBy());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -678,5 +707,6 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	private Date _registerDate;
 	private String _reservationCode;
 	private int _status;
+	private long _managedBy;
 	private Attendee _escapedModel;
 }

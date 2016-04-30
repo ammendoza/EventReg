@@ -62,6 +62,7 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("requiresApproval", getRequiresApproval());
 		attributes.put("status", getStatus());
+		attributes.put("createdBy", getCreatedBy());
 
 		return attributes;
 	}
@@ -144,6 +145,12 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long createdBy = (Long)attributes.get("createdBy");
+
+		if (createdBy != null) {
+			setCreatedBy(createdBy);
 		}
 	}
 
@@ -238,6 +245,73 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	}
 
 	/**
+	* Returns the localized title of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this reg event
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _regEvent.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this reg event. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _regEvent.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this reg event
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _regEvent.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this reg event
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _regEvent.getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _regEvent.getTitleCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _regEvent.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this reg event.
+	*
+	* @return the locales and localized titles of this reg event
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _regEvent.getTitleMap();
+	}
+
+	/**
 	* Sets the title of this reg event.
 	*
 	* @param title the title of this reg event
@@ -245,6 +319,59 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	@Override
 	public void setTitle(java.lang.String title) {
 		_regEvent.setTitle(title);
+	}
+
+	/**
+	* Sets the localized title of this reg event in the language.
+	*
+	* @param title the localized title of this reg event
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setTitle(java.lang.String title, java.util.Locale locale) {
+		_regEvent.setTitle(title, locale);
+	}
+
+	/**
+	* Sets the localized title of this reg event in the language, and sets the default locale.
+	*
+	* @param title the localized title of this reg event
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setTitle(java.lang.String title, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_regEvent.setTitle(title, locale, defaultLocale);
+	}
+
+	@Override
+	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+		_regEvent.setTitleCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized titles of this reg event from the map of locales and localized titles.
+	*
+	* @param titleMap the locales and localized titles of this reg event
+	*/
+	@Override
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+		_regEvent.setTitleMap(titleMap);
+	}
+
+	/**
+	* Sets the localized titles of this reg event from the map of locales and localized titles, and sets the default locale.
+	*
+	* @param titleMap the locales and localized titles of this reg event
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Locale defaultLocale) {
+		_regEvent.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -258,6 +385,74 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	}
 
 	/**
+	* Returns the localized description of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this reg event
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _regEvent.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this reg event. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _regEvent.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this reg event
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _regEvent.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this reg event
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _regEvent.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _regEvent.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentValue() {
+		return _regEvent.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this reg event.
+	*
+	* @return the locales and localized descriptions of this reg event
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _regEvent.getDescriptionMap();
+	}
+
+	/**
 	* Sets the description of this reg event.
 	*
 	* @param description the description of this reg event
@@ -265,6 +460,60 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	@Override
 	public void setDescription(java.lang.String description) {
 		_regEvent.setDescription(description);
+	}
+
+	/**
+	* Sets the localized description of this reg event in the language.
+	*
+	* @param description the localized description of this reg event
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale) {
+		_regEvent.setDescription(description, locale);
+	}
+
+	/**
+	* Sets the localized description of this reg event in the language, and sets the default locale.
+	*
+	* @param description the localized description of this reg event
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale, java.util.Locale defaultLocale) {
+		_regEvent.setDescription(description, locale, defaultLocale);
+	}
+
+	@Override
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_regEvent.setDescriptionCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized descriptions of this reg event from the map of locales and localized descriptions.
+	*
+	* @param descriptionMap the locales and localized descriptions of this reg event
+	*/
+	@Override
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		_regEvent.setDescriptionMap(descriptionMap);
+	}
+
+	/**
+	* Sets the localized descriptions of this reg event from the map of locales and localized descriptions, and sets the default locale.
+	*
+	* @param descriptionMap the locales and localized descriptions of this reg event
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Locale defaultLocale) {
+		_regEvent.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -278,6 +527,74 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	}
 
 	/**
+	* Returns the localized address of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized address of this reg event
+	*/
+	@Override
+	public java.lang.String getAddress(java.util.Locale locale) {
+		return _regEvent.getAddress(locale);
+	}
+
+	/**
+	* Returns the localized address of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized address of this reg event. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getAddress(java.util.Locale locale,
+		boolean useDefault) {
+		return _regEvent.getAddress(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized address of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized address of this reg event
+	*/
+	@Override
+	public java.lang.String getAddress(java.lang.String languageId) {
+		return _regEvent.getAddress(languageId);
+	}
+
+	/**
+	* Returns the localized address of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized address of this reg event
+	*/
+	@Override
+	public java.lang.String getAddress(java.lang.String languageId,
+		boolean useDefault) {
+		return _regEvent.getAddress(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getAddressCurrentLanguageId() {
+		return _regEvent.getAddressCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getAddressCurrentValue() {
+		return _regEvent.getAddressCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized addresses of this reg event.
+	*
+	* @return the locales and localized addresses of this reg event
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getAddressMap() {
+		return _regEvent.getAddressMap();
+	}
+
+	/**
 	* Sets the address of this reg event.
 	*
 	* @param address the address of this reg event
@@ -285,6 +602,59 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	@Override
 	public void setAddress(java.lang.String address) {
 		_regEvent.setAddress(address);
+	}
+
+	/**
+	* Sets the localized address of this reg event in the language.
+	*
+	* @param address the localized address of this reg event
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setAddress(java.lang.String address, java.util.Locale locale) {
+		_regEvent.setAddress(address, locale);
+	}
+
+	/**
+	* Sets the localized address of this reg event in the language, and sets the default locale.
+	*
+	* @param address the localized address of this reg event
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setAddress(java.lang.String address, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_regEvent.setAddress(address, locale, defaultLocale);
+	}
+
+	@Override
+	public void setAddressCurrentLanguageId(java.lang.String languageId) {
+		_regEvent.setAddressCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized addresses of this reg event from the map of locales and localized addresses.
+	*
+	* @param addressMap the locales and localized addresses of this reg event
+	*/
+	@Override
+	public void setAddressMap(
+		java.util.Map<java.util.Locale, java.lang.String> addressMap) {
+		_regEvent.setAddressMap(addressMap);
+	}
+
+	/**
+	* Sets the localized addresses of this reg event from the map of locales and localized addresses, and sets the default locale.
+	*
+	* @param addressMap the locales and localized addresses of this reg event
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setAddressMap(
+		java.util.Map<java.util.Locale, java.lang.String> addressMap,
+		java.util.Locale defaultLocale) {
+		_regEvent.setAddressMap(addressMap, defaultLocale);
 	}
 
 	/**
@@ -298,6 +668,74 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	}
 
 	/**
+	* Returns the localized location of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized location of this reg event
+	*/
+	@Override
+	public java.lang.String getLocation(java.util.Locale locale) {
+		return _regEvent.getLocation(locale);
+	}
+
+	/**
+	* Returns the localized location of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized location of this reg event. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getLocation(java.util.Locale locale,
+		boolean useDefault) {
+		return _regEvent.getLocation(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized location of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized location of this reg event
+	*/
+	@Override
+	public java.lang.String getLocation(java.lang.String languageId) {
+		return _regEvent.getLocation(languageId);
+	}
+
+	/**
+	* Returns the localized location of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized location of this reg event
+	*/
+	@Override
+	public java.lang.String getLocation(java.lang.String languageId,
+		boolean useDefault) {
+		return _regEvent.getLocation(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getLocationCurrentLanguageId() {
+		return _regEvent.getLocationCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getLocationCurrentValue() {
+		return _regEvent.getLocationCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized locations of this reg event.
+	*
+	* @return the locales and localized locations of this reg event
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getLocationMap() {
+		return _regEvent.getLocationMap();
+	}
+
+	/**
 	* Sets the location of this reg event.
 	*
 	* @param location the location of this reg event
@@ -305,6 +743,59 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	@Override
 	public void setLocation(java.lang.String location) {
 		_regEvent.setLocation(location);
+	}
+
+	/**
+	* Sets the localized location of this reg event in the language.
+	*
+	* @param location the localized location of this reg event
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setLocation(java.lang.String location, java.util.Locale locale) {
+		_regEvent.setLocation(location, locale);
+	}
+
+	/**
+	* Sets the localized location of this reg event in the language, and sets the default locale.
+	*
+	* @param location the localized location of this reg event
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setLocation(java.lang.String location, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_regEvent.setLocation(location, locale, defaultLocale);
+	}
+
+	@Override
+	public void setLocationCurrentLanguageId(java.lang.String languageId) {
+		_regEvent.setLocationCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized locations of this reg event from the map of locales and localized locations.
+	*
+	* @param locationMap the locales and localized locations of this reg event
+	*/
+	@Override
+	public void setLocationMap(
+		java.util.Map<java.util.Locale, java.lang.String> locationMap) {
+		_regEvent.setLocationMap(locationMap);
+	}
+
+	/**
+	* Sets the localized locations of this reg event from the map of locales and localized locations, and sets the default locale.
+	*
+	* @param locationMap the locales and localized locations of this reg event
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setLocationMap(
+		java.util.Map<java.util.Locale, java.lang.String> locationMap,
+		java.util.Locale defaultLocale) {
+		_regEvent.setLocationMap(locationMap, defaultLocale);
 	}
 
 	/**
@@ -437,6 +928,26 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 		_regEvent.setStatus(status);
 	}
 
+	/**
+	* Returns the created by of this reg event.
+	*
+	* @return the created by of this reg event
+	*/
+	@Override
+	public long getCreatedBy() {
+		return _regEvent.getCreatedBy();
+	}
+
+	/**
+	* Sets the created by of this reg event.
+	*
+	* @param createdBy the created by of this reg event
+	*/
+	@Override
+	public void setCreatedBy(long createdBy) {
+		_regEvent.setCreatedBy(createdBy);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _regEvent.isNew();
@@ -493,6 +1004,29 @@ public class RegEventWrapper implements RegEvent, ModelWrapper<RegEvent> {
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_regEvent.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _regEvent.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _regEvent.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_regEvent.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_regEvent.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override

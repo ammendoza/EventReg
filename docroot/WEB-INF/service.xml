@@ -4,25 +4,25 @@
 	<author>Ana Mendoza</author>
 	<namespace>EVENTREG</namespace>
 
-	<entity name="RegEvent" local-service="true" remote-service="true">
+	<entity name="Event" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="id" type="long" primary="true" />
+		<column name="id" type="long" primary="true" id-type="increment" />
 
 		<!-- Other fields -->
 		<column name="companyId" type="long" />
 		<column name="groupId" type="long" />
-		<column name="title" type="String" />
-		<column name="description" type="String" />
-		<column name="address" type="String" />
-		<column name="location" type="String" />
+		<column name="title" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="address" type="String" localized="true" />
+		<column name="location" type="String" localized="true" />
 		<column name="coordX" type="String" />
 		<column name="coordY" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="requiresApproval" type="boolean" />
 		<column name="status" type="int" />
-		<column name="createdBy" type="Collection" entity="com.liferay.portal.User" />
+		<column name="createdBy" type="long" />
 		
 		<!-- Order -->
 		<order by="desc">
@@ -34,7 +34,7 @@
 	<entity name="EventOption" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="id" type="long" primary="true" />
+		<column name="id" type="long" primary="true" id-type="increment" />
 
 		<!-- Other fields -->
 		<column name="companyId" type="long" />
@@ -54,7 +54,7 @@
 	<entity name="Attendee" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="id" type="long" primary="true" />
+		<column name="id" type="long" primary="true" id-type="increment" />
 
 		<!-- Other fields -->
 		<column name="companyId" type="long" />
@@ -68,7 +68,7 @@
 		<column name="reservationCode" type="String" />
 		<column name="status" type="int" />
 		<column name="eventOptionId" type="Collection" entity="EventOption" />
-		<column name="managedBy" type="Collection" entity="com.liferay.portal.User" />
+		<column name="managedBy" type="long" />
 
 		<!-- Order -->
 		<order by="asc">
@@ -80,7 +80,7 @@
 	<entity name="Image" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="id" type="long" primary="true" />
+		<column name="id" type="long" primary="true" id-type="increment" />
 
 		<!-- Other fields -->
 		<column name="companyId" type="long" />

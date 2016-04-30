@@ -29,7 +29,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 
 import edu.uoc.eventreg.service.ClpSerializer;
-import edu.uoc.eventreg.service.RegEventLocalServiceUtil;
+import edu.uoc.eventreg.service.EventLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -45,18 +45,18 @@ import java.util.TreeSet;
 /**
  * @author Ana Mendoza
  */
-public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
-	public RegEventClp() {
+public class EventClp extends BaseModelImpl<Event> implements Event {
+	public EventClp() {
 	}
 
 	@Override
 	public Class<?> getModelClass() {
-		return RegEvent.class;
+		return Event.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return RegEvent.class.getName();
+		return Event.class.getName();
 	}
 
 	@Override
@@ -197,13 +197,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setId(long id) {
 		_id = id;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setId", long.class);
 
-				method.invoke(_regEventRemoteModel, id);
+				method.invoke(_eventRemoteModel, id);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -220,13 +220,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setCompanyId", long.class);
 
-				method.invoke(_regEventRemoteModel, companyId);
+				method.invoke(_eventRemoteModel, companyId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -243,13 +243,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setGroupId", long.class);
 
-				method.invoke(_regEventRemoteModel, groupId);
+				method.invoke(_eventRemoteModel, groupId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -308,13 +308,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setTitle(String title) {
 		_title = title;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setTitle", String.class);
 
-				method.invoke(_regEventRemoteModel, title);
+				method.invoke(_eventRemoteModel, title);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -430,13 +430,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setDescription(String description) {
 		_description = description;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setDescription", String.class);
 
-				method.invoke(_regEventRemoteModel, description);
+				method.invoke(_eventRemoteModel, description);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -556,13 +556,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setAddress(String address) {
 		_address = address;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setAddress", String.class);
 
-				method.invoke(_regEventRemoteModel, address);
+				method.invoke(_eventRemoteModel, address);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -680,13 +680,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setLocation(String location) {
 		_location = location;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setLocation", String.class);
 
-				method.invoke(_regEventRemoteModel, location);
+				method.invoke(_eventRemoteModel, location);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -762,13 +762,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setCoordX(String coordX) {
 		_coordX = coordX;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setCoordX", String.class);
 
-				method.invoke(_regEventRemoteModel, coordX);
+				method.invoke(_eventRemoteModel, coordX);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -785,13 +785,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setCoordY(String coordY) {
 		_coordY = coordY;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setCoordY", String.class);
 
-				method.invoke(_regEventRemoteModel, coordY);
+				method.invoke(_eventRemoteModel, coordY);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -808,13 +808,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setCreateDate", Date.class);
 
-				method.invoke(_regEventRemoteModel, createDate);
+				method.invoke(_eventRemoteModel, createDate);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -831,13 +831,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setModifiedDate", Date.class);
 
-				method.invoke(_regEventRemoteModel, modifiedDate);
+				method.invoke(_eventRemoteModel, modifiedDate);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -859,14 +859,14 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setRequiresApproval(boolean requiresApproval) {
 		_requiresApproval = requiresApproval;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setRequiresApproval",
 						boolean.class);
 
-				method.invoke(_regEventRemoteModel, requiresApproval);
+				method.invoke(_eventRemoteModel, requiresApproval);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -883,13 +883,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setStatus(int status) {
 		_status = status;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setStatus", int.class);
 
-				method.invoke(_regEventRemoteModel, status);
+				method.invoke(_eventRemoteModel, status);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -906,13 +906,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	public void setCreatedBy(long createdBy) {
 		_createdBy = createdBy;
 
-		if (_regEventRemoteModel != null) {
+		if (_eventRemoteModel != null) {
 			try {
-				Class<?> clazz = _regEventRemoteModel.getClass();
+				Class<?> clazz = _eventRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setCreatedBy", long.class);
 
-				method.invoke(_regEventRemoteModel, createdBy);
+				method.invoke(_eventRemoteModel, createdBy);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -920,12 +920,12 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 		}
 	}
 
-	public BaseModel<?> getRegEventRemoteModel() {
-		return _regEventRemoteModel;
+	public BaseModel<?> getEventRemoteModel() {
+		return _eventRemoteModel;
 	}
 
-	public void setRegEventRemoteModel(BaseModel<?> regEventRemoteModel) {
-		_regEventRemoteModel = regEventRemoteModel;
+	public void setEventRemoteModel(BaseModel<?> eventRemoteModel) {
+		_eventRemoteModel = eventRemoteModel;
 	}
 
 	public Object invokeOnRemoteModel(String methodName,
@@ -939,7 +939,7 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 			}
 		}
 
-		Class<?> remoteModelClass = _regEventRemoteModel.getClass();
+		Class<?> remoteModelClass = _eventRemoteModel.getClass();
 
 		ClassLoader remoteModelClassLoader = remoteModelClass.getClassLoader();
 
@@ -959,7 +959,7 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 		Method method = remoteModelClass.getMethod(methodName,
 				remoteParameterTypes);
 
-		Object returnValue = method.invoke(_regEventRemoteModel,
+		Object returnValue = method.invoke(_eventRemoteModel,
 				remoteParameterValues);
 
 		if (returnValue != null) {
@@ -972,10 +972,10 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	@Override
 	public void persist() throws SystemException {
 		if (this.isNew()) {
-			RegEventLocalServiceUtil.addRegEvent(this);
+			EventLocalServiceUtil.addEvent(this);
 		}
 		else {
-			RegEventLocalServiceUtil.updateRegEvent(this);
+			EventLocalServiceUtil.updateEvent(this);
 		}
 	}
 
@@ -1095,14 +1095,14 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	}
 
 	@Override
-	public RegEvent toEscapedModel() {
-		return (RegEvent)ProxyUtil.newProxyInstance(RegEvent.class.getClassLoader(),
-			new Class[] { RegEvent.class }, new AutoEscapeBeanHandler(this));
+	public Event toEscapedModel() {
+		return (Event)ProxyUtil.newProxyInstance(Event.class.getClassLoader(),
+			new Class[] { Event.class }, new AutoEscapeBeanHandler(this));
 	}
 
 	@Override
 	public Object clone() {
-		RegEventClp clone = new RegEventClp();
+		EventClp clone = new EventClp();
 
 		clone.setId(getId());
 		clone.setCompanyId(getCompanyId());
@@ -1123,10 +1123,10 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	}
 
 	@Override
-	public int compareTo(RegEvent regEvent) {
+	public int compareTo(Event event) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getCreateDate(), regEvent.getCreateDate());
+		value = DateUtil.compareTo(getCreateDate(), event.getCreateDate());
 
 		value = value * -1;
 
@@ -1143,13 +1143,13 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 			return true;
 		}
 
-		if (!(obj instanceof RegEventClp)) {
+		if (!(obj instanceof EventClp)) {
 			return false;
 		}
 
-		RegEventClp regEvent = (RegEventClp)obj;
+		EventClp event = (EventClp)obj;
 
-		long primaryKey = regEvent.getPrimaryKey();
+		long primaryKey = event.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -1210,7 +1210,7 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
-		sb.append("edu.uoc.eventreg.model.RegEvent");
+		sb.append("edu.uoc.eventreg.model.Event");
 		sb.append("</model-name>");
 
 		sb.append(
@@ -1293,6 +1293,6 @@ public class RegEventClp extends BaseModelImpl<RegEvent> implements RegEvent {
 	private boolean _requiresApproval;
 	private int _status;
 	private long _createdBy;
-	private BaseModel<?> _regEventRemoteModel;
+	private BaseModel<?> _eventRemoteModel;
 	private Class<?> _clpSerializerClass = edu.uoc.eventreg.service.ClpSerializer.class;
 }

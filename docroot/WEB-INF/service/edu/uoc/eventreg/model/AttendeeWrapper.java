@@ -60,6 +60,7 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 		attributes.put("registerDate", getRegisterDate());
 		attributes.put("reservationCode", getReservationCode());
 		attributes.put("status", getStatus());
+		attributes.put("managedBy", getManagedBy());
 
 		return attributes;
 	}
@@ -130,6 +131,12 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long managedBy = (Long)attributes.get("managedBy");
+
+		if (managedBy != null) {
+			setManagedBy(managedBy);
 		}
 	}
 
@@ -371,6 +378,26 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 	@Override
 	public void setStatus(int status) {
 		_attendee.setStatus(status);
+	}
+
+	/**
+	* Returns the managed by of this attendee.
+	*
+	* @return the managed by of this attendee
+	*/
+	@Override
+	public long getManagedBy() {
+		return _attendee.getManagedBy();
+	}
+
+	/**
+	* Sets the managed by of this attendee.
+	*
+	* @param managedBy the managed by of this attendee
+	*/
+	@Override
+	public void setManagedBy(long managedBy) {
+		_attendee.setManagedBy(managedBy);
 	}
 
 	@Override

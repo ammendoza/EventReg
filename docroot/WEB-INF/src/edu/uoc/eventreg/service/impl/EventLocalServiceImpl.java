@@ -14,26 +14,26 @@
 
 package edu.uoc.eventreg.service.impl;
 
-import edu.uoc.eventreg.service.base.RegEventLocalServiceBaseImpl;
+import edu.uoc.eventreg.service.base.EventLocalServiceBaseImpl;
 
 /**
- * The implementation of the reg event local service.
+ * The implementation of the event local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link edu.uoc.eventreg.service.RegEventLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link edu.uoc.eventreg.service.EventLocalService} interface.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
  * @author Ana Mendoza
- * @see edu.uoc.eventreg.service.base.RegEventLocalServiceBaseImpl
- * @see edu.uoc.eventreg.service.RegEventLocalServiceUtil
+ * @see edu.uoc.eventreg.service.base.EventLocalServiceBaseImpl
+ * @see edu.uoc.eventreg.service.EventLocalServiceUtil
  */
-public class RegEventLocalServiceImpl extends RegEventLocalServiceBaseImpl {
+public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.RegEventLocalServiceUtil} to access the reg event local service.
+	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.EventLocalServiceUtil} to access the event local service.
 	 */
 }

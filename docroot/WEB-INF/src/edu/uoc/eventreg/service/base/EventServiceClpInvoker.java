@@ -14,7 +14,7 @@
 
 package edu.uoc.eventreg.service.base;
 
-import edu.uoc.eventreg.service.RegEventServiceUtil;
+import edu.uoc.eventreg.service.EventServiceUtil;
 
 import java.util.Arrays;
 
@@ -22,8 +22,8 @@ import java.util.Arrays;
  * @author Ana Mendoza
  * @generated
  */
-public class RegEventServiceClpInvoker {
-	public RegEventServiceClpInvoker() {
+public class EventServiceClpInvoker {
+	public EventServiceClpInvoker() {
 		_methodName36 = "getBeanIdentifier";
 
 		_methodParameterTypes36 = new String[] {  };
@@ -37,12 +37,12 @@ public class RegEventServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName36.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
-			return RegEventServiceUtil.getBeanIdentifier();
+			return EventServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName37.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
-			RegEventServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			EventServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}

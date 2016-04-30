@@ -330,6 +330,7 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 		attendeeImpl.setRegisterDate(attendee.getRegisterDate());
 		attendeeImpl.setReservationCode(attendee.getReservationCode());
 		attendeeImpl.setStatus(attendee.getStatus());
+		attendeeImpl.setManagedBy(attendee.getManagedBy());
 
 		return attendeeImpl;
 	}

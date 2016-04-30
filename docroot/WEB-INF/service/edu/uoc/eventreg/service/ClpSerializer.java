@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
 import edu.uoc.eventreg.model.AttendeeClp;
+import edu.uoc.eventreg.model.EventClp;
 import edu.uoc.eventreg.model.EventOptionClp;
 import edu.uoc.eventreg.model.ImageClp;
-import edu.uoc.eventreg.model.RegEventClp;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -109,16 +109,16 @@ public class ClpSerializer {
 			return translateInputAttendee(oldModel);
 		}
 
+		if (oldModelClassName.equals(EventClp.class.getName())) {
+			return translateInputEvent(oldModel);
+		}
+
 		if (oldModelClassName.equals(EventOptionClp.class.getName())) {
 			return translateInputEventOption(oldModel);
 		}
 
 		if (oldModelClassName.equals(ImageClp.class.getName())) {
 			return translateInputImage(oldModel);
-		}
-
-		if (oldModelClassName.equals(RegEventClp.class.getName())) {
-			return translateInputRegEvent(oldModel);
 		}
 
 		return oldModel;
@@ -146,6 +146,16 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateInputEvent(BaseModel<?> oldModel) {
+		EventClp oldClpModel = (EventClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getEventRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateInputEventOption(BaseModel<?> oldModel) {
 		EventOptionClp oldClpModel = (EventOptionClp)oldModel;
 
@@ -160,16 +170,6 @@ public class ClpSerializer {
 		ImageClp oldClpModel = (ImageClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getImageRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputRegEvent(BaseModel<?> oldModel) {
-		RegEventClp oldClpModel = (RegEventClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getRegEventRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -195,6 +195,42 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals("edu.uoc.eventreg.model.impl.AttendeeImpl")) {
 			return translateOutputAttendee(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals("edu.uoc.eventreg.model.impl.EventImpl")) {
+			return translateOutputEvent(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -268,42 +304,6 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals("edu.uoc.eventreg.model.impl.ImageImpl")) {
 			return translateOutputImage(oldModel);
-		}
-		else if (oldModelClassName.endsWith("Clp")) {
-			try {
-				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
-
-				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
-
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
-
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
-
-				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
-
-				Class<?> oldModelModelClass = oldModel.getModelClass();
-
-				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
-
-				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
-
-				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
-
-				return newModel;
-			}
-			catch (Throwable t) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Unable to translate " + oldModelClassName, t);
-				}
-			}
-		}
-
-		if (oldModelClassName.equals("edu.uoc.eventreg.model.impl.RegEventImpl")) {
-			return translateOutputRegEvent(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -422,16 +422,16 @@ public class ClpSerializer {
 			return new edu.uoc.eventreg.NoSuchAttendeeException();
 		}
 
+		if (className.equals("edu.uoc.eventreg.NoSuchEventException")) {
+			return new edu.uoc.eventreg.NoSuchEventException();
+		}
+
 		if (className.equals("edu.uoc.eventreg.NoSuchEventOptionException")) {
 			return new edu.uoc.eventreg.NoSuchEventOptionException();
 		}
 
 		if (className.equals("edu.uoc.eventreg.NoSuchImageException")) {
 			return new edu.uoc.eventreg.NoSuchImageException();
-		}
-
-		if (className.equals("edu.uoc.eventreg.NoSuchRegEventException")) {
-			return new edu.uoc.eventreg.NoSuchRegEventException();
 		}
 
 		return throwable;
@@ -443,6 +443,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setAttendeeRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputEvent(BaseModel<?> oldModel) {
+		EventClp newModel = new EventClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setEventRemoteModel(oldModel);
 
 		return newModel;
 	}
@@ -463,16 +473,6 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setImageRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputRegEvent(BaseModel<?> oldModel) {
-		RegEventClp newModel = new RegEventClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setRegEventRemoteModel(oldModel);
 
 		return newModel;
 	}

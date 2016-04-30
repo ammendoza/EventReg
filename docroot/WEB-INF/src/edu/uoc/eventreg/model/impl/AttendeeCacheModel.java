@@ -37,7 +37,7 @@ import java.util.Date;
 public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -61,6 +61,8 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 		sb.append(reservationCode);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", managedBy=");
+		sb.append(managedBy);
 		sb.append("}");
 
 		return sb.toString();
@@ -124,6 +126,7 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 		}
 
 		attendeeImpl.setStatus(status);
+		attendeeImpl.setManagedBy(managedBy);
 
 		attendeeImpl.resetOriginalValues();
 
@@ -143,6 +146,7 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 		registerDate = objectInput.readLong();
 		reservationCode = objectInput.readUTF();
 		status = objectInput.readInt();
+		managedBy = objectInput.readLong();
 	}
 
 	@Override
@@ -197,6 +201,7 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 		}
 
 		objectOutput.writeInt(status);
+		objectOutput.writeLong(managedBy);
 	}
 
 	public long id;
@@ -210,4 +215,5 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 	public long registerDate;
 	public String reservationCode;
 	public int status;
+	public long managedBy;
 }

@@ -9,7 +9,25 @@ create table EVENTREG_Attendee (
 	phone VARCHAR(75) null,
 	registerDate DATE null,
 	reservationCode VARCHAR(75) null,
-	status INTEGER
+	status INTEGER,
+	managedBy LONG
+);
+
+create table EVENTREG_Event (
+	id_ LONG not null primary key,
+	companyId LONG,
+	groupId LONG,
+	title STRING null,
+	description STRING null,
+	address STRING null,
+	location STRING null,
+	coordX VARCHAR(75) null,
+	coordY VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	requiresApproval BOOLEAN,
+	status INTEGER,
+	createdBy LONG
 );
 
 create table EVENTREG_EventOption (
@@ -31,14 +49,15 @@ create table EVENTREG_RegEvent (
 	id_ LONG not null primary key,
 	companyId LONG,
 	groupId LONG,
-	title VARCHAR(75) null,
-	description VARCHAR(75) null,
-	address VARCHAR(75) null,
-	location VARCHAR(75) null,
+	title STRING null,
+	description STRING null,
+	address STRING null,
+	location STRING null,
 	coordX VARCHAR(75) null,
 	coordY VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	requiresApproval BOOLEAN,
-	status INTEGER
+	status INTEGER,
+	createdBy LONG
 );

@@ -24,9 +24,45 @@
 			</basic>
 			<basic name="reservationCode" />
 			<basic name="status" />
+			<basic name="managedBy" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="edu.uoc.eventreg.model.impl.EventModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="title" />
+			<basic name="description" />
+			<basic name="address" />
+			<basic name="location" />
+			<basic name="coordX" />
+			<basic name="coordY" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="requiresApproval" />
+			<basic name="status" />
+			<basic name="createdBy" />
+			<transient name="addressCurrentLanguageId" />
+			<transient name="addressMap" />
+			<transient name="descriptionCurrentLanguageId" />
+			<transient name="descriptionMap" />
+			<transient name="locationCurrentLanguageId" />
+			<transient name="locationMap" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="titleCurrentLanguageId" />
+			<transient name="titleMap" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="edu.uoc.eventreg.model.impl.EventOptionModelImpl">
@@ -60,34 +96,12 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="edu.uoc.eventreg.model.impl.RegEventModelImpl">
-		<attributes>
-			<id name="id">
-				<column name="ID_" />
-			</id>
-			<basic name="companyId" />
-			<basic name="groupId" />
-			<basic name="title" />
-			<basic name="description" />
-			<basic name="address" />
-			<basic name="location" />
-			<basic name="coordX" />
-			<basic name="coordY" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="requiresApproval" />
-			<basic name="status" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
 	<entity class="edu.uoc.eventreg.model.impl.AttendeeImpl" name="Attendee">
 		<table name="EVENTREG_Attendee" />
+		<attributes />
+	</entity>
+	<entity class="edu.uoc.eventreg.model.impl.EventImpl" name="Event">
+		<table name="EVENTREG_Event" />
 		<attributes />
 	</entity>
 	<entity class="edu.uoc.eventreg.model.impl.EventOptionImpl" name="EventOption">
@@ -96,10 +110,6 @@
 	</entity>
 	<entity class="edu.uoc.eventreg.model.impl.ImageImpl" name="Image">
 		<table name="EVENTREG_Image" />
-		<attributes />
-	</entity>
-	<entity class="edu.uoc.eventreg.model.impl.RegEventImpl" name="RegEvent">
-		<table name="EVENTREG_RegEvent" />
 		<attributes />
 	</entity>
 </entity-mappings>

@@ -219,6 +219,20 @@ public interface AttendeeModel extends BaseModel<Attendee> {
 	 */
 	public void setStatus(int status);
 
+	/**
+	 * Returns the managed by of this attendee.
+	 *
+	 * @return the managed by of this attendee
+	 */
+	public long getManagedBy();
+
+	/**
+	 * Sets the managed by of this attendee.
+	 *
+	 * @param managedBy the managed by of this attendee
+	 */
+	public void setManagedBy(long managedBy);
+
 	@Override
 	public boolean isNew();
 

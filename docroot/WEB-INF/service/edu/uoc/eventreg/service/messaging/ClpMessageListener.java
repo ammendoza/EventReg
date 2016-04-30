@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.messaging.Message;
 import edu.uoc.eventreg.service.AttendeeLocalServiceUtil;
 import edu.uoc.eventreg.service.AttendeeServiceUtil;
 import edu.uoc.eventreg.service.ClpSerializer;
+import edu.uoc.eventreg.service.EventLocalServiceUtil;
 import edu.uoc.eventreg.service.EventOptionLocalServiceUtil;
 import edu.uoc.eventreg.service.EventOptionServiceUtil;
+import edu.uoc.eventreg.service.EventServiceUtil;
 import edu.uoc.eventreg.service.ImageLocalServiceUtil;
 import edu.uoc.eventreg.service.ImageServiceUtil;
-import edu.uoc.eventreg.service.RegEventLocalServiceUtil;
-import edu.uoc.eventreg.service.RegEventServiceUtil;
 
 /**
  * @author Ana Mendoza
@@ -45,15 +45,15 @@ public class ClpMessageListener extends BaseMessageListener {
 			AttendeeLocalServiceUtil.clearService();
 
 			AttendeeServiceUtil.clearService();
+			EventLocalServiceUtil.clearService();
+
+			EventServiceUtil.clearService();
 			EventOptionLocalServiceUtil.clearService();
 
 			EventOptionServiceUtil.clearService();
 			ImageLocalServiceUtil.clearService();
 
 			ImageServiceUtil.clearService();
-			RegEventLocalServiceUtil.clearService();
-
-			RegEventServiceUtil.clearService();
 		}
 	}
 }

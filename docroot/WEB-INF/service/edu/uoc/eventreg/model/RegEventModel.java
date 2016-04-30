@@ -14,6 +14,7 @@
 
 package edu.uoc.eventreg.model;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -24,6 +25,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The base model interface for the RegEvent service. Represents a row in the &quot;EVENTREG_RegEvent&quot; database table, with each column mapped to a property of this class.
@@ -106,8 +109,58 @@ public interface RegEventModel extends BaseModel<RegEvent> {
 	 *
 	 * @return the title of this reg event
 	 */
-	@AutoEscape
 	public String getTitle();
+
+	/**
+	 * Returns the localized title of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized title of this reg event
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale);
+
+	/**
+	 * Returns the localized title of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this reg event. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized title of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized title of this reg event
+	 */
+	@AutoEscape
+	public String getTitle(String languageId);
+
+	/**
+	 * Returns the localized title of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this reg event
+	 */
+	@AutoEscape
+	public String getTitle(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getTitleCurrentLanguageId();
+
+	@AutoEscape
+	public String getTitleCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized titles of this reg event.
+	 *
+	 * @return the locales and localized titles of this reg event
+	 */
+	public Map<Locale, String> getTitleMap();
 
 	/**
 	 * Sets the title of this reg event.
@@ -117,12 +170,96 @@ public interface RegEventModel extends BaseModel<RegEvent> {
 	public void setTitle(String title);
 
 	/**
+	 * Sets the localized title of this reg event in the language.
+	 *
+	 * @param title the localized title of this reg event
+	 * @param locale the locale of the language
+	 */
+	public void setTitle(String title, Locale locale);
+
+	/**
+	 * Sets the localized title of this reg event in the language, and sets the default locale.
+	 *
+	 * @param title the localized title of this reg event
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitle(String title, Locale locale, Locale defaultLocale);
+
+	public void setTitleCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized titles of this reg event from the map of locales and localized titles.
+	 *
+	 * @param titleMap the locales and localized titles of this reg event
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap);
+
+	/**
+	 * Sets the localized titles of this reg event from the map of locales and localized titles, and sets the default locale.
+	 *
+	 * @param titleMap the locales and localized titles of this reg event
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
+
+	/**
 	 * Returns the description of this reg event.
 	 *
 	 * @return the description of this reg event
 	 */
-	@AutoEscape
 	public String getDescription();
+
+	/**
+	 * Returns the localized description of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized description of this reg event
+	 */
+	@AutoEscape
+	public String getDescription(Locale locale);
+
+	/**
+	 * Returns the localized description of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this reg event. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getDescription(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized description of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized description of this reg event
+	 */
+	@AutoEscape
+	public String getDescription(String languageId);
+
+	/**
+	 * Returns the localized description of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this reg event
+	 */
+	@AutoEscape
+	public String getDescription(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getDescriptionCurrentLanguageId();
+
+	@AutoEscape
+	public String getDescriptionCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized descriptions of this reg event.
+	 *
+	 * @return the locales and localized descriptions of this reg event
+	 */
+	public Map<Locale, String> getDescriptionMap();
 
 	/**
 	 * Sets the description of this reg event.
@@ -132,12 +269,98 @@ public interface RegEventModel extends BaseModel<RegEvent> {
 	public void setDescription(String description);
 
 	/**
+	 * Sets the localized description of this reg event in the language.
+	 *
+	 * @param description the localized description of this reg event
+	 * @param locale the locale of the language
+	 */
+	public void setDescription(String description, Locale locale);
+
+	/**
+	 * Sets the localized description of this reg event in the language, and sets the default locale.
+	 *
+	 * @param description the localized description of this reg event
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
+
+	public void setDescriptionCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized descriptions of this reg event from the map of locales and localized descriptions.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this reg event
+	 */
+	public void setDescriptionMap(Map<Locale, String> descriptionMap);
+
+	/**
+	 * Sets the localized descriptions of this reg event from the map of locales and localized descriptions, and sets the default locale.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this reg event
+	 * @param defaultLocale the default locale
+	 */
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
+
+	/**
 	 * Returns the address of this reg event.
 	 *
 	 * @return the address of this reg event
 	 */
-	@AutoEscape
 	public String getAddress();
+
+	/**
+	 * Returns the localized address of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized address of this reg event
+	 */
+	@AutoEscape
+	public String getAddress(Locale locale);
+
+	/**
+	 * Returns the localized address of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized address of this reg event. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getAddress(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized address of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized address of this reg event
+	 */
+	@AutoEscape
+	public String getAddress(String languageId);
+
+	/**
+	 * Returns the localized address of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized address of this reg event
+	 */
+	@AutoEscape
+	public String getAddress(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getAddressCurrentLanguageId();
+
+	@AutoEscape
+	public String getAddressCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized addresses of this reg event.
+	 *
+	 * @return the locales and localized addresses of this reg event
+	 */
+	public Map<Locale, String> getAddressMap();
 
 	/**
 	 * Sets the address of this reg event.
@@ -147,12 +370,97 @@ public interface RegEventModel extends BaseModel<RegEvent> {
 	public void setAddress(String address);
 
 	/**
+	 * Sets the localized address of this reg event in the language.
+	 *
+	 * @param address the localized address of this reg event
+	 * @param locale the locale of the language
+	 */
+	public void setAddress(String address, Locale locale);
+
+	/**
+	 * Sets the localized address of this reg event in the language, and sets the default locale.
+	 *
+	 * @param address the localized address of this reg event
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setAddress(String address, Locale locale, Locale defaultLocale);
+
+	public void setAddressCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized addresses of this reg event from the map of locales and localized addresses.
+	 *
+	 * @param addressMap the locales and localized addresses of this reg event
+	 */
+	public void setAddressMap(Map<Locale, String> addressMap);
+
+	/**
+	 * Sets the localized addresses of this reg event from the map of locales and localized addresses, and sets the default locale.
+	 *
+	 * @param addressMap the locales and localized addresses of this reg event
+	 * @param defaultLocale the default locale
+	 */
+	public void setAddressMap(Map<Locale, String> addressMap,
+		Locale defaultLocale);
+
+	/**
 	 * Returns the location of this reg event.
 	 *
 	 * @return the location of this reg event
 	 */
-	@AutoEscape
 	public String getLocation();
+
+	/**
+	 * Returns the localized location of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized location of this reg event
+	 */
+	@AutoEscape
+	public String getLocation(Locale locale);
+
+	/**
+	 * Returns the localized location of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized location of this reg event. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getLocation(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized location of this reg event in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized location of this reg event
+	 */
+	@AutoEscape
+	public String getLocation(String languageId);
+
+	/**
+	 * Returns the localized location of this reg event in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized location of this reg event
+	 */
+	@AutoEscape
+	public String getLocation(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getLocationCurrentLanguageId();
+
+	@AutoEscape
+	public String getLocationCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized locations of this reg event.
+	 *
+	 * @return the locales and localized locations of this reg event
+	 */
+	public Map<Locale, String> getLocationMap();
 
 	/**
 	 * Sets the location of this reg event.
@@ -160,6 +468,41 @@ public interface RegEventModel extends BaseModel<RegEvent> {
 	 * @param location the location of this reg event
 	 */
 	public void setLocation(String location);
+
+	/**
+	 * Sets the localized location of this reg event in the language.
+	 *
+	 * @param location the localized location of this reg event
+	 * @param locale the locale of the language
+	 */
+	public void setLocation(String location, Locale locale);
+
+	/**
+	 * Sets the localized location of this reg event in the language, and sets the default locale.
+	 *
+	 * @param location the localized location of this reg event
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setLocation(String location, Locale locale, Locale defaultLocale);
+
+	public void setLocationCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized locations of this reg event from the map of locales and localized locations.
+	 *
+	 * @param locationMap the locales and localized locations of this reg event
+	 */
+	public void setLocationMap(Map<Locale, String> locationMap);
+
+	/**
+	 * Sets the localized locations of this reg event from the map of locales and localized locations, and sets the default locale.
+	 *
+	 * @param locationMap the locales and localized locations of this reg event
+	 * @param defaultLocale the default locale
+	 */
+	public void setLocationMap(Map<Locale, String> locationMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the coord x of this reg event.
@@ -254,6 +597,20 @@ public interface RegEventModel extends BaseModel<RegEvent> {
 	 */
 	public void setStatus(int status);
 
+	/**
+	 * Returns the created by of this reg event.
+	 *
+	 * @return the created by of this reg event
+	 */
+	public long getCreatedBy();
+
+	/**
+	 * Sets the created by of this reg event.
+	 *
+	 * @param createdBy the created by of this reg event
+	 */
+	public void setCreatedBy(long createdBy);
+
 	@Override
 	public boolean isNew();
 
@@ -286,6 +643,15 @@ public interface RegEventModel extends BaseModel<RegEvent> {
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	public String[] getAvailableLanguageIds();
+
+	public String getDefaultLanguageId();
+
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	@Override
 	public Object clone();

@@ -42,6 +42,7 @@ public class AttendeeSoap implements Serializable {
 		soapModel.setRegisterDate(model.getRegisterDate());
 		soapModel.setReservationCode(model.getReservationCode());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setManagedBy(model.getManagedBy());
 
 		return soapModel;
 	}
@@ -182,6 +183,14 @@ public class AttendeeSoap implements Serializable {
 		_status = status;
 	}
 
+	public long getManagedBy() {
+		return _managedBy;
+	}
+
+	public void setManagedBy(long managedBy) {
+		_managedBy = managedBy;
+	}
+
 	private long _id;
 	private long _companyId;
 	private long _groupId;
@@ -193,4 +202,5 @@ public class AttendeeSoap implements Serializable {
 	private Date _registerDate;
 	private String _reservationCode;
 	private int _status;
+	private long _managedBy;
 }

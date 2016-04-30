@@ -21,15 +21,15 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link edu.uoc.eventreg.service.http.RegEventServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link edu.uoc.eventreg.service.http.EventServiceSoap}.
  *
  * @author Ana Mendoza
- * @see edu.uoc.eventreg.service.http.RegEventServiceSoap
+ * @see edu.uoc.eventreg.service.http.EventServiceSoap
  * @generated
  */
-public class RegEventSoap implements Serializable {
-	public static RegEventSoap toSoapModel(RegEvent model) {
-		RegEventSoap soapModel = new RegEventSoap();
+public class EventSoap implements Serializable {
+	public static EventSoap toSoapModel(Event model) {
+		EventSoap soapModel = new EventSoap();
 
 		soapModel.setId(model.getId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -49,8 +49,8 @@ public class RegEventSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static RegEventSoap[] toSoapModels(RegEvent[] models) {
-		RegEventSoap[] soapModels = new RegEventSoap[models.length];
+	public static EventSoap[] toSoapModels(Event[] models) {
+		EventSoap[] soapModels = new EventSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -59,14 +59,14 @@ public class RegEventSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static RegEventSoap[][] toSoapModels(RegEvent[][] models) {
-		RegEventSoap[][] soapModels = null;
+	public static EventSoap[][] toSoapModels(Event[][] models) {
+		EventSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new RegEventSoap[models.length][models[0].length];
+			soapModels = new EventSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new RegEventSoap[0][0];
+			soapModels = new EventSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -76,17 +76,17 @@ public class RegEventSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static RegEventSoap[] toSoapModels(List<RegEvent> models) {
-		List<RegEventSoap> soapModels = new ArrayList<RegEventSoap>(models.size());
+	public static EventSoap[] toSoapModels(List<Event> models) {
+		List<EventSoap> soapModels = new ArrayList<EventSoap>(models.size());
 
-		for (RegEvent model : models) {
+		for (Event model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new RegEventSoap[soapModels.size()]);
+		return soapModels.toArray(new EventSoap[soapModels.size()]);
 	}
 
-	public RegEventSoap() {
+	public EventSoap() {
 	}
 
 	public long getPrimaryKey() {

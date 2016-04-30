@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
-import edu.uoc.eventreg.model.RegEvent;
+import edu.uoc.eventreg.model.Event;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -28,16 +28,16 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing RegEvent in entity cache.
+ * The cache model class for representing Event in entity cache.
  *
  * @author Ana Mendoza
- * @see RegEvent
+ * @see Event
  * @generated
  */
-public class RegEventCacheModel implements CacheModel<RegEvent>, Externalizable {
+public class EventCacheModel implements CacheModel<Event>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -65,81 +65,84 @@ public class RegEventCacheModel implements CacheModel<RegEvent>, Externalizable 
 		sb.append(requiresApproval);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", createdBy=");
+		sb.append(createdBy);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public RegEvent toEntityModel() {
-		RegEventImpl regEventImpl = new RegEventImpl();
+	public Event toEntityModel() {
+		EventImpl eventImpl = new EventImpl();
 
-		regEventImpl.setId(id);
-		regEventImpl.setCompanyId(companyId);
-		regEventImpl.setGroupId(groupId);
+		eventImpl.setId(id);
+		eventImpl.setCompanyId(companyId);
+		eventImpl.setGroupId(groupId);
 
 		if (title == null) {
-			regEventImpl.setTitle(StringPool.BLANK);
+			eventImpl.setTitle(StringPool.BLANK);
 		}
 		else {
-			regEventImpl.setTitle(title);
+			eventImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			regEventImpl.setDescription(StringPool.BLANK);
+			eventImpl.setDescription(StringPool.BLANK);
 		}
 		else {
-			regEventImpl.setDescription(description);
+			eventImpl.setDescription(description);
 		}
 
 		if (address == null) {
-			regEventImpl.setAddress(StringPool.BLANK);
+			eventImpl.setAddress(StringPool.BLANK);
 		}
 		else {
-			regEventImpl.setAddress(address);
+			eventImpl.setAddress(address);
 		}
 
 		if (location == null) {
-			regEventImpl.setLocation(StringPool.BLANK);
+			eventImpl.setLocation(StringPool.BLANK);
 		}
 		else {
-			regEventImpl.setLocation(location);
+			eventImpl.setLocation(location);
 		}
 
 		if (coordX == null) {
-			regEventImpl.setCoordX(StringPool.BLANK);
+			eventImpl.setCoordX(StringPool.BLANK);
 		}
 		else {
-			regEventImpl.setCoordX(coordX);
+			eventImpl.setCoordX(coordX);
 		}
 
 		if (coordY == null) {
-			regEventImpl.setCoordY(StringPool.BLANK);
+			eventImpl.setCoordY(StringPool.BLANK);
 		}
 		else {
-			regEventImpl.setCoordY(coordY);
+			eventImpl.setCoordY(coordY);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			regEventImpl.setCreateDate(null);
+			eventImpl.setCreateDate(null);
 		}
 		else {
-			regEventImpl.setCreateDate(new Date(createDate));
+			eventImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			regEventImpl.setModifiedDate(null);
+			eventImpl.setModifiedDate(null);
 		}
 		else {
-			regEventImpl.setModifiedDate(new Date(modifiedDate));
+			eventImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		regEventImpl.setRequiresApproval(requiresApproval);
-		regEventImpl.setStatus(status);
+		eventImpl.setRequiresApproval(requiresApproval);
+		eventImpl.setStatus(status);
+		eventImpl.setCreatedBy(createdBy);
 
-		regEventImpl.resetOriginalValues();
+		eventImpl.resetOriginalValues();
 
-		return regEventImpl;
+		return eventImpl;
 	}
 
 	@Override
@@ -157,6 +160,7 @@ public class RegEventCacheModel implements CacheModel<RegEvent>, Externalizable 
 		modifiedDate = objectInput.readLong();
 		requiresApproval = objectInput.readBoolean();
 		status = objectInput.readInt();
+		createdBy = objectInput.readLong();
 	}
 
 	@Override
@@ -212,6 +216,7 @@ public class RegEventCacheModel implements CacheModel<RegEvent>, Externalizable 
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeBoolean(requiresApproval);
 		objectOutput.writeInt(status);
+		objectOutput.writeLong(createdBy);
 	}
 
 	public long id;
@@ -227,4 +232,5 @@ public class RegEventCacheModel implements CacheModel<RegEvent>, Externalizable 
 	public long modifiedDate;
 	public boolean requiresApproval;
 	public int status;
+	public long createdBy;
 }

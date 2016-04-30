@@ -35,8 +35,8 @@ import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.service.AttendeeLocalService;
 import edu.uoc.eventreg.service.persistence.AttendeePersistence;
 import edu.uoc.eventreg.service.persistence.EventOptionPersistence;
+import edu.uoc.eventreg.service.persistence.EventPersistence;
 import edu.uoc.eventreg.service.persistence.ImagePersistence;
-import edu.uoc.eventreg.service.persistence.RegEventPersistence;
 
 import java.io.Serializable;
 
@@ -334,6 +334,62 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the event local service.
+	 *
+	 * @return the event local service
+	 */
+	public edu.uoc.eventreg.service.EventLocalService getEventLocalService() {
+		return eventLocalService;
+	}
+
+	/**
+	 * Sets the event local service.
+	 *
+	 * @param eventLocalService the event local service
+	 */
+	public void setEventLocalService(
+		edu.uoc.eventreg.service.EventLocalService eventLocalService) {
+		this.eventLocalService = eventLocalService;
+	}
+
+	/**
+	 * Returns the event remote service.
+	 *
+	 * @return the event remote service
+	 */
+	public edu.uoc.eventreg.service.EventService getEventService() {
+		return eventService;
+	}
+
+	/**
+	 * Sets the event remote service.
+	 *
+	 * @param eventService the event remote service
+	 */
+	public void setEventService(
+		edu.uoc.eventreg.service.EventService eventService) {
+		this.eventService = eventService;
+	}
+
+	/**
+	 * Returns the event persistence.
+	 *
+	 * @return the event persistence
+	 */
+	public EventPersistence getEventPersistence() {
+		return eventPersistence;
+	}
+
+	/**
+	 * Sets the event persistence.
+	 *
+	 * @param eventPersistence the event persistence
+	 */
+	public void setEventPersistence(EventPersistence eventPersistence) {
+		this.eventPersistence = eventPersistence;
+	}
+
+	/**
 	 * Returns the event option local service.
 	 *
 	 * @return the event option local service
@@ -444,62 +500,6 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setImagePersistence(ImagePersistence imagePersistence) {
 		this.imagePersistence = imagePersistence;
-	}
-
-	/**
-	 * Returns the reg event local service.
-	 *
-	 * @return the reg event local service
-	 */
-	public edu.uoc.eventreg.service.RegEventLocalService getRegEventLocalService() {
-		return regEventLocalService;
-	}
-
-	/**
-	 * Sets the reg event local service.
-	 *
-	 * @param regEventLocalService the reg event local service
-	 */
-	public void setRegEventLocalService(
-		edu.uoc.eventreg.service.RegEventLocalService regEventLocalService) {
-		this.regEventLocalService = regEventLocalService;
-	}
-
-	/**
-	 * Returns the reg event remote service.
-	 *
-	 * @return the reg event remote service
-	 */
-	public edu.uoc.eventreg.service.RegEventService getRegEventService() {
-		return regEventService;
-	}
-
-	/**
-	 * Sets the reg event remote service.
-	 *
-	 * @param regEventService the reg event remote service
-	 */
-	public void setRegEventService(
-		edu.uoc.eventreg.service.RegEventService regEventService) {
-		this.regEventService = regEventService;
-	}
-
-	/**
-	 * Returns the reg event persistence.
-	 *
-	 * @return the reg event persistence
-	 */
-	public RegEventPersistence getRegEventPersistence() {
-		return regEventPersistence;
-	}
-
-	/**
-	 * Sets the reg event persistence.
-	 *
-	 * @param regEventPersistence the reg event persistence
-	 */
-	public void setRegEventPersistence(RegEventPersistence regEventPersistence) {
-		this.regEventPersistence = regEventPersistence;
 	}
 
 	/**
@@ -684,6 +684,12 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected edu.uoc.eventreg.service.AttendeeService attendeeService;
 	@BeanReference(type = AttendeePersistence.class)
 	protected AttendeePersistence attendeePersistence;
+	@BeanReference(type = edu.uoc.eventreg.service.EventLocalService.class)
+	protected edu.uoc.eventreg.service.EventLocalService eventLocalService;
+	@BeanReference(type = edu.uoc.eventreg.service.EventService.class)
+	protected edu.uoc.eventreg.service.EventService eventService;
+	@BeanReference(type = EventPersistence.class)
+	protected EventPersistence eventPersistence;
 	@BeanReference(type = edu.uoc.eventreg.service.EventOptionLocalService.class)
 	protected edu.uoc.eventreg.service.EventOptionLocalService eventOptionLocalService;
 	@BeanReference(type = edu.uoc.eventreg.service.EventOptionService.class)
@@ -696,12 +702,6 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected edu.uoc.eventreg.service.ImageService imageService;
 	@BeanReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;
-	@BeanReference(type = edu.uoc.eventreg.service.RegEventLocalService.class)
-	protected edu.uoc.eventreg.service.RegEventLocalService regEventLocalService;
-	@BeanReference(type = edu.uoc.eventreg.service.RegEventService.class)
-	protected edu.uoc.eventreg.service.RegEventService regEventService;
-	@BeanReference(type = RegEventPersistence.class)
-	protected RegEventPersistence regEventPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

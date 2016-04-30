@@ -14,26 +14,26 @@
 
 package edu.uoc.eventreg.service.impl;
 
-import edu.uoc.eventreg.service.base.RegEventServiceBaseImpl;
+import edu.uoc.eventreg.service.base.EventServiceBaseImpl;
 
 /**
- * The implementation of the reg event remote service.
+ * The implementation of the event remote service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link edu.uoc.eventreg.service.RegEventService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link edu.uoc.eventreg.service.EventService} interface.
  *
  * <p>
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
  * @author Ana Mendoza
- * @see edu.uoc.eventreg.service.base.RegEventServiceBaseImpl
- * @see edu.uoc.eventreg.service.RegEventServiceUtil
+ * @see edu.uoc.eventreg.service.base.EventServiceBaseImpl
+ * @see edu.uoc.eventreg.service.EventServiceUtil
  */
-public class RegEventServiceImpl extends RegEventServiceBaseImpl {
+public class EventServiceImpl extends EventServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.RegEventServiceUtil} to access the reg event remote service.
+	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.EventServiceUtil} to access the event remote service.
 	 */
 }
