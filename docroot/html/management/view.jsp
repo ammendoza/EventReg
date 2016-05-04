@@ -1,19 +1,9 @@
-<%@ page import="edu.uoc.eventreg.model.Event" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Locale" %>
-<%@ page import="com.liferay.portal.util.PortalUtil" %>
-
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-<%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
+<%@ include file="init.jsp" %>
 <% 
 	List<Event> events = (List<Event>) request.getAttribute("events");
 	Locale locale = request.getLocale();
+	String defaultUsername = "";
 %>
-
-<portlet:defineObjects />
 
 <liferay-ui:search-container emptyResultsMessage="there-are-no-events">
 
@@ -47,6 +37,20 @@
 			<liferay-ui:search-container-column-text
 				name="title"
 				value="<%= event.getTitle(locale) %>"
+			/>
+			
+			<liferay-ui:search-container-column-text
+				name="created-by"
+				value="<%= PortalUtil.getUserName(event.getCreatedBy(), defaultUsername) %>"
+			/>
+			
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				value="<%= event.getCreateDate() %>"
+			/>
+			
+			<liferay-ui:search-container-column-jsp 
+				path="/html/management/event_action.jsp" 
 			/>
 			
 		</liferay-ui:search-container-row>

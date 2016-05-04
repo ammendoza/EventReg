@@ -13,10 +13,12 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -53,12 +55,12 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 	
 	public void addEventForm(ActionRequest request, ActionResponse response) {
 		
-		response.setRenderParameter("mvcPath",
-                "/html/management/add_event.jsp");
+		response.setRenderParameter("mvcPath", "/html/management/event_form.jsp");
 	}
 	
-	public void addEvent(ActionRequest request, ActionResponse response) {
+	public void saveEvent(ActionRequest request, ActionResponse response) {
 
+		long id = ParamUtil.getLong(request, "id");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(request, "title");
 		Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(request, "description");
 		Map<Locale, String> addressMap = LocalizationUtil.getLocalizationMap(request, "address");
@@ -70,7 +72,17 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		User user = (User) request.getAttribute(WebKeys.USER);
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		
-		Event event = new EventImpl();
+		Event event = null;
+		if (Validator.isNull(id)) {
+			event = new EventImpl();
+		} else {
+			try {
+				event = EventLocalServiceUtil.getEvent(id);
+			} catch (PortalException | SystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		event.setTitleMap(titleMap);
 		event.setDescriptionMap(descriptionMap);
 		event.setAddressMap(addressMap);
@@ -78,22 +90,53 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		event.setCoordX(coordX);
 		event.setCoordY(coordY);
 		event.setRequiresApproval(requiresApproval);
-		event.setCreateDate(createDate);
 		event.setModifiedDate(createDate);
-		event.setCreatedBy(user.getUserId());
-		event.setCompanyId(themeDisplay.getCompanyId());
-		event.setGroupId(themeDisplay.getLayout().getGroupId());
 		
 		try {
-			EventLocalServiceUtil.addEvent(event);
+			if (Validator.isNull(id)) {
+				event.setCompanyId(themeDisplay.getCompanyId());
+				event.setGroupId(themeDisplay.getLayout().getGroupId());
+				event.setCreatedBy(user.getUserId());
+				event.setCreateDate(createDate);
+				
+				EventLocalServiceUtil.addEvent(event);
+			} else {
+				event.persist();
+			}
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
 		}
 		
 		SessionMessages.add(request, "event-added-successfuly");
 		
+	}
+	
+	public void deleteEvent (ActionRequest request, ActionResponse response) {
+		
+		long eventId = ParamUtil.getLong(request, "id");
+		
+		try {
+			EventLocalServiceUtil.deleteEvent(eventId);
+			SessionMessages.add(request, "event-deleted-successfuly");
+		} catch (PortalException | SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void editEventForm (ActionRequest request, ActionResponse response) {
+		
+		long eventId = ParamUtil.getLong(request, "id");
+		try {
+			Event event = (Event) EventLocalServiceUtil.getEvent(eventId);
+			request.setAttribute("event", event);
+			response.setRenderParameter("mvcPath", "/html/management/event_form.jsp");
+		} catch (PortalException | SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
