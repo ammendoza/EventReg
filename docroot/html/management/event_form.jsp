@@ -57,7 +57,7 @@
 	<aui:field-wrapper label="description" required="true">
 		<liferay-ui:input-localized 
 			name="description" 
-			xml="<%= (event !=null)? event.getDescription() : StringPool.BLANK %>" 
+			xml="<%= (event != null)? event.getDescription() : StringPool.BLANK %>" 
 			type="editor" 
 		/>
 	</aui:field-wrapper>
@@ -68,6 +68,9 @@
 		value="<%= (event != null)? event.getRequiresApproval() : false %>"
 	/>
 	
-	<aui:button type="submit" value="send"></aui:button>
+	<c:if test="<%= event == null || event.getStatus() == WorkflowConstants.STATUS_DRAFT %>">
+		<aui:button type="submit" name="save" value="save-draft" ></aui:button>
+	</c:if>
+	<aui:button type="submit" name="save" value="publish"></aui:button>
 
 </aui:form>

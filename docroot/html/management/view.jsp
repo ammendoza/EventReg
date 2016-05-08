@@ -49,6 +49,11 @@
 				value="<%= event.getCreateDate() %>"
 			/>
 			
+			<liferay-ui:search-container-column-text
+				name="status"
+				value="<%= WorkflowConstants.getStatusLabel(event.getStatus()) %>"
+			/>
+						
 			<liferay-ui:search-container-column-jsp 
 				path="/html/management/event_action.jsp" 
 			/>

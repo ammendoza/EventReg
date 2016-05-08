@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -68,9 +69,12 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		String coordX = ParamUtil.getString(request, "coord-x");
 		String coordY = ParamUtil.getString(request, "coord-y");
 		boolean requiresApproval = ParamUtil.getBoolean(request, "requires-approval");
+		String saveStatus = ParamUtil.getString(request, "save");
 		Date createDate = new Date();
 		User user = (User) request.getAttribute(WebKeys.USER);
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		
 		
 		Event event = null;
 		if (Validator.isNull(id)) {
@@ -83,6 +87,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 				e.printStackTrace();
 			}
 		}
+		
 		event.setTitleMap(titleMap);
 		event.setDescriptionMap(descriptionMap);
 		event.setAddressMap(addressMap);
@@ -91,6 +96,12 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		event.setCoordY(coordY);
 		event.setRequiresApproval(requiresApproval);
 		event.setModifiedDate(createDate);
+		
+		if (saveStatus.equals("save-draft")) {
+			event.setStatus(WorkflowConstants.STATUS_DRAFT);
+		} else {
+			event.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
 		
 		try {
 			if (Validator.isNull(id)) {
