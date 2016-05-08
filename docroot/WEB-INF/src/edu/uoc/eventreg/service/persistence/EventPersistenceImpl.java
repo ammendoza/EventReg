@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,8 +32,10 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -82,6 +85,387 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
 			EventModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_SEARCH = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
+			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchBysearch",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName(), Integer.class.getName()
+			},
+			EventModelImpl.TITLE_COLUMN_BITMASK |
+			EventModelImpl.DESCRIPTION_COLUMN_BITMASK |
+			EventModelImpl.LOCATION_COLUMN_BITMASK |
+			EventModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_SEARCH = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
+			EventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBysearch",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName(), Integer.class.getName()
+			});
+
+	/**
+	 * Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or throws a {@link edu.uoc.eventreg.NoSuchEventException} if it could not be found.
+	 *
+	 * @param title the title
+	 * @param description the description
+	 * @param location the location
+	 * @param status the status
+	 * @return the matching event
+	 * @throws edu.uoc.eventreg.NoSuchEventException if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Event findBysearch(String title, String description,
+		String location, int status)
+		throws NoSuchEventException, SystemException {
+		Event event = fetchBysearch(title, description, location, status);
+
+		if (event == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("title=");
+			msg.append(title);
+
+			msg.append(", description=");
+			msg.append(description);
+
+			msg.append(", location=");
+			msg.append(location);
+
+			msg.append(", status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchEventException(msg.toString());
+		}
+
+		return event;
+	}
+
+	/**
+	 * Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param title the title
+	 * @param description the description
+	 * @param location the location
+	 * @param status the status
+	 * @return the matching event, or <code>null</code> if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Event fetchBysearch(String title, String description,
+		String location, int status) throws SystemException {
+		return fetchBysearch(title, description, location, status, true);
+	}
+
+	/**
+	 * Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param title the title
+	 * @param description the description
+	 * @param location the location
+	 * @param status the status
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching event, or <code>null</code> if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Event fetchBysearch(String title, String description,
+		String location, int status, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { title, description, location, status };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_SEARCH,
+					finderArgs, this);
+		}
+
+		if (result instanceof Event) {
+			Event event = (Event)result;
+
+			if (!Validator.equals(title, event.getTitle()) ||
+					!Validator.equals(description, event.getDescription()) ||
+					!Validator.equals(location, event.getLocation()) ||
+					(status != event.getStatus())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_EVENT_WHERE);
+
+			boolean bindTitle = false;
+
+			if (title == null) {
+				query.append(_FINDER_COLUMN_SEARCH_TITLE_1);
+			}
+			else if (title.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SEARCH_TITLE_3);
+			}
+			else {
+				bindTitle = true;
+
+				query.append(_FINDER_COLUMN_SEARCH_TITLE_2);
+			}
+
+			boolean bindDescription = false;
+
+			if (description == null) {
+				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_1);
+			}
+			else if (description.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_3);
+			}
+			else {
+				bindDescription = true;
+
+				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_2);
+			}
+
+			boolean bindLocation = false;
+
+			if (location == null) {
+				query.append(_FINDER_COLUMN_SEARCH_LOCATION_1);
+			}
+			else if (location.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SEARCH_LOCATION_3);
+			}
+			else {
+				bindLocation = true;
+
+				query.append(_FINDER_COLUMN_SEARCH_LOCATION_2);
+			}
+
+			query.append(_FINDER_COLUMN_SEARCH_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindTitle) {
+					qPos.add(title);
+				}
+
+				if (bindDescription) {
+					qPos.add(description);
+				}
+
+				if (bindLocation) {
+					qPos.add(location);
+				}
+
+				qPos.add(status);
+
+				List<Event> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"EventPersistenceImpl.fetchBysearch(String, String, String, int, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Event event = list.get(0);
+
+					result = event;
+
+					cacheResult(event);
+
+					if ((event.getTitle() == null) ||
+							!event.getTitle().equals(title) ||
+							(event.getDescription() == null) ||
+							!event.getDescription().equals(description) ||
+							(event.getLocation() == null) ||
+							!event.getLocation().equals(location) ||
+							(event.getStatus() != status)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH,
+							finderArgs, event);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SEARCH,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Event)result;
+		}
+	}
+
+	/**
+	 * Removes the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; from the database.
+	 *
+	 * @param title the title
+	 * @param description the description
+	 * @param location the location
+	 * @param status the status
+	 * @return the event that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Event removeBysearch(String title, String description,
+		String location, int status)
+		throws NoSuchEventException, SystemException {
+		Event event = findBysearch(title, description, location, status);
+
+		return remove(event);
+	}
+
+	/**
+	 * Returns the number of events where title = &#63; and description = &#63; and location = &#63; and status = &#63;.
+	 *
+	 * @param title the title
+	 * @param description the description
+	 * @param location the location
+	 * @param status the status
+	 * @return the number of matching events
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countBysearch(String title, String description, String location,
+		int status) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_SEARCH;
+
+		Object[] finderArgs = new Object[] { title, description, location, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_EVENT_WHERE);
+
+			boolean bindTitle = false;
+
+			if (title == null) {
+				query.append(_FINDER_COLUMN_SEARCH_TITLE_1);
+			}
+			else if (title.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SEARCH_TITLE_3);
+			}
+			else {
+				bindTitle = true;
+
+				query.append(_FINDER_COLUMN_SEARCH_TITLE_2);
+			}
+
+			boolean bindDescription = false;
+
+			if (description == null) {
+				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_1);
+			}
+			else if (description.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_3);
+			}
+			else {
+				bindDescription = true;
+
+				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_2);
+			}
+
+			boolean bindLocation = false;
+
+			if (location == null) {
+				query.append(_FINDER_COLUMN_SEARCH_LOCATION_1);
+			}
+			else if (location.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SEARCH_LOCATION_3);
+			}
+			else {
+				bindLocation = true;
+
+				query.append(_FINDER_COLUMN_SEARCH_LOCATION_2);
+			}
+
+			query.append(_FINDER_COLUMN_SEARCH_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindTitle) {
+					qPos.add(title);
+				}
+
+				if (bindDescription) {
+					qPos.add(description);
+				}
+
+				if (bindLocation) {
+					qPos.add(location);
+				}
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_SEARCH_TITLE_1 = "event.title IS NULL AND ";
+	private static final String _FINDER_COLUMN_SEARCH_TITLE_2 = "event.title = ? AND ";
+	private static final String _FINDER_COLUMN_SEARCH_TITLE_3 = "(event.title IS NULL OR event.title = '') AND ";
+	private static final String _FINDER_COLUMN_SEARCH_DESCRIPTION_1 = "event.description IS NULL AND ";
+	private static final String _FINDER_COLUMN_SEARCH_DESCRIPTION_2 = "event.description = ? AND ";
+	private static final String _FINDER_COLUMN_SEARCH_DESCRIPTION_3 = "(event.description IS NULL OR event.description = '') AND ";
+	private static final String _FINDER_COLUMN_SEARCH_LOCATION_1 = "event.location IS NULL AND ";
+	private static final String _FINDER_COLUMN_SEARCH_LOCATION_2 = "event.location = ? AND ";
+	private static final String _FINDER_COLUMN_SEARCH_LOCATION_3 = "(event.location IS NULL OR event.location = '') AND ";
+	private static final String _FINDER_COLUMN_SEARCH_STATUS_2 = "event.status = ?";
 
 	public EventPersistenceImpl() {
 		setModelClass(Event.class);
@@ -96,6 +480,12 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	public void cacheResult(Event event) {
 		EntityCacheUtil.putResult(EventModelImpl.ENTITY_CACHE_ENABLED,
 			EventImpl.class, event.getPrimaryKey(), event);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH,
+			new Object[] {
+				event.getTitle(), event.getDescription(), event.getLocation(),
+				event.getStatus()
+			}, event);
 
 		event.resetOriginalValues();
 	}
@@ -152,6 +542,8 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(event);
 	}
 
 	@Override
@@ -162,6 +554,62 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		for (Event event : events) {
 			EntityCacheUtil.removeResult(EventModelImpl.ENTITY_CACHE_ENABLED,
 				EventImpl.class, event.getPrimaryKey());
+
+			clearUniqueFindersCache(event);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(Event event) {
+		if (event.isNew()) {
+			Object[] args = new Object[] {
+					event.getTitle(), event.getDescription(),
+					event.getLocation(), event.getStatus()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SEARCH, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH, args, event);
+		}
+		else {
+			EventModelImpl eventModelImpl = (EventModelImpl)event;
+
+			if ((eventModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_SEARCH.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						event.getTitle(), event.getDescription(),
+						event.getLocation(), event.getStatus()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SEARCH, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH, args,
+					event);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(Event event) {
+		EventModelImpl eventModelImpl = (EventModelImpl)event;
+
+		Object[] args = new Object[] {
+				event.getTitle(), event.getDescription(), event.getLocation(),
+				event.getStatus()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SEARCH, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SEARCH, args);
+
+		if ((eventModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_SEARCH.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					eventModelImpl.getOriginalTitle(),
+					eventModelImpl.getOriginalDescription(),
+					eventModelImpl.getOriginalLocation(),
+					eventModelImpl.getOriginalStatus()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SEARCH, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SEARCH, args);
 		}
 	}
 
@@ -296,12 +744,15 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !EventModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		EntityCacheUtil.putResult(EventModelImpl.ENTITY_CACHE_ENABLED,
 			EventImpl.class, event.getPrimaryKey(), event);
+
+		clearUniqueFindersCache(event);
+		cacheUniqueFindersCache(event);
 
 		return event;
 	}
@@ -642,9 +1093,12 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	private static final String _SQL_SELECT_EVENT = "SELECT event FROM Event event";
+	private static final String _SQL_SELECT_EVENT_WHERE = "SELECT event FROM Event event WHERE ";
 	private static final String _SQL_COUNT_EVENT = "SELECT COUNT(event) FROM Event event";
+	private static final String _SQL_COUNT_EVENT_WHERE = "SELECT COUNT(event) FROM Event event WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "event.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Event exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Event exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(EventPersistenceImpl.class);

@@ -5,7 +5,7 @@
 	String defaultUsername = "";
 %>
 
-<liferay-ui:search-container emptyResultsMessage="there-are-no-events">
+<liferay-ui:search-container emptyResultsMessage="there-are-no-events" displayTerms="<%= new EventDisplayTerms(renderRequest) %>">
 
 	<aui:nav-bar>
 		<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
@@ -21,12 +21,17 @@
 			<aui:nav-item href="<%= addEventFormURL %>" iconCssClass="icon-plus" label="add-event" />
 		</aui:nav>
 	
-		<!-- <aui:nav-bar-search cssClass="pull-right" file="/html/portlet/journal/article_search.jsp" /> -->
+		<aui:nav-bar-search cssClass="pull-right">
+			<liferay-ui:search-form
+					page="/html/management/event_search.jsp"
+					servletContext="<%= application %>"
+					/>
+		</aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<liferay-ui:search-container-results
 		results="<%= events %>"
-		total="<%= events.size() %>" 
+		total="<%= events.size() %>"
 	/>
 		
 		<liferay-ui:search-container-row

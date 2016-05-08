@@ -28,6 +28,14 @@
 		<order by="desc">
 			<order-column name="createDate" />
 		</order>
+		
+		<!-- Finders -->
+		<finder name="search" return-type="Event">
+			<finder-column name="title" />
+			<finder-column name="description" />
+			<finder-column name="location" />
+			<finder-column name="status" />
+		</finder>
 
 	</entity>
 	

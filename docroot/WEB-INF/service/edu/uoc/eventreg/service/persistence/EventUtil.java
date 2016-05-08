@@ -109,6 +109,100 @@ public class EventUtil {
 	}
 
 	/**
+	* Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or throws a {@link edu.uoc.eventreg.NoSuchEventException} if it could not be found.
+	*
+	* @param title the title
+	* @param description the description
+	* @param location the location
+	* @param status the status
+	* @return the matching event
+	* @throws edu.uoc.eventreg.NoSuchEventException if a matching event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.Event findBysearch(
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, int status)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchEventException {
+		return getPersistence()
+				   .findBysearch(title, description, location, status);
+	}
+
+	/**
+	* Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param title the title
+	* @param description the description
+	* @param location the location
+	* @param status the status
+	* @return the matching event, or <code>null</code> if a matching event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.Event fetchBysearch(
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchBysearch(title, description, location, status);
+	}
+
+	/**
+	* Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param title the title
+	* @param description the description
+	* @param location the location
+	* @param status the status
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching event, or <code>null</code> if a matching event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.Event fetchBysearch(
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, int status, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchBysearch(title, description, location, status,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; from the database.
+	*
+	* @param title the title
+	* @param description the description
+	* @param location the location
+	* @param status the status
+	* @return the event that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.Event removeBysearch(
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, int status)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchEventException {
+		return getPersistence()
+				   .removeBysearch(title, description, location, status);
+	}
+
+	/**
+	* Returns the number of events where title = &#63; and description = &#63; and location = &#63; and status = &#63;.
+	*
+	* @param title the title
+	* @param description the description
+	* @param location the location
+	* @param status the status
+	* @return the number of matching events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countBysearch(java.lang.String title,
+		java.lang.String description, java.lang.String location, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countBysearch(title, description, location, status);
+	}
+
+	/**
 	* Caches the event in the entity cache if it is enabled.
 	*
 	* @param event the event

@@ -1,0 +1,1 @@
+create index IX_52A4956E on EVENTREG_Event (title, description, location, status);
