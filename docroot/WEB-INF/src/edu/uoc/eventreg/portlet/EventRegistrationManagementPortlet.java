@@ -34,24 +34,14 @@ import edu.uoc.eventreg.service.EventLocalServiceUtil;
  */
 public class EventRegistrationManagementPortlet extends MVCPortlet {
  
-	public void doView (RenderRequest request, RenderResponse response) {
+	public void doView (RenderRequest request, RenderResponse response) throws IOException, PortletException {
 		
-		List<Event> events = null;
-		try {
-			events = EventLocalServiceUtil.getEvents(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		} catch (SystemException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		
-		request.setAttribute("events", events);
+		request.setAttribute("companyId", themeDisplay.getCompanyId());
+		request.setAttribute("groupId", themeDisplay.getLayout().getGroupId());
 		
-		try {
-			super.doView(request, response);
-		} catch (IOException | PortletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		super.doView(request, response);
 	}
 	
 	public void addEventForm(ActionRequest request, ActionResponse response) {

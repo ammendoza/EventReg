@@ -271,6 +271,28 @@ public class EventLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
+		long companyId, long groupId) {
+		return getService().findGroupEvents(companyId, groupId);
+	}
+
+	public static java.util.List<edu.uoc.eventreg.model.Event> searchEvents(
+		long companyId, long groupId, java.lang.String title,
+		java.lang.String description, java.lang.String location, int status,
+		boolean andSearch, int start, int end) {
+		return getService()
+				   .searchEvents(companyId, groupId, title, description,
+			location, status, andSearch, start, end);
+	}
+
+	public static int searchEventsCount(long companyId, long groupId,
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, int status, boolean andSearch) {
+		return getService()
+				   .searchEventsCount(companyId, groupId, title, description,
+			location, status, andSearch);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

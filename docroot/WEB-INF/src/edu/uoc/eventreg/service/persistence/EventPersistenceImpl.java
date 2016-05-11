@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -85,170 +84,141 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
 			EventModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_FETCH_BY_SEARCH = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPEVENTS =
+		new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
 			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchBysearch",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupEvents",
 			new String[] {
-				String.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			EventModelImpl.TITLE_COLUMN_BITMASK |
-			EventModelImpl.DESCRIPTION_COLUMN_BITMASK |
-			EventModelImpl.LOCATION_COLUMN_BITMASK |
-			EventModelImpl.STATUS_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_SEARCH = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBysearch",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName()
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPEVENTS =
+		new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
+			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupEvents",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			EventModelImpl.COMPANYID_COLUMN_BITMASK |
+			EventModelImpl.GROUPID_COLUMN_BITMASK |
+			EventModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPEVENTS = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
+			EventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupEvents",
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or throws a {@link edu.uoc.eventreg.NoSuchEventException} if it could not be found.
+	 * Returns all the events where companyId = &#63; and groupId = &#63;.
 	 *
-	 * @param title the title
-	 * @param description the description
-	 * @param location the location
-	 * @param status the status
-	 * @return the matching event
-	 * @throws edu.uoc.eventreg.NoSuchEventException if a matching event could not be found
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @return the matching events
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event findBysearch(String title, String description,
-		String location, int status)
-		throws NoSuchEventException, SystemException {
-		Event event = fetchBysearch(title, description, location, status);
-
-		if (event == null) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("title=");
-			msg.append(title);
-
-			msg.append(", description=");
-			msg.append(description);
-
-			msg.append(", location=");
-			msg.append(location);
-
-			msg.append(", status=");
-			msg.append(status);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchEventException(msg.toString());
-		}
-
-		return event;
-	}
-
-	/**
-	 * Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param title the title
-	 * @param description the description
-	 * @param location the location
-	 * @param status the status
-	 * @return the matching event, or <code>null</code> if a matching event could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Event fetchBysearch(String title, String description,
-		String location, int status) throws SystemException {
-		return fetchBysearch(title, description, location, status, true);
-	}
-
-	/**
-	 * Returns the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param title the title
-	 * @param description the description
-	 * @param location the location
-	 * @param status the status
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching event, or <code>null</code> if a matching event could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Event fetchBysearch(String title, String description,
-		String location, int status, boolean retrieveFromCache)
+	public List<Event> findByGroupEvents(long companyId, long groupId)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { title, description, location, status };
+		return findByGroupEvents(companyId, groupId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
 
-		Object result = null;
+	/**
+	 * Returns a range of all the events where companyId = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link edu.uoc.eventreg.model.impl.EventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of events
+	 * @param end the upper bound of the range of events (not inclusive)
+	 * @return the range of matching events
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Event> findByGroupEvents(long companyId, long groupId,
+		int start, int end) throws SystemException {
+		return findByGroupEvents(companyId, groupId, start, end, null);
+	}
 
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_SEARCH,
-					finderArgs, this);
+	/**
+	 * Returns an ordered range of all the events where companyId = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link edu.uoc.eventreg.model.impl.EventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of events
+	 * @param end the upper bound of the range of events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching events
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Event> findByGroupEvents(long companyId, long groupId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPEVENTS;
+			finderArgs = new Object[] { companyId, groupId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPEVENTS;
+			finderArgs = new Object[] {
+					companyId, groupId,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		if (result instanceof Event) {
-			Event event = (Event)result;
+		List<Event> list = (List<Event>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
 
-			if (!Validator.equals(title, event.getTitle()) ||
-					!Validator.equals(description, event.getDescription()) ||
-					!Validator.equals(location, event.getLocation()) ||
-					(status != event.getStatus())) {
-				result = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (Event event : list) {
+				if ((companyId != event.getCompanyId()) ||
+						(groupId != event.getGroupId())) {
+					list = null;
+
+					break;
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(6);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
 
 			query.append(_SQL_SELECT_EVENT_WHERE);
 
-			boolean bindTitle = false;
+			query.append(_FINDER_COLUMN_GROUPEVENTS_COMPANYID_2);
 
-			if (title == null) {
-				query.append(_FINDER_COLUMN_SEARCH_TITLE_1);
-			}
-			else if (title.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SEARCH_TITLE_3);
-			}
-			else {
-				bindTitle = true;
+			query.append(_FINDER_COLUMN_GROUPEVENTS_GROUPID_2);
 
-				query.append(_FINDER_COLUMN_SEARCH_TITLE_2);
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-
-			boolean bindDescription = false;
-
-			if (description == null) {
-				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_1);
+			else
+			 if (pagination) {
+				query.append(EventModelImpl.ORDER_BY_JPQL);
 			}
-			else if (description.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_3);
-			}
-			else {
-				bindDescription = true;
-
-				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_2);
-			}
-
-			boolean bindLocation = false;
-
-			if (location == null) {
-				query.append(_FINDER_COLUMN_SEARCH_LOCATION_1);
-			}
-			else if (location.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SEARCH_LOCATION_3);
-			}
-			else {
-				bindLocation = true;
-
-				query.append(_FINDER_COLUMN_SEARCH_LOCATION_2);
-			}
-
-			query.append(_FINDER_COLUMN_SEARCH_STATUS_2);
 
 			String sql = query.toString();
 
@@ -261,55 +231,29 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindTitle) {
-					qPos.add(title);
-				}
+				qPos.add(companyId);
 
-				if (bindDescription) {
-					qPos.add(description);
-				}
+				qPos.add(groupId);
 
-				if (bindLocation) {
-					qPos.add(location);
-				}
+				if (!pagination) {
+					list = (List<Event>)QueryUtil.list(q, getDialect(), start,
+							end, false);
 
-				qPos.add(status);
+					Collections.sort(list);
 
-				List<Event> list = q.list();
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH,
-						finderArgs, list);
+					list = new UnmodifiableList<Event>(list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"EventPersistenceImpl.fetchBysearch(String, String, String, int, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
-					Event event = list.get(0);
-
-					result = event;
-
-					cacheResult(event);
-
-					if ((event.getTitle() == null) ||
-							!event.getTitle().equals(title) ||
-							(event.getDescription() == null) ||
-							!event.getDescription().equals(description) ||
-							(event.getLocation() == null) ||
-							!event.getLocation().equals(location) ||
-							(event.getStatus() != status)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH,
-							finderArgs, event);
-					}
+					list = (List<Event>)QueryUtil.list(q, getDialect(), start,
+							end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SEARCH,
-					finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -318,101 +262,324 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Event)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the event where title = &#63; and description = &#63; and location = &#63; and status = &#63; from the database.
+	 * Returns the first event in the ordered set where companyId = &#63; and groupId = &#63;.
 	 *
-	 * @param title the title
-	 * @param description the description
-	 * @param location the location
-	 * @param status the status
-	 * @return the event that was removed
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event
+	 * @throws edu.uoc.eventreg.NoSuchEventException if a matching event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event removeBysearch(String title, String description,
-		String location, int status)
+	public Event findByGroupEvents_First(long companyId, long groupId,
+		OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
-		Event event = findBysearch(title, description, location, status);
+		Event event = fetchByGroupEvents_First(companyId, groupId,
+				orderByComparator);
 
-		return remove(event);
+		if (event != null) {
+			return event;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
 	}
 
 	/**
-	 * Returns the number of events where title = &#63; and description = &#63; and location = &#63; and status = &#63;.
+	 * Returns the first event in the ordered set where companyId = &#63; and groupId = &#63;.
 	 *
-	 * @param title the title
-	 * @param description the description
-	 * @param location the location
-	 * @param status the status
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event, or <code>null</code> if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Event fetchByGroupEvents_First(long companyId, long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Event> list = findByGroupEvents(companyId, groupId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last event in the ordered set where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event
+	 * @throws edu.uoc.eventreg.NoSuchEventException if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Event findByGroupEvents_Last(long companyId, long groupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEventException, SystemException {
+		Event event = fetchByGroupEvents_Last(companyId, groupId,
+				orderByComparator);
+
+		if (event != null) {
+			return event;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last event in the ordered set where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event, or <code>null</code> if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Event fetchByGroupEvents_Last(long companyId, long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByGroupEvents(companyId, groupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Event> list = findByGroupEvents(companyId, groupId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the events before and after the current event in the ordered set where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param id the primary key of the current event
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next event
+	 * @throws edu.uoc.eventreg.NoSuchEventException if a event with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Event[] findByGroupEvents_PrevAndNext(long id, long companyId,
+		long groupId, OrderByComparator orderByComparator)
+		throws NoSuchEventException, SystemException {
+		Event event = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Event[] array = new EventImpl[3];
+
+			array[0] = getByGroupEvents_PrevAndNext(session, event, companyId,
+					groupId, orderByComparator, true);
+
+			array[1] = event;
+
+			array[2] = getByGroupEvents_PrevAndNext(session, event, companyId,
+					groupId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Event getByGroupEvents_PrevAndNext(Session session, Event event,
+		long companyId, long groupId, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_EVENT_WHERE);
+
+		query.append(_FINDER_COLUMN_GROUPEVENTS_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_GROUPEVENTS_GROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(EventModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(groupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(event);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Event> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the events where companyId = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByGroupEvents(long companyId, long groupId)
+		throws SystemException {
+		for (Event event : findByGroupEvents(companyId, groupId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(event);
+		}
+	}
+
+	/**
+	 * Returns the number of events where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @return the number of matching events
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countBysearch(String title, String description, String location,
-		int status) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_SEARCH;
+	public int countByGroupEvents(long companyId, long groupId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPEVENTS;
 
-		Object[] finderArgs = new Object[] { title, description, location, status };
+		Object[] finderArgs = new Object[] { companyId, groupId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_EVENT_WHERE);
 
-			boolean bindTitle = false;
+			query.append(_FINDER_COLUMN_GROUPEVENTS_COMPANYID_2);
 
-			if (title == null) {
-				query.append(_FINDER_COLUMN_SEARCH_TITLE_1);
-			}
-			else if (title.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SEARCH_TITLE_3);
-			}
-			else {
-				bindTitle = true;
-
-				query.append(_FINDER_COLUMN_SEARCH_TITLE_2);
-			}
-
-			boolean bindDescription = false;
-
-			if (description == null) {
-				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_1);
-			}
-			else if (description.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_3);
-			}
-			else {
-				bindDescription = true;
-
-				query.append(_FINDER_COLUMN_SEARCH_DESCRIPTION_2);
-			}
-
-			boolean bindLocation = false;
-
-			if (location == null) {
-				query.append(_FINDER_COLUMN_SEARCH_LOCATION_1);
-			}
-			else if (location.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SEARCH_LOCATION_3);
-			}
-			else {
-				bindLocation = true;
-
-				query.append(_FINDER_COLUMN_SEARCH_LOCATION_2);
-			}
-
-			query.append(_FINDER_COLUMN_SEARCH_STATUS_2);
+			query.append(_FINDER_COLUMN_GROUPEVENTS_GROUPID_2);
 
 			String sql = query.toString();
 
@@ -425,19 +592,9 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindTitle) {
-					qPos.add(title);
-				}
+				qPos.add(companyId);
 
-				if (bindDescription) {
-					qPos.add(description);
-				}
-
-				if (bindLocation) {
-					qPos.add(location);
-				}
-
-				qPos.add(status);
+				qPos.add(groupId);
 
 				count = (Long)q.uniqueResult();
 
@@ -456,16 +613,8 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SEARCH_TITLE_1 = "event.title IS NULL AND ";
-	private static final String _FINDER_COLUMN_SEARCH_TITLE_2 = "event.title = ? AND ";
-	private static final String _FINDER_COLUMN_SEARCH_TITLE_3 = "(event.title IS NULL OR event.title = '') AND ";
-	private static final String _FINDER_COLUMN_SEARCH_DESCRIPTION_1 = "event.description IS NULL AND ";
-	private static final String _FINDER_COLUMN_SEARCH_DESCRIPTION_2 = "event.description = ? AND ";
-	private static final String _FINDER_COLUMN_SEARCH_DESCRIPTION_3 = "(event.description IS NULL OR event.description = '') AND ";
-	private static final String _FINDER_COLUMN_SEARCH_LOCATION_1 = "event.location IS NULL AND ";
-	private static final String _FINDER_COLUMN_SEARCH_LOCATION_2 = "event.location = ? AND ";
-	private static final String _FINDER_COLUMN_SEARCH_LOCATION_3 = "(event.location IS NULL OR event.location = '') AND ";
-	private static final String _FINDER_COLUMN_SEARCH_STATUS_2 = "event.status = ?";
+	private static final String _FINDER_COLUMN_GROUPEVENTS_COMPANYID_2 = "event.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_GROUPEVENTS_GROUPID_2 = "event.groupId = ?";
 
 	public EventPersistenceImpl() {
 		setModelClass(Event.class);
@@ -480,12 +629,6 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	public void cacheResult(Event event) {
 		EntityCacheUtil.putResult(EventModelImpl.ENTITY_CACHE_ENABLED,
 			EventImpl.class, event.getPrimaryKey(), event);
-
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH,
-			new Object[] {
-				event.getTitle(), event.getDescription(), event.getLocation(),
-				event.getStatus()
-			}, event);
 
 		event.resetOriginalValues();
 	}
@@ -542,8 +685,6 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(event);
 	}
 
 	@Override
@@ -554,62 +695,6 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		for (Event event : events) {
 			EntityCacheUtil.removeResult(EventModelImpl.ENTITY_CACHE_ENABLED,
 				EventImpl.class, event.getPrimaryKey());
-
-			clearUniqueFindersCache(event);
-		}
-	}
-
-	protected void cacheUniqueFindersCache(Event event) {
-		if (event.isNew()) {
-			Object[] args = new Object[] {
-					event.getTitle(), event.getDescription(),
-					event.getLocation(), event.getStatus()
-				};
-
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SEARCH, args,
-				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH, args, event);
-		}
-		else {
-			EventModelImpl eventModelImpl = (EventModelImpl)event;
-
-			if ((eventModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_SEARCH.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						event.getTitle(), event.getDescription(),
-						event.getLocation(), event.getStatus()
-					};
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SEARCH, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SEARCH, args,
-					event);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(Event event) {
-		EventModelImpl eventModelImpl = (EventModelImpl)event;
-
-		Object[] args = new Object[] {
-				event.getTitle(), event.getDescription(), event.getLocation(),
-				event.getStatus()
-			};
-
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SEARCH, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SEARCH, args);
-
-		if ((eventModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_SEARCH.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					eventModelImpl.getOriginalTitle(),
-					eventModelImpl.getOriginalDescription(),
-					eventModelImpl.getOriginalLocation(),
-					eventModelImpl.getOriginalStatus()
-				};
-
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SEARCH, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SEARCH, args);
 		}
 	}
 
@@ -721,6 +806,8 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 		boolean isNew = event.isNew();
 
+		EventModelImpl eventModelImpl = (EventModelImpl)event;
+
 		Session session = null;
 
 		try {
@@ -748,11 +835,33 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
+		else {
+			if ((eventModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPEVENTS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						eventModelImpl.getOriginalCompanyId(),
+						eventModelImpl.getOriginalGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPEVENTS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPEVENTS,
+					args);
+
+				args = new Object[] {
+						eventModelImpl.getCompanyId(),
+						eventModelImpl.getGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPEVENTS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPEVENTS,
+					args);
+			}
+		}
+
 		EntityCacheUtil.putResult(EventModelImpl.ENTITY_CACHE_ENABLED,
 			EventImpl.class, event.getPrimaryKey(), event);
-
-		clearUniqueFindersCache(event);
-		cacheUniqueFindersCache(event);
 
 		return event;
 	}

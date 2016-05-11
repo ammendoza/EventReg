@@ -14,6 +14,9 @@
 
 package edu.uoc.eventreg.service.impl;
 
+import java.util.List;
+
+import edu.uoc.eventreg.model.Event;
 import edu.uoc.eventreg.service.base.EventServiceBaseImpl;
 
 /**
@@ -36,4 +39,6 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.EventServiceUtil} to access the event remote service.
 	 */
+	
+
 }

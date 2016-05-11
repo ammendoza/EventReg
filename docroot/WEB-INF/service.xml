@@ -30,13 +30,10 @@
 		</order>
 		
 		<!-- Finders -->
-		<finder name="search" return-type="Event">
-			<finder-column name="title" />
-			<finder-column name="description" />
-			<finder-column name="location" />
-			<finder-column name="status" />
+		<finder name="GroupEvents" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
 		</finder>
-
 	</entity>
 	
 	<entity name="EventOption" local-service="true" remote-service="true">

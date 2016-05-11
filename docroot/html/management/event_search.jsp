@@ -6,9 +6,9 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 EventDisplayTerms displayTerms = (EventDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<liferay-portlet:renderURL var="portletURL" />
+<liferay-portlet:renderURL var="searchFormURL" />
 
-<aui:form action="<%= portletURL %>" method="post" name="search">
+<aui:form action="<%= searchFormURL %>" method="post" name="searchForm">
 	<liferay-ui:search-toggle
 		buttonLabel="search"
 		displayTerms="<%= displayTerms %>"
@@ -22,23 +22,9 @@ EventDisplayTerms displayTerms = (EventDisplayTerms)searchContainer.getDisplayTe
 			<aui:input name="<%= displayTerms.LOCATION %>" size="20" type="text" value="<%= displayTerms.getLocation() %>" />
 
 			<aui:select name="<%= displayTerms.STATUS %>">
-				<aui:option value=""></aui:option>
-
+				<aui:option value="0" label="all" />
 			</aui:select>
 
 		</aui:fieldset>
 	</liferay-ui:search-toggle>
 </aui:form>
-
-<aui:script use="aui-node-base,liferay-form">
-	var form = Liferay.Form.get('<portlet:namespace />search');
-
-	if (form) {
-		form.set(
-			'onSubmit',
-			function(event) {
-				event.preventDefault();
-			}
-		);
-	}
-</aui:script>

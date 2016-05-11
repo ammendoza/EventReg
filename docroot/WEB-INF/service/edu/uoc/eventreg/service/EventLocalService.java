@@ -248,4 +248,18 @@ public interface EventLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
+		long companyId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<edu.uoc.eventreg.model.Event> searchEvents(
+		long companyId, long groupId, java.lang.String title,
+		java.lang.String description, java.lang.String location, int status,
+		boolean andSearch, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchEventsCount(long companyId, long groupId,
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, int status, boolean andSearch);
 }

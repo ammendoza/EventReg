@@ -279,6 +279,29 @@ public class EventLocalServiceWrapper implements EventLocalService,
 		return _eventLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
+		long companyId, long groupId) {
+		return _eventLocalService.findGroupEvents(companyId, groupId);
+	}
+
+	@Override
+	public java.util.List<edu.uoc.eventreg.model.Event> searchEvents(
+		long companyId, long groupId, java.lang.String title,
+		java.lang.String description, java.lang.String location, int status,
+		boolean andSearch, int start, int end) {
+		return _eventLocalService.searchEvents(companyId, groupId, title,
+			description, location, status, andSearch, start, end);
+	}
+
+	@Override
+	public int searchEventsCount(long companyId, long groupId,
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, int status, boolean andSearch) {
+		return _eventLocalService.searchEventsCount(companyId, groupId, title,
+			description, location, status, andSearch);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

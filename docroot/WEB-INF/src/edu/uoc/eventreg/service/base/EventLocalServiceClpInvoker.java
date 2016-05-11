@@ -107,6 +107,24 @@ public class EventLocalServiceClpInvoker {
 		_methodName53 = "setBeanIdentifier";
 
 		_methodParameterTypes53 = new String[] { "java.lang.String" };
+
+		_methodName58 = "findGroupEvents";
+
+		_methodParameterTypes58 = new String[] { "long", "long" };
+
+		_methodName59 = "searchEvents";
+
+		_methodParameterTypes59 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int", "boolean", "int", "int"
+			};
+
+		_methodName60 = "searchEventsCount";
+
+		_methodParameterTypes60 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int", "boolean"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -210,6 +228,34 @@ public class EventLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName58.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+			return EventLocalServiceUtil.findGroupEvents(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName59.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+			return EventLocalServiceUtil.searchEvents(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(java.lang.String)arguments[4],
+				((Integer)arguments[5]).intValue(),
+				((Boolean)arguments[6]).booleanValue(),
+				((Integer)arguments[7]).intValue(),
+				((Integer)arguments[8]).intValue());
+		}
+
+		if (_methodName60.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+			return EventLocalServiceUtil.searchEventsCount(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(java.lang.String)arguments[4],
+				((Integer)arguments[5]).intValue(),
+				((Boolean)arguments[6]).booleanValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -249,4 +295,10 @@ public class EventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes52;
 	private String _methodName53;
 	private String[] _methodParameterTypes53;
+	private String _methodName58;
+	private String[] _methodParameterTypes58;
+	private String _methodName59;
+	private String[] _methodParameterTypes59;
+	private String _methodName60;
+	private String[] _methodParameterTypes60;
 }

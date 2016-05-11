@@ -102,11 +102,9 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.edu.uoc.eventreg.model.Event"),
 			true);
-	public static long DESCRIPTION_COLUMN_BITMASK = 1L;
-	public static long LOCATION_COLUMN_BITMASK = 2L;
-	public static long STATUS_COLUMN_BITMASK = 4L;
-	public static long TITLE_COLUMN_BITMASK = 8L;
-	public static long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long CREATEDATE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -323,7 +321,19 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -334,7 +344,19 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -393,12 +415,6 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public void setTitle(String title) {
-		_columnBitmask |= TITLE_COLUMN_BITMASK;
-
-		if (_originalTitle == null) {
-			_originalTitle = _title;
-		}
-
 		_title = title;
 	}
 
@@ -440,10 +456,6 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	public String getOriginalTitle() {
-		return GetterUtil.getString(_originalTitle);
 	}
 
 	@JSON
@@ -502,12 +514,6 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public void setDescription(String description) {
-		_columnBitmask |= DESCRIPTION_COLUMN_BITMASK;
-
-		if (_originalDescription == null) {
-			_originalDescription = _description;
-		}
-
 		_description = description;
 	}
 
@@ -553,10 +559,6 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
 				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	public String getOriginalDescription() {
-		return GetterUtil.getString(_originalDescription);
 	}
 
 	@JSON
@@ -715,12 +717,6 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public void setLocation(String location) {
-		_columnBitmask |= LOCATION_COLUMN_BITMASK;
-
-		if (_originalLocation == null) {
-			_originalLocation = _location;
-		}
-
 		_location = location;
 	}
 
@@ -764,10 +760,6 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		setLocation(LocalizationUtil.updateLocalization(locationMap,
 				getLocation(), "Location",
 				LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	public String getOriginalLocation() {
-		return GetterUtil.getString(_originalLocation);
 	}
 
 	@JSON
@@ -850,19 +842,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
-		}
-
 		_status = status;
-	}
-
-	public int getOriginalStatus() {
-		return _originalStatus;
 	}
 
 	@JSON
@@ -1088,15 +1068,13 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	public void resetOriginalValues() {
 		EventModelImpl eventModelImpl = this;
 
-		eventModelImpl._originalTitle = eventModelImpl._title;
+		eventModelImpl._originalCompanyId = eventModelImpl._companyId;
 
-		eventModelImpl._originalDescription = eventModelImpl._description;
+		eventModelImpl._setOriginalCompanyId = false;
 
-		eventModelImpl._originalLocation = eventModelImpl._location;
+		eventModelImpl._originalGroupId = eventModelImpl._groupId;
 
-		eventModelImpl._originalStatus = eventModelImpl._status;
-
-		eventModelImpl._setOriginalStatus = false;
+		eventModelImpl._setOriginalGroupId = false;
 
 		eventModelImpl._columnBitmask = 0;
 	}
@@ -1297,26 +1275,25 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Event.class };
 	private long _id;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private String _title;
 	private String _titleCurrentLanguageId;
-	private String _originalTitle;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
-	private String _originalDescription;
 	private String _address;
 	private String _addressCurrentLanguageId;
 	private String _location;
 	private String _locationCurrentLanguageId;
-	private String _originalLocation;
 	private String _coordX;
 	private String _coordY;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _requiresApproval;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _createdBy;
 	private long _columnBitmask;
 	private Event _escapedModel;
