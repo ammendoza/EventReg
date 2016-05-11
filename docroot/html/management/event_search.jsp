@@ -23,7 +23,9 @@ EventDisplayTerms displayTerms = (EventDisplayTerms)searchContainer.getDisplayTe
 
 			<aui:select name="<%= displayTerms.STATUS %>">
 				<aui:option value="0" label="all" />
-			</aui:select>
+				<aui:option value="<%= WorkflowConstants.STATUS_APPROVED %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_APPROVED) %>" />
+				<aui:option value="<%= WorkflowConstants.STATUS_DRAFT %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DRAFT) %>" />
+ 			</aui:select>
 
 		</aui:fieldset>
 	</liferay-ui:search-toggle>
