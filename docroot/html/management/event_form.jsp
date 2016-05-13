@@ -15,8 +15,10 @@
 	</c:choose>
 </h2>
 
-<aui:form action="<%= formActionURL %>" method="post">
+<aui:form action="<%= formActionURL %>" method="post" id="fm">
 
+	<aui:input type="hidden" name="cmd" id="cmd" value="save-draft" />
+	
 	<c:if test="<%= event != null %>">
 		<aui:input type="hidden" name="id" value="<%= event.getId() %>" />
 	</c:if>
@@ -69,8 +71,18 @@
 	/>
 	
 	<c:if test="<%= event == null || event.getStatus() == WorkflowConstants.STATUS_DRAFT %>">
-		<aui:button type="submit" name="save" value="save-draft" ></aui:button>
+		<aui:button type="submit" name="save" value="save-draft" onclick="saveDraft()"></aui:button>
 	</c:if>
-	<aui:button type="submit" name="save" value="publish"></aui:button>
+	<aui:button type="submit" name="save" value="publish" onclick="publish()"></aui:button>
 
 </aui:form>
+
+<script type="text/javascript">
+	function saveDraft () {
+		document.<portlet:namespace />fm.<portlet:namespace />cmd.value="save-draft";
+	}
+	
+	function publish () {
+		document.<portlet:namespace />fm.<portlet:namespace />cmd.value="add";
+	}
+</script>

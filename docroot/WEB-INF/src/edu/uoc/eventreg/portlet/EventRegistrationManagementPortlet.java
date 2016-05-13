@@ -59,12 +59,10 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		String coordX = ParamUtil.getString(request, "coord-x");
 		String coordY = ParamUtil.getString(request, "coord-y");
 		boolean requiresApproval = ParamUtil.getBoolean(request, "requires-approval");
-		String saveStatus = ParamUtil.getString(request, "save");
+		String saveStatus = ParamUtil.getString(request, "cmd");
 		Date createDate = new Date();
 		User user = (User) request.getAttribute(WebKeys.USER);
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		
-		
 		
 		Event event = null;
 		if (Validator.isNull(id)) {
@@ -73,7 +71,6 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 			try {
 				event = EventLocalServiceUtil.getEvent(id);
 			} catch (PortalException | SystemException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -105,7 +102,6 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 				event.persist();
 			}
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
