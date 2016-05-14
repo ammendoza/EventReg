@@ -1,4 +1,4 @@
-<%@ include file="/html/management/init.jsp" %>
+<%@ include file="/html/init.jsp" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ page import="edu.uoc.eventreg.portlet.search.AttendeeDisplayTerms" %>
 

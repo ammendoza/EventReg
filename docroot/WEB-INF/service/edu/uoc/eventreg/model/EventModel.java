@@ -611,6 +611,34 @@ public interface EventModel extends BaseModel<Event> {
 	 */
 	public void setCreatedBy(long createdBy);
 
+	/**
+	 * Returns the start date of this event.
+	 *
+	 * @return the start date of this event
+	 */
+	public Date getStartDate();
+
+	/**
+	 * Sets the start date of this event.
+	 *
+	 * @param startDate the start date of this event
+	 */
+	public void setStartDate(Date startDate);
+
+	/**
+	 * Returns the end date of this event.
+	 *
+	 * @return the end date of this event
+	 */
+	public Date getEndDate();
+
+	/**
+	 * Sets the end date of this event.
+	 *
+	 * @param endDate the end date of this event
+	 */
+	public void setEndDate(Date endDate);
+
 	@Override
 	public boolean isNew();
 

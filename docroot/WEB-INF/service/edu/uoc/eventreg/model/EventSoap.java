@@ -45,6 +45,8 @@ public class EventSoap implements Serializable {
 		soapModel.setRequiresApproval(model.getRequiresApproval());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setCreatedBy(model.getCreatedBy());
+		soapModel.setStartDate(model.getStartDate());
+		soapModel.setEndDate(model.getEndDate());
 
 		return soapModel;
 	}
@@ -213,6 +215,22 @@ public class EventSoap implements Serializable {
 		_createdBy = createdBy;
 	}
 
+	public Date getStartDate() {
+		return _startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return _endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
+	}
+
 	private long _id;
 	private long _companyId;
 	private long _groupId;
@@ -227,4 +245,6 @@ public class EventSoap implements Serializable {
 	private boolean _requiresApproval;
 	private int _status;
 	private long _createdBy;
+	private Date _startDate;
+	private Date _endDate;
 }

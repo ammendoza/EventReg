@@ -41,6 +41,8 @@
 		<property name="requiresApproval" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="startDate" type="org.hibernate.type.TimestampType" />
+		<property name="endDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="edu.uoc.eventreg.model.impl.EventOptionImpl" table="EVENTREG_EventOption">
 		<cache usage="read-write" />

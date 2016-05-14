@@ -52,6 +52,12 @@
 			<basic name="requiresApproval" />
 			<basic name="status" />
 			<basic name="createdBy" />
+			<basic name="startDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="endDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="addressCurrentLanguageId" />
 			<transient name="addressMap" />
 			<transient name="descriptionCurrentLanguageId" />

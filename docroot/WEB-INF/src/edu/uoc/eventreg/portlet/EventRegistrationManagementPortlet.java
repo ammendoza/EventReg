@@ -39,7 +39,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		request.setAttribute("companyId", themeDisplay.getCompanyId());
-		request.setAttribute("groupId", themeDisplay.getLayout().getGroupId());
+		request.setAttribute("groupId", themeDisplay.getDoAsGroupId());
 		
 		super.doView(request, response);
 	}
@@ -93,7 +93,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		try {
 			if (Validator.isNull(id)) {
 				event.setCompanyId(themeDisplay.getCompanyId());
-				event.setGroupId(themeDisplay.getLayout().getGroupId());
+				event.setGroupId(themeDisplay.getDoAsGroupId());
 				event.setCreatedBy(user.getUserId());
 				event.setCreateDate(createDate);
 				
@@ -140,7 +140,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		request.setAttribute("companyId", themeDisplay.getCompanyId());
-		request.setAttribute("groupId", themeDisplay.getLayout().getGroupId());
+		request.setAttribute("groupId", themeDisplay.getDoAsGroupId());
 		
 		response.setRenderParameter("mvcPath", "/html/management/attendee_list.jsp");
 	}

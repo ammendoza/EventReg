@@ -4,7 +4,9 @@
 	<portlet>
 		<portlet-name>event-registration</portlet-name>
 		<display-name>Event Registration</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>
+			edu.uoc.eventreg.portlet.EventRegistrationPortlet
+		</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/registration/view.jsp</value>

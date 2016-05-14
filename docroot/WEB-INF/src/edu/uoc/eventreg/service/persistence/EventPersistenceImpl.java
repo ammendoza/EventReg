@@ -890,6 +890,8 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		eventImpl.setRequiresApproval(event.isRequiresApproval());
 		eventImpl.setStatus(event.getStatus());
 		eventImpl.setCreatedBy(event.getCreatedBy());
+		eventImpl.setStartDate(event.getStartDate());
+		eventImpl.setEndDate(event.getEndDate());
 
 		return eventImpl;
 	}

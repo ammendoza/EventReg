@@ -27,7 +27,9 @@ create table EVENTREG_Event (
 	modifiedDate DATE null,
 	requiresApproval BOOLEAN,
 	status INTEGER,
-	createdBy LONG
+	createdBy LONG,
+	startDate DATE null,
+	endDate DATE null
 );
 
 create table EVENTREG_EventOption (

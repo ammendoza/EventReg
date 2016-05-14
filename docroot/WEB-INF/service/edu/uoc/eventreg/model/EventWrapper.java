@@ -63,6 +63,8 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 		attributes.put("requiresApproval", getRequiresApproval());
 		attributes.put("status", getStatus());
 		attributes.put("createdBy", getCreatedBy());
+		attributes.put("startDate", getStartDate());
+		attributes.put("endDate", getEndDate());
 
 		return attributes;
 	}
@@ -151,6 +153,18 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 
 		if (createdBy != null) {
 			setCreatedBy(createdBy);
+		}
+
+		Date startDate = (Date)attributes.get("startDate");
+
+		if (startDate != null) {
+			setStartDate(startDate);
+		}
+
+		Date endDate = (Date)attributes.get("endDate");
+
+		if (endDate != null) {
+			setEndDate(endDate);
 		}
 	}
 
@@ -946,6 +960,46 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 	@Override
 	public void setCreatedBy(long createdBy) {
 		_event.setCreatedBy(createdBy);
+	}
+
+	/**
+	* Returns the start date of this event.
+	*
+	* @return the start date of this event
+	*/
+	@Override
+	public java.util.Date getStartDate() {
+		return _event.getStartDate();
+	}
+
+	/**
+	* Sets the start date of this event.
+	*
+	* @param startDate the start date of this event
+	*/
+	@Override
+	public void setStartDate(java.util.Date startDate) {
+		_event.setStartDate(startDate);
+	}
+
+	/**
+	* Returns the end date of this event.
+	*
+	* @return the end date of this event
+	*/
+	@Override
+	public java.util.Date getEndDate() {
+		return _event.getEndDate();
+	}
+
+	/**
+	* Sets the end date of this event.
+	*
+	* @param endDate the end date of this event
+	*/
+	@Override
+	public void setEndDate(java.util.Date endDate) {
+		_event.setEndDate(endDate);
 	}
 
 	@Override

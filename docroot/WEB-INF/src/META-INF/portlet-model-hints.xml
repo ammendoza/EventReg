@@ -30,6 +30,8 @@
 		<field name="requiresApproval" type="boolean" />
 		<field name="status" type="int" />
 		<field name="createdBy" type="long" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
 	</model>
 	<model name="edu.uoc.eventreg.model.EventOption">
 		<field name="id" type="long" />

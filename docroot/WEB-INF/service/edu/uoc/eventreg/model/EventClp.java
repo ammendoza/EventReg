@@ -97,6 +97,8 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		attributes.put("requiresApproval", getRequiresApproval());
 		attributes.put("status", getStatus());
 		attributes.put("createdBy", getCreatedBy());
+		attributes.put("startDate", getStartDate());
+		attributes.put("endDate", getEndDate());
 
 		return attributes;
 	}
@@ -185,6 +187,18 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 
 		if (createdBy != null) {
 			setCreatedBy(createdBy);
+		}
+
+		Date startDate = (Date)attributes.get("startDate");
+
+		if (startDate != null) {
+			setStartDate(startDate);
+		}
+
+		Date endDate = (Date)attributes.get("endDate");
+
+		if (endDate != null) {
+			setEndDate(endDate);
 		}
 	}
 
@@ -920,6 +934,52 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		}
 	}
 
+	@Override
+	public Date getStartDate() {
+		return _startDate;
+	}
+
+	@Override
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
+
+		if (_eventRemoteModel != null) {
+			try {
+				Class<?> clazz = _eventRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setStartDate", Date.class);
+
+				method.invoke(_eventRemoteModel, startDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public Date getEndDate() {
+		return _endDate;
+	}
+
+	@Override
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
+
+		if (_eventRemoteModel != null) {
+			try {
+				Class<?> clazz = _eventRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setEndDate", Date.class);
+
+				method.invoke(_eventRemoteModel, endDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getEventRemoteModel() {
 		return _eventRemoteModel;
 	}
@@ -1118,6 +1178,8 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		clone.setRequiresApproval(getRequiresApproval());
 		clone.setStatus(getStatus());
 		clone.setCreatedBy(getCreatedBy());
+		clone.setStartDate(getStartDate());
+		clone.setEndDate(getEndDate());
 
 		return clone;
 	}
@@ -1170,7 +1232,7 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1200,6 +1262,10 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		sb.append(getStatus());
 		sb.append(", createdBy=");
 		sb.append(getCreatedBy());
+		sb.append(", startDate=");
+		sb.append(getStartDate());
+		sb.append(", endDate=");
+		sb.append(getEndDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1207,7 +1273,7 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Event");
@@ -1269,6 +1335,14 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 			"<column><column-name>createdBy</column-name><column-value><![CDATA[");
 		sb.append(getCreatedBy());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>startDate</column-name><column-value><![CDATA[");
+		sb.append(getStartDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>endDate</column-name><column-value><![CDATA[");
+		sb.append(getEndDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1293,6 +1367,8 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 	private boolean _requiresApproval;
 	private int _status;
 	private long _createdBy;
+	private Date _startDate;
+	private Date _endDate;
 	private BaseModel<?> _eventRemoteModel;
 	private Class<?> _clpSerializerClass = edu.uoc.eventreg.service.ClpSerializer.class;
 }

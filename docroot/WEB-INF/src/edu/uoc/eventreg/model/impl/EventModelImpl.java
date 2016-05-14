@@ -84,9 +84,11 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "requiresApproval", Types.BOOLEAN },
 			{ "status", Types.INTEGER },
-			{ "createdBy", Types.BIGINT }
+			{ "createdBy", Types.BIGINT },
+			{ "startDate", Types.TIMESTAMP },
+			{ "endDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Event (id_ LONG not null primary key,companyId LONG,groupId LONG,title STRING null,description STRING null,address STRING null,location STRING null,coordX VARCHAR(75) null,coordY VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,requiresApproval BOOLEAN,status INTEGER,createdBy LONG)";
+	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Event (id_ LONG not null primary key,companyId LONG,groupId LONG,title STRING null,description STRING null,address STRING null,location STRING null,coordX VARCHAR(75) null,coordY VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,requiresApproval BOOLEAN,status INTEGER,createdBy LONG,startDate DATE null,endDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_Event";
 	public static final String ORDER_BY_JPQL = " ORDER BY event.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Event.createDate DESC";
@@ -133,6 +135,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		model.setRequiresApproval(soapModel.getRequiresApproval());
 		model.setStatus(soapModel.getStatus());
 		model.setCreatedBy(soapModel.getCreatedBy());
+		model.setStartDate(soapModel.getStartDate());
+		model.setEndDate(soapModel.getEndDate());
 
 		return model;
 	}
@@ -211,6 +215,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		attributes.put("requiresApproval", getRequiresApproval());
 		attributes.put("status", getStatus());
 		attributes.put("createdBy", getCreatedBy());
+		attributes.put("startDate", getStartDate());
+		attributes.put("endDate", getEndDate());
 
 		return attributes;
 	}
@@ -299,6 +305,18 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		if (createdBy != null) {
 			setCreatedBy(createdBy);
+		}
+
+		Date startDate = (Date)attributes.get("startDate");
+
+		if (startDate != null) {
+			setStartDate(startDate);
+		}
+
+		Date endDate = (Date)attributes.get("endDate");
+
+		if (endDate != null) {
+			setEndDate(endDate);
 		}
 	}
 
@@ -856,6 +874,28 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		_createdBy = createdBy;
 	}
 
+	@JSON
+	@Override
+	public Date getStartDate() {
+		return _startDate;
+	}
+
+	@Override
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
+	}
+
+	@JSON
+	@Override
+	public Date getEndDate() {
+		return _endDate;
+	}
+
+	@Override
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -1016,6 +1056,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		eventImpl.setRequiresApproval(getRequiresApproval());
 		eventImpl.setStatus(getStatus());
 		eventImpl.setCreatedBy(getCreatedBy());
+		eventImpl.setStartDate(getStartDate());
+		eventImpl.setEndDate(getEndDate());
 
 		eventImpl.resetOriginalValues();
 
@@ -1161,12 +1203,30 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		eventCacheModel.createdBy = getCreatedBy();
 
+		Date startDate = getStartDate();
+
+		if (startDate != null) {
+			eventCacheModel.startDate = startDate.getTime();
+		}
+		else {
+			eventCacheModel.startDate = Long.MIN_VALUE;
+		}
+
+		Date endDate = getEndDate();
+
+		if (endDate != null) {
+			eventCacheModel.endDate = endDate.getTime();
+		}
+		else {
+			eventCacheModel.endDate = Long.MIN_VALUE;
+		}
+
 		return eventCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1196,6 +1256,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(getStatus());
 		sb.append(", createdBy=");
 		sb.append(getCreatedBy());
+		sb.append(", startDate=");
+		sb.append(getStartDate());
+		sb.append(", endDate=");
+		sb.append(getEndDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1203,7 +1267,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Event");
@@ -1265,6 +1329,14 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 			"<column><column-name>createdBy</column-name><column-value><![CDATA[");
 		sb.append(getCreatedBy());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>startDate</column-name><column-value><![CDATA[");
+		sb.append(getStartDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>endDate</column-name><column-value><![CDATA[");
+		sb.append(getEndDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1295,6 +1367,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	private boolean _requiresApproval;
 	private int _status;
 	private long _createdBy;
+	private Date _startDate;
+	private Date _endDate;
 	private long _columnBitmask;
 	private Event _escapedModel;
 }

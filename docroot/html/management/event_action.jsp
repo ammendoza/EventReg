@@ -1,4 +1,4 @@
-<%@ include file="init.jsp" %>
+<%@ include file="/html/init.jsp" %>
 <%
 	String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 	ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);

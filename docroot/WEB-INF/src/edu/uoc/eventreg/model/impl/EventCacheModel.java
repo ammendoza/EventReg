@@ -37,7 +37,7 @@ import java.util.Date;
 public class EventCacheModel implements CacheModel<Event>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -67,6 +67,10 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 		sb.append(status);
 		sb.append(", createdBy=");
 		sb.append(createdBy);
+		sb.append(", startDate=");
+		sb.append(startDate);
+		sb.append(", endDate=");
+		sb.append(endDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,6 +144,20 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 		eventImpl.setStatus(status);
 		eventImpl.setCreatedBy(createdBy);
 
+		if (startDate == Long.MIN_VALUE) {
+			eventImpl.setStartDate(null);
+		}
+		else {
+			eventImpl.setStartDate(new Date(startDate));
+		}
+
+		if (endDate == Long.MIN_VALUE) {
+			eventImpl.setEndDate(null);
+		}
+		else {
+			eventImpl.setEndDate(new Date(endDate));
+		}
+
 		eventImpl.resetOriginalValues();
 
 		return eventImpl;
@@ -161,6 +179,8 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 		requiresApproval = objectInput.readBoolean();
 		status = objectInput.readInt();
 		createdBy = objectInput.readLong();
+		startDate = objectInput.readLong();
+		endDate = objectInput.readLong();
 	}
 
 	@Override
@@ -217,6 +237,8 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 		objectOutput.writeBoolean(requiresApproval);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(createdBy);
+		objectOutput.writeLong(startDate);
+		objectOutput.writeLong(endDate);
 	}
 
 	public long id;
@@ -233,4 +255,6 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 	public boolean requiresApproval;
 	public int status;
 	public long createdBy;
+	public long startDate;
+	public long endDate;
 }
