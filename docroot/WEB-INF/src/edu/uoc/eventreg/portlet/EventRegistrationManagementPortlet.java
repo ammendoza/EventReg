@@ -135,5 +135,14 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 			e.printStackTrace();
 		}
 	}
+	
+	public void listAttendees(ActionRequest request, ActionResponse response) {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		request.setAttribute("companyId", themeDisplay.getCompanyId());
+		request.setAttribute("groupId", themeDisplay.getLayout().getGroupId());
+		
+		response.setRenderParameter("mvcPath", "/html/management/attendee_list.jsp");
+	}
 
 }

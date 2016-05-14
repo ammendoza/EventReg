@@ -38,6 +38,154 @@ public interface AttendeePersistence extends BasePersistence<Attendee> {
 	 */
 
 	/**
+	* Returns all the attendees where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @return the matching attendees
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findByGroupAttendees(
+		long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the attendees where companyId = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link edu.uoc.eventreg.model.impl.AttendeeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param start the lower bound of the range of attendees
+	* @param end the upper bound of the range of attendees (not inclusive)
+	* @return the range of matching attendees
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findByGroupAttendees(
+		long companyId, long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the attendees where companyId = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link edu.uoc.eventreg.model.impl.AttendeeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param start the lower bound of the range of attendees
+	* @param end the upper bound of the range of attendees (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching attendees
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findByGroupAttendees(
+		long companyId, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first attendee in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching attendee
+	* @throws edu.uoc.eventreg.NoSuchAttendeeException if a matching attendee could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Attendee findByGroupAttendees_First(
+		long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchAttendeeException;
+
+	/**
+	* Returns the first attendee in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching attendee, or <code>null</code> if a matching attendee could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Attendee fetchByGroupAttendees_First(
+		long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last attendee in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching attendee
+	* @throws edu.uoc.eventreg.NoSuchAttendeeException if a matching attendee could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Attendee findByGroupAttendees_Last(
+		long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchAttendeeException;
+
+	/**
+	* Returns the last attendee in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching attendee, or <code>null</code> if a matching attendee could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Attendee fetchByGroupAttendees_Last(
+		long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the attendees before and after the current attendee in the ordered set where companyId = &#63; and groupId = &#63;.
+	*
+	* @param id the primary key of the current attendee
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next attendee
+	* @throws edu.uoc.eventreg.NoSuchAttendeeException if a attendee with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Attendee[] findByGroupAttendees_PrevAndNext(
+		long id, long companyId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchAttendeeException;
+
+	/**
+	* Removes all the attendees where companyId = &#63; and groupId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByGroupAttendees(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of attendees where companyId = &#63; and groupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @return the number of matching attendees
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByGroupAttendees(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the attendee in the entity cache if it is enabled.
 	*
 	* @param attendee the attendee

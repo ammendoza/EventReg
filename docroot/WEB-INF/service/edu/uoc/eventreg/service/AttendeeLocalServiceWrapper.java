@@ -282,6 +282,29 @@ public class AttendeeLocalServiceWrapper implements AttendeeLocalService,
 			arguments);
 	}
 
+	@Override
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
+		long companyId, long groupId) {
+		return _attendeeLocalService.findGroupAttendees(companyId, groupId);
+	}
+
+	@Override
+	public java.util.List<edu.uoc.eventreg.model.Attendee> searchAttendees(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String surname, java.lang.String email, int status,
+		boolean andSearch, int start, int end) {
+		return _attendeeLocalService.searchAttendees(companyId, groupId, name,
+			surname, email, status, andSearch, start, end);
+	}
+
+	@Override
+	public int searchAttendeeCount(long companyId, long groupId,
+		java.lang.String name, java.lang.String surname,
+		java.lang.String email, int status, boolean andSearch) {
+		return _attendeeLocalService.searchAttendeeCount(companyId, groupId,
+			name, surname, email, status, andSearch);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

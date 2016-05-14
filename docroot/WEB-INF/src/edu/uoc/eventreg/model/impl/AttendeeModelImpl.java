@@ -90,7 +90,12 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.edu.uoc.eventreg.model.Attendee"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.edu.uoc.eventreg.model.Attendee"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long SURNAME_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -291,7 +296,19 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -302,7 +319,19 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -334,6 +363,8 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public void setSurname(String surname) {
+		_columnBitmask = -1L;
+
 		_surname = surname;
 	}
 
@@ -434,6 +465,10 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		_managedBy = managedBy;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -521,6 +556,17 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public void resetOriginalValues() {
+		AttendeeModelImpl attendeeModelImpl = this;
+
+		attendeeModelImpl._originalCompanyId = attendeeModelImpl._companyId;
+
+		attendeeModelImpl._setOriginalCompanyId = false;
+
+		attendeeModelImpl._originalGroupId = attendeeModelImpl._groupId;
+
+		attendeeModelImpl._setOriginalGroupId = false;
+
+		attendeeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -698,7 +744,11 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		};
 	private long _id;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private String _name;
 	private String _surname;
 	private String _company;
@@ -708,5 +758,6 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	private String _reservationCode;
 	private int _status;
 	private long _managedBy;
+	private long _columnBitmask;
 	private Attendee _escapedModel;
 }

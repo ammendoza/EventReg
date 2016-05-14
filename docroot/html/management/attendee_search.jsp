@@ -1,10 +1,10 @@
 <%@ include file="/html/management/init.jsp" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
-<%@ page import="edu.uoc.eventreg.portlet.search.EventDisplayTerms" %>
+<%@ page import="edu.uoc.eventreg.portlet.search.AttendeeDisplayTerms" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-EventDisplayTerms displayTerms = (EventDisplayTerms)searchContainer.getDisplayTerms();
+AttendeeDisplayTerms displayTerms = (AttendeeDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
 <liferay-portlet:renderURL var="searchFormURL" />
@@ -16,16 +16,16 @@ EventDisplayTerms displayTerms = (EventDisplayTerms)searchContainer.getDisplayTe
 		id="<%= renderResponse.getNamespace() %>"
 	>
 		<aui:fieldset>
-			<aui:input name="<%= displayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
+			<aui:input name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 
-			<aui:input label="summary" name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
+			<aui:input name="<%= displayTerms.SURNAME %>" label="last-name" size="20" type="text" value="<%= displayTerms.getSurname() %>" />
 
-			<aui:input name="<%= displayTerms.LOCATION %>" size="20" type="text" value="<%= displayTerms.getLocation() %>" />
+			<aui:input name="<%= displayTerms.EMAIL %>" size="20" type="text" value="<%= displayTerms.getEmail() %>" />
 
 			<aui:select name="<%= displayTerms.STATUS %>">
 				<aui:option value="0" label="all" />
 				<aui:option value="<%= WorkflowConstants.STATUS_APPROVED %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_APPROVED) %>" />
-				<aui:option value="<%= WorkflowConstants.STATUS_DRAFT %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DRAFT) %>" />
+				<aui:option value="<%= WorkflowConstants.STATUS_PENDING %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_PENDING) %>" />
  			</aui:select>
 
 		</aui:fieldset>

@@ -271,6 +271,28 @@ public class AttendeeLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
+		long companyId, long groupId) {
+		return getService().findGroupAttendees(companyId, groupId);
+	}
+
+	public static java.util.List<edu.uoc.eventreg.model.Attendee> searchAttendees(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String surname, java.lang.String email, int status,
+		boolean andSearch, int start, int end) {
+		return getService()
+				   .searchAttendees(companyId, groupId, name, surname, email,
+			status, andSearch, start, end);
+	}
+
+	public static int searchAttendeeCount(long companyId, long groupId,
+		java.lang.String name, java.lang.String surname,
+		java.lang.String email, int status, boolean andSearch) {
+		return getService()
+				   .searchAttendeeCount(companyId, groupId, name, surname,
+			email, status, andSearch);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

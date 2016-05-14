@@ -107,6 +107,24 @@ public class AttendeeLocalServiceClp implements AttendeeLocalService {
 		_methodName17 = "setBeanIdentifier";
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
+
+		_methodName19 = "findGroupAttendees";
+
+		_methodParameterTypes19 = new String[] { "long", "long" };
+
+		_methodName20 = "searchAttendees";
+
+		_methodParameterTypes20 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int", "boolean", "int", "int"
+			};
+
+		_methodName21 = "searchAttendeeCount";
+
+		_methodParameterTypes21 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int", "boolean"
+			};
 	}
 
 	@Override
@@ -655,6 +673,115 @@ public class AttendeeLocalServiceClp implements AttendeeLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
+		long companyId, long groupId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] { companyId, groupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<edu.uoc.eventreg.model.Attendee>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<edu.uoc.eventreg.model.Attendee> searchAttendees(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String surname, java.lang.String email, int status,
+		boolean andSearch, int start, int end) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] {
+						companyId,
+						
+					groupId,
+						
+					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(surname),
+						
+					ClpSerializer.translateInput(email),
+						
+					status,
+						
+					andSearch,
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<edu.uoc.eventreg.model.Attendee>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int searchAttendeeCount(long companyId, long groupId,
+		java.lang.String name, java.lang.String surname,
+		java.lang.String email, int status, boolean andSearch) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] {
+						companyId,
+						
+					groupId,
+						
+					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(surname),
+						
+					ClpSerializer.translateInput(email),
+						
+					status,
+						
+					andSearch
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -692,4 +819,10 @@ public class AttendeeLocalServiceClp implements AttendeeLocalService {
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
+	private String _methodName19;
+	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

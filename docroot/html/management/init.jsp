@@ -1,5 +1,4 @@
 <%@ page import="edu.uoc.eventreg.model.Event" %>
-<%@ page import="edu.uoc.eventreg.portlet.search.EventDisplayTerms" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>

@@ -14,7 +14,20 @@
 
 package edu.uoc.eventreg.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Junction;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Validator;
+
+import edu.uoc.eventreg.model.Attendee;
+import edu.uoc.eventreg.service.AttendeeLocalServiceUtil;
+import edu.uoc.eventreg.service.EventLocalServiceUtil;
 import edu.uoc.eventreg.service.base.AttendeeLocalServiceBaseImpl;
+import edu.uoc.eventreg.service.persistence.AttendeeUtil;
 
 /**
  * The implementation of the attendee local service.
@@ -36,4 +49,76 @@ public class AttendeeLocalServiceImpl extends AttendeeLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.AttendeeLocalServiceUtil} to access the attendee local service.
 	 */
+	
+	public List<Attendee> findGroupAttendees (long companyId, long groupId) {
+		List<Attendee> attendees = null;
+		
+		try {
+			return AttendeeUtil.findByGroupAttendees(companyId, groupId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		return attendees;
+	}
+	
+	public List<Attendee> searchAttendees (long companyId, long groupId, String name, String surname, String email, int status, boolean andSearch, int start, int end) {
+			
+		List<Attendee> attendees = null;
+		
+		DynamicQuery dynamicQuery = searchAttendeesQuery(companyId, groupId, name, surname, email, status, andSearch);
+		
+		try {
+			attendees = (List<Attendee>) AttendeeLocalServiceUtil.dynamicQuery(dynamicQuery, start, end);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+			
+		return attendees;
+	}
+	
+	public int searchAttendeeCount (long companyId, long groupId, String name, String surname, String email, int status, boolean andSearch) {
+
+		int count = 0;
+		DynamicQuery dynamicQuery = searchAttendeesQuery(companyId, groupId, name, surname, email, status, andSearch);
+			
+		try {
+			count = (int) EventLocalServiceUtil.dynamicQueryCount(dynamicQuery);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+	
+	private DynamicQuery searchAttendeesQuery (long companyId, long groupId, String name, String surname, String email, int status, boolean andSearch) {
+		
+		Junction junction = null;
+		if(andSearch)
+			junction = RestrictionsFactoryUtil.conjunction();
+		else
+			junction = RestrictionsFactoryUtil.disjunction();
+		
+		if (Validator.isNotNull(name) && !name.isEmpty())
+			junction.add(RestrictionsFactoryUtil.ilike("name", "%"+name+"%"));
+		
+		if (Validator.isNotNull(surname) && !surname.isEmpty())
+			junction.add(RestrictionsFactoryUtil.ilike("surname", "%"+surname+"%"));
+		
+		if (Validator.isNotNull(email) && !email.isEmpty())
+			junction.add(RestrictionsFactoryUtil.ilike("email", "%"+email+"%"));
+	
+		if (status != 0)
+			junction.add(RestrictionsFactoryUtil.eq("status", status));
+		
+		Junction groupJunction = RestrictionsFactoryUtil.conjunction();
+		groupJunction.add(junction);
+		groupJunction.add(RestrictionsFactoryUtil.eq("companyId", companyId));
+		groupJunction.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+		
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Attendee.class, getClassLoader());
+		dynamicQuery.add(junction);
+
+		return dynamicQuery;
+	}
 }

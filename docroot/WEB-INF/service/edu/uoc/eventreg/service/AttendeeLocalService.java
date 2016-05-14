@@ -249,4 +249,18 @@ public interface AttendeeLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
+		long companyId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<edu.uoc.eventreg.model.Attendee> searchAttendees(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String surname, java.lang.String email, int status,
+		boolean andSearch, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchAttendeeCount(long companyId, long groupId,
+		java.lang.String name, java.lang.String surname,
+		java.lang.String email, int status, boolean andSearch);
 }

@@ -70,6 +70,11 @@
 		value="<%= (event != null)? event.getRequiresApproval() : false %>"
 	/>
 	
+	<div class="control-group">
+		<liferay-ui:input-date formName="startDate"></liferay-ui:input-date>
+		<liferay-ui:input-date formName="endDate"></liferay-ui:input-date>
+	</div>
+	
 	<c:if test="<%= event == null || event.getStatus() == WorkflowConstants.STATUS_DRAFT %>">
 		<aui:button type="submit" name="save" value="save-draft" onclick="saveDraft()"></aui:button>
 	</c:if>

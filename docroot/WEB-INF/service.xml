@@ -79,6 +79,12 @@
 		<order by="asc">
 			<order-column name="surname" />
 		</order>
+		
+		<!-- Finders -->
+		<finder name="GroupAttendees" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+		</finder>
 
 	</entity>
 	

@@ -1,5 +1,6 @@
 <%@page import="com.liferay.portal.kernel.util.ListUtil"%>
 <%@page import="edu.uoc.eventreg.service.EventLocalServiceUtil"%>
+<%@ page import="edu.uoc.eventreg.portlet.search.EventDisplayTerms" %>
 <%@ include file="init.jsp" %>
 <% 
 	long companyId = (Long) request.getAttribute("companyId");
@@ -38,6 +39,9 @@
 		<aui:nav id="toolbarContainer">
 			<liferay-portlet:actionURL name="addEventForm" var="addEventFormURL" />
 			<aui:nav-item href="<%= addEventFormURL %>" iconCssClass="icon-plus" label="add-event" />
+			
+			<liferay-portlet:actionURL name="listAttendees" var="listAttendeesURL" />
+			<aui:nav-item href="<%= listAttendeesURL %>" iconCssClass="icon-th-list" label="view-registered" />
 		</aui:nav>
 	
 		<aui:nav-bar-search cssClass="pull-right">
