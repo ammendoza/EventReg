@@ -37,41 +37,41 @@
 		<liferay-ui:input-localized 
 			name="location" 
 			xml="<%= (event != null)? event.getLocation() : StringPool.BLANK %>" 
-		/>
+			/>
 	</aui:field-wrapper>
 	
 	<aui:field-wrapper label="address">
 		<liferay-ui:input-localized 
 			name="address" 
 			xml="<%= (event != null)? event.getAddress() : StringPool.BLANK %>" 
-		/>
+			/>
 	</aui:field-wrapper>
 	
 	<aui:input 
 		name="coord-y" 
 		type="text" 
 		value="<%= (event != null)? event.getCoordY() : StringPool.BLANK %>"
-	/>
+		/>
 	
-		<aui:input 
+	<aui:input 
 		name="coord-x" 
 		type="text" 
 		value="<%= (event != null)? event.getCoordX() : StringPool.BLANK %>"
-	/>
+		/>
 	
 	<aui:field-wrapper label="description" required="true">
 		<liferay-ui:input-localized 
 			name="description" 
 			xml="<%= (event != null)? event.getDescription() : StringPool.BLANK %>" 
 			type="editor" 
-		/>
+			/>
 	</aui:field-wrapper>
 	
 	<aui:input 
 		name="requires-approval" 
 		type="checkbox" 
 		value="<%= (event != null)? event.getRequiresApproval() : false %>"
-	/>
+		/>
 	
 	<h2><liferay-ui:message key="event-options" /></h2>
 	

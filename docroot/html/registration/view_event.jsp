@@ -14,6 +14,35 @@
 		<%= event.getDescription(locale) %>
 	</div>
 	
+	<liferay-ui:search-container 
+		emptyResultsMessage="there-are-no-events">
+
+		<liferay-ui:search-container-results
+			results="<%= eventOptions %>"
+			total="<%= eventOptions.size() %>"
+		/>
+			
+		<liferay-ui:search-container-row
+			className="edu.uoc.eventreg.model.EventOption"
+			modelVar="option"
+		>
+			<portlet:actionURL var="registerFormURL" name="registerForm">
+				<portlet:param name="eventId" value="<%= String.valueOf(event.getEventId()) %>" />
+				<portlet:param name="eventOptionId" value="<%= String.valueOf(option.getEventOptionId()) %>"/>
+			</portlet:actionURL>
+					
+			<liferay-ui:search-container-column-date
+				name="title"
+				value="<%= option.getStartDate() %>"
+				href="<%= registerFormURL %>"
+			/>
+			
+		</liferay-ui:search-container-row>
+	
+		<liferay-ui:search-iterator paginate="<%= false %>" />
+	
+	</liferay-ui:search-container>
+	
 	<c:if test="<%= !event.getCoordX().isEmpty() && ! event.getCoordY().isEmpty() %>">
 		<div id="map"></div>
 	    <script>

@@ -50,4 +50,21 @@ public class EventRegistrationPortlet extends MVCPortlet {
 		response.setRenderParameter("mvcPath", "/html/registration/view_event.jsp");
 	}
 	
+	public void registerForm(ActionRequest request, ActionResponse response) {
+		
+		long eventId = ParamUtil.getLong(request, "eventId");
+		Event event = null;
+				
+		try {
+			event = (Event) EventLocalServiceUtil.getEvent(eventId);
+		} catch (PortalException | SystemException e) {
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("requiresApproval", event.getRequiresApproval());
+		request.setAttribute("eventOptionId", request.getAttribute("eventOptionId"));
+		
+		response.setRenderParameter("mvcPath", "/html/registration/register_form.jsp");
+	}
+	
 }
