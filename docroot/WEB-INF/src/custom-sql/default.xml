@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+    <sql id="edu.uoc.eventreg.AttendeeFinder.findByEvent">
+    	<![CDATA[
+    		SELECT Attendee.*
+    		FROM Attendee
+    		INNER JOIN EventOption e ON e.eventOptionId = a.eventOptionId
+    		WHERE e.eventId = ?
+    	]]>
+
+    </sql>
+</custom-sql>

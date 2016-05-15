@@ -5,6 +5,7 @@
 <% 
 	long companyId = (Long) request.getAttribute("companyId");
 	long groupId = (Long) request.getAttribute("groupId");
+	long eventId = (Long) request.getAttribute("eventId");
 	Locale locale = request.getLocale();
 	
 	String currentURL = PortalUtil.getCurrentURL(request);
@@ -15,6 +16,7 @@
 %>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
+	<portlet:param name="eventId" value="<%= eventId %>" />
 	<portlet:param name="name" value="<%= name %>" />
 	<portlet:param name="surname" value="<%= surname %>" />
 	<portlet:param name="email" value="<%= email %>" />
@@ -40,8 +42,14 @@
 				total = results.size();
 				results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
 			} else {
-				total = AttendeeLocalServiceUtil.searchAttendeeCount(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false);
-				results = AttendeeLocalServiceUtil.searchAttendees(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false, searchContainer.getStart(), searchContainer.getEnd());
+				if (eventId != 0) {
+					total = AttendeeLocalServiceUtil.searchAttendeeCount(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false);
+					results = AttendeeLocalServiceUtil.searchAttendees(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false, searchContainer.getStart(), searchContainer.getEnd());
+				} else {
+					results = AttendeeLocalServiceUtil.findByEvent(eventId);
+					total = results.size();
+					results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
+				}
 			}
 		}
 		

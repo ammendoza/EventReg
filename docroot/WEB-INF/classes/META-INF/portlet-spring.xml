@@ -4,6 +4,7 @@
 	<bean id="edu.uoc.eventreg.service.AttendeeLocalService" class="edu.uoc.eventreg.service.impl.AttendeeLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.AttendeeService" class="edu.uoc.eventreg.service.impl.AttendeeServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.AttendeePersistence" class="edu.uoc.eventreg.service.persistence.AttendeePersistenceImpl" parent="basePersistence" />
+	<bean id="edu.uoc.eventreg.service.persistence.AttendeeFinder" class="edu.uoc.eventreg.service.persistence.AttendeeFinderImpl" parent="basePersistence" />
 	<bean id="edu.uoc.eventreg.service.EventLocalService" class="edu.uoc.eventreg.service.impl.EventLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.EventService" class="edu.uoc.eventreg.service.impl.EventServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.EventPersistence" class="edu.uoc.eventreg.service.persistence.EventPersistenceImpl" parent="basePersistence" />

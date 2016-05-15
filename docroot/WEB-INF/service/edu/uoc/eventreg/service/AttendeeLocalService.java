@@ -250,6 +250,9 @@ public interface AttendeeLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findByEvent(
+		long eventId);
+
 	public java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
 		long companyId, long groupId);
 

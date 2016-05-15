@@ -273,6 +273,11 @@ public class AttendeeLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<edu.uoc.eventreg.model.Attendee> findByEvent(
+		long eventId) {
+		return getService().findByEvent(eventId);
+	}
+
 	public static java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
 		long companyId, long groupId) {
 		return getService().findGroupAttendees(companyId, groupId);

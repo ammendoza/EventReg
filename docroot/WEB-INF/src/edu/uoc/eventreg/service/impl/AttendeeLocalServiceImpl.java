@@ -50,6 +50,13 @@ public class AttendeeLocalServiceImpl extends AttendeeLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.AttendeeLocalServiceUtil} to access the attendee local service.
 	 */
 	
+	public List<Attendee> findByEvent (long eventId) {
+		
+		List<Attendee> list = attendeeFinder.findByEvent(eventId);
+		
+		return list;
+	}
+	
 	public List<Attendee> findGroupAttendees (long companyId, long groupId) {
 		List<Attendee> attendees = null;
 		

@@ -94,7 +94,6 @@
 			<finder-column name="companyId" />
 			<finder-column name="groupId" />
 		</finder>
-
 	</entity>
 	
 	<entity name="Image" local-service="true" remote-service="true">

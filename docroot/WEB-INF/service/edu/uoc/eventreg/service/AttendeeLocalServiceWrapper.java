@@ -283,6 +283,12 @@ public class AttendeeLocalServiceWrapper implements AttendeeLocalService,
 	}
 
 	@Override
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findByEvent(
+		long eventId) {
+		return _attendeeLocalService.findByEvent(eventId);
+	}
+
+	@Override
 	public java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
 		long companyId, long groupId) {
 		return _attendeeLocalService.findGroupAttendees(companyId, groupId);

@@ -108,20 +108,24 @@ public class AttendeeLocalServiceClp implements AttendeeLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "findGroupAttendees";
+		_methodName19 = "findByEvent";
 
-		_methodParameterTypes19 = new String[] { "long", "long" };
+		_methodParameterTypes19 = new String[] { "long" };
 
-		_methodName20 = "searchAttendees";
+		_methodName20 = "findGroupAttendees";
 
-		_methodParameterTypes20 = new String[] {
+		_methodParameterTypes20 = new String[] { "long", "long" };
+
+		_methodName21 = "searchAttendees";
+
+		_methodParameterTypes21 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "boolean", "int", "int"
 			};
 
-		_methodName21 = "searchAttendeeCount";
+		_methodName22 = "searchAttendeeCount";
 
-		_methodParameterTypes21 = new String[] {
+		_methodParameterTypes22 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "boolean"
 			};
@@ -674,13 +678,37 @@ public class AttendeeLocalServiceClp implements AttendeeLocalService {
 	}
 
 	@Override
+	public java.util.List<edu.uoc.eventreg.model.Attendee> findByEvent(
+		long eventId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] { eventId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<edu.uoc.eventreg.model.Attendee>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
 		long companyId, long groupId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { companyId, groupId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { companyId, groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -705,8 +733,8 @@ public class AttendeeLocalServiceClp implements AttendeeLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] {
 						companyId,
 						
@@ -749,8 +777,8 @@ public class AttendeeLocalServiceClp implements AttendeeLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] {
 						companyId,
 						
@@ -825,4 +853,6 @@ public class AttendeeLocalServiceClp implements AttendeeLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

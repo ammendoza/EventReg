@@ -227,9 +227,11 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 	
 	public void listAttendees(ActionRequest request, ActionResponse response) {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long eventId = ParamUtil.getLong(request, "eventId");
 		
 		request.setAttribute("companyId", themeDisplay.getCompanyId());
 		request.setAttribute("groupId", themeDisplay.getDoAsGroupId());
+		request.setAttribute("eventId", eventId);
 		
 		response.setRenderParameter("mvcPath", "/html/management/attendee_list.jsp");
 	}

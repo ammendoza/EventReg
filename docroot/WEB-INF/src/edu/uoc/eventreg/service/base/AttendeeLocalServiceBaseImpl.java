@@ -33,6 +33,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.service.AttendeeLocalService;
+import edu.uoc.eventreg.service.persistence.AttendeeFinder;
 import edu.uoc.eventreg.service.persistence.AttendeePersistence;
 import edu.uoc.eventreg.service.persistence.EventOptionPersistence;
 import edu.uoc.eventreg.service.persistence.EventPersistence;
@@ -331,6 +332,24 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setAttendeePersistence(AttendeePersistence attendeePersistence) {
 		this.attendeePersistence = attendeePersistence;
+	}
+
+	/**
+	 * Returns the attendee finder.
+	 *
+	 * @return the attendee finder
+	 */
+	public AttendeeFinder getAttendeeFinder() {
+		return attendeeFinder;
+	}
+
+	/**
+	 * Sets the attendee finder.
+	 *
+	 * @param attendeeFinder the attendee finder
+	 */
+	public void setAttendeeFinder(AttendeeFinder attendeeFinder) {
+		this.attendeeFinder = attendeeFinder;
 	}
 
 	/**
@@ -684,6 +703,8 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected edu.uoc.eventreg.service.AttendeeService attendeeService;
 	@BeanReference(type = AttendeePersistence.class)
 	protected AttendeePersistence attendeePersistence;
+	@BeanReference(type = AttendeeFinder.class)
+	protected AttendeeFinder attendeeFinder;
 	@BeanReference(type = edu.uoc.eventreg.service.EventLocalService.class)
 	protected edu.uoc.eventreg.service.EventLocalService eventLocalService;
 	@BeanReference(type = edu.uoc.eventreg.service.EventService.class)
