@@ -1,5 +1,6 @@
 <%@ page import="edu.uoc.eventreg.model.Event" %>
 <%@ page import="edu.uoc.eventreg.model.EventOption" %>
+<%@ page import="edu.uoc.eventreg.model.Attendee" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.Calendar" %>

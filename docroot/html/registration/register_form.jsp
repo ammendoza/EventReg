@@ -5,23 +5,25 @@
 	String eventOptionId = (String) request.getAttribute("eventOptionId");
 %>
 
-<liferay-portlet:actionURL name="saveRegisterForm" var="formActionURL">
-	<portlet:param name="eventOptionId" value=" <%= eventOptionId %>" />
-</liferay-portlet:actionURL>
+<liferay-portlet:actionURL name="saveRegisterForm" var="formActionURL" />
 
 <c:if test="<%= requiresApproval != null && requiresApproval %>">
-	<p><liferay-ui:message key="approval-message" />
+	<p><liferay-ui:message key="requires-approval-message" /></p>
 </c:if>
 
 <aui:form action="<%= formActionURL %>" method="post" id="fm">
+
+	<aui:input 
+		name="eventOptionId"
+		type="hidden"
+		value="<%= eventOptionId %>"
+		/>
 
 	<aui:input 
 		name="name"
 		type="text">
 		<aui:validator name="required" />
 	</aui:input>
-
-
 
 	<aui:input
 		name="surname"
