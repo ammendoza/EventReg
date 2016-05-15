@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,7 +48,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the attendee service.
@@ -390,7 +388,7 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 	/**
 	 * Returns the attendees before and after the current attendee in the ordered set where companyId = &#63; and groupId = &#63;.
 	 *
-	 * @param id the primary key of the current attendee
+	 * @param attendeeId the primary key of the current attendee
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -399,10 +397,10 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Attendee[] findByGroupAttendees_PrevAndNext(long id, long companyId,
-		long groupId, OrderByComparator orderByComparator)
+	public Attendee[] findByGroupAttendees_PrevAndNext(long attendeeId,
+		long companyId, long groupId, OrderByComparator orderByComparator)
 		throws NoSuchAttendeeException, SystemException {
-		Attendee attendee = findByPrimaryKey(id);
+		Attendee attendee = findByPrimaryKey(attendeeId);
 
 		Session session = null;
 
@@ -702,15 +700,15 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 	/**
 	 * Creates a new attendee with the primary key. Does not add the attendee to the database.
 	 *
-	 * @param id the primary key for the new attendee
+	 * @param attendeeId the primary key for the new attendee
 	 * @return the new attendee
 	 */
 	@Override
-	public Attendee create(long id) {
+	public Attendee create(long attendeeId) {
 		Attendee attendee = new AttendeeImpl();
 
 		attendee.setNew(true);
-		attendee.setPrimaryKey(id);
+		attendee.setPrimaryKey(attendeeId);
 
 		return attendee;
 	}
@@ -718,15 +716,15 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 	/**
 	 * Removes the attendee with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param id the primary key of the attendee
+	 * @param attendeeId the primary key of the attendee
 	 * @return the attendee that was removed
 	 * @throws edu.uoc.eventreg.NoSuchAttendeeException if a attendee with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Attendee remove(long id)
+	public Attendee remove(long attendeeId)
 		throws NoSuchAttendeeException, SystemException {
-		return remove((Serializable)id);
+		return remove((Serializable)attendeeId);
 	}
 
 	/**
@@ -879,7 +877,7 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 		attendeeImpl.setNew(attendee.isNew());
 		attendeeImpl.setPrimaryKey(attendee.getPrimaryKey());
 
-		attendeeImpl.setId(attendee.getId());
+		attendeeImpl.setAttendeeId(attendee.getAttendeeId());
 		attendeeImpl.setCompanyId(attendee.getCompanyId());
 		attendeeImpl.setGroupId(attendee.getGroupId());
 		attendeeImpl.setName(attendee.getName());
@@ -923,15 +921,15 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 	/**
 	 * Returns the attendee with the primary key or throws a {@link edu.uoc.eventreg.NoSuchAttendeeException} if it could not be found.
 	 *
-	 * @param id the primary key of the attendee
+	 * @param attendeeId the primary key of the attendee
 	 * @return the attendee
 	 * @throws edu.uoc.eventreg.NoSuchAttendeeException if a attendee with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Attendee findByPrimaryKey(long id)
+	public Attendee findByPrimaryKey(long attendeeId)
 		throws NoSuchAttendeeException, SystemException {
-		return findByPrimaryKey((Serializable)id);
+		return findByPrimaryKey((Serializable)attendeeId);
 	}
 
 	/**
@@ -984,13 +982,14 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 	/**
 	 * Returns the attendee with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param id the primary key of the attendee
+	 * @param attendeeId the primary key of the attendee
 	 * @return the attendee, or <code>null</code> if a attendee with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Attendee fetchByPrimaryKey(long id) throws SystemException {
-		return fetchByPrimaryKey((Serializable)id);
+	public Attendee fetchByPrimaryKey(long attendeeId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)attendeeId);
 	}
 
 	/**
@@ -1165,11 +1164,6 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 		return count.intValue();
 	}
 
-	@Override
-	protected Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
 	/**
 	 * Initializes the attendee persistence.
 	 */
@@ -1212,9 +1206,6 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(AttendeePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"id"
-			});
 	private static Attendee _nullAttendee = new AttendeeImpl() {
 			@Override
 			public Object clone() {

@@ -32,6 +32,6 @@ public abstract class EventActionableDynamicQuery
 
 		setClassLoader(edu.uoc.eventreg.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("id");
+		setPrimaryKeyPropertyName("eventId");
 	}
 }

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
@@ -47,7 +46,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the image service.
@@ -168,15 +166,15 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *
-	 * @param id the primary key for the new image
+	 * @param imageId the primary key for the new image
 	 * @return the new image
 	 */
 	@Override
-	public Image create(long id) {
+	public Image create(long imageId) {
 		Image image = new ImageImpl();
 
 		image.setNew(true);
-		image.setPrimaryKey(id);
+		image.setPrimaryKey(imageId);
 
 		return image;
 	}
@@ -184,14 +182,15 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	/**
 	 * Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param id the primary key of the image
+	 * @param imageId the primary key of the image
 	 * @return the image that was removed
 	 * @throws edu.uoc.eventreg.NoSuchImageException if a image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Image remove(long id) throws NoSuchImageException, SystemException {
-		return remove((Serializable)id);
+	public Image remove(long imageId)
+		throws NoSuchImageException, SystemException {
+		return remove((Serializable)imageId);
 	}
 
 	/**
@@ -316,7 +315,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		imageImpl.setNew(image.isNew());
 		imageImpl.setPrimaryKey(image.getPrimaryKey());
 
-		imageImpl.setId(image.getId());
+		imageImpl.setImageId(image.getImageId());
 		imageImpl.setCompanyId(image.getCompanyId());
 		imageImpl.setGroupId(image.getGroupId());
 
@@ -351,15 +350,15 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	/**
 	 * Returns the image with the primary key or throws a {@link edu.uoc.eventreg.NoSuchImageException} if it could not be found.
 	 *
-	 * @param id the primary key of the image
+	 * @param imageId the primary key of the image
 	 * @return the image
 	 * @throws edu.uoc.eventreg.NoSuchImageException if a image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Image findByPrimaryKey(long id)
+	public Image findByPrimaryKey(long imageId)
 		throws NoSuchImageException, SystemException {
-		return findByPrimaryKey((Serializable)id);
+		return findByPrimaryKey((Serializable)imageId);
 	}
 
 	/**
@@ -412,13 +411,13 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	/**
 	 * Returns the image with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param id the primary key of the image
+	 * @param imageId the primary key of the image
 	 * @return the image, or <code>null</code> if a image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Image fetchByPrimaryKey(long id) throws SystemException {
-		return fetchByPrimaryKey((Serializable)id);
+	public Image fetchByPrimaryKey(long imageId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)imageId);
 	}
 
 	/**
@@ -593,11 +592,6 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		return count.intValue();
 	}
 
-	@Override
-	protected Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
 	/**
 	 * Initializes the image persistence.
 	 */
@@ -637,9 +631,6 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(ImagePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"id"
-			});
 	private static Image _nullImage = new ImageImpl() {
 			@Override
 			public Object clone() {

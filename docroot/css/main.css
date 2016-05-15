@@ -1,0 +1,21 @@
+@import "compass";
+
+.event-registration-portlet {
+	
+	#map {
+		height: 300px;
+	}
+}
+
+.event-management-portlet {
+	
+	.event-option {
+		border: 1px solid #d0d0d0;
+	    border-left-width: 10px;
+	    padding: 7px 10px 10px;
+	    margin: 15px 0 0;
+	    @include border-radius(5px);
+	}
+	
+	
+}

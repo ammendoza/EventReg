@@ -84,27 +84,27 @@ public abstract class EventOptionLocalServiceBaseImpl
 	/**
 	 * Creates a new event option with the primary key. Does not add the event option to the database.
 	 *
-	 * @param id the primary key for the new event option
+	 * @param eventOptionId the primary key for the new event option
 	 * @return the new event option
 	 */
 	@Override
-	public EventOption createEventOption(long id) {
-		return eventOptionPersistence.create(id);
+	public EventOption createEventOption(long eventOptionId) {
+		return eventOptionPersistence.create(eventOptionId);
 	}
 
 	/**
 	 * Deletes the event option with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param id the primary key of the event option
+	 * @param eventOptionId the primary key of the event option
 	 * @return the event option that was removed
 	 * @throws PortalException if a event option with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public EventOption deleteEventOption(long id)
+	public EventOption deleteEventOption(long eventOptionId)
 		throws PortalException, SystemException {
-		return eventOptionPersistence.remove(id);
+		return eventOptionPersistence.remove(eventOptionId);
 	}
 
 	/**
@@ -215,22 +215,23 @@ public abstract class EventOptionLocalServiceBaseImpl
 	}
 
 	@Override
-	public EventOption fetchEventOption(long id) throws SystemException {
-		return eventOptionPersistence.fetchByPrimaryKey(id);
+	public EventOption fetchEventOption(long eventOptionId)
+		throws SystemException {
+		return eventOptionPersistence.fetchByPrimaryKey(eventOptionId);
 	}
 
 	/**
 	 * Returns the event option with the primary key.
 	 *
-	 * @param id the primary key of the event option
+	 * @param eventOptionId the primary key of the event option
 	 * @return the event option
 	 * @throws PortalException if a event option with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public EventOption getEventOption(long id)
+	public EventOption getEventOption(long eventOptionId)
 		throws PortalException, SystemException {
-		return eventOptionPersistence.findByPrimaryKey(id);
+		return eventOptionPersistence.findByPrimaryKey(eventOptionId);
 	}
 
 	@Override

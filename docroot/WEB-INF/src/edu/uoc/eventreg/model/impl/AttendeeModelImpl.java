@@ -64,7 +64,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	 */
 	public static final String TABLE_NAME = "EVENTREG_Attendee";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "id_", Types.BIGINT },
+			{ "attendeeId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
@@ -77,7 +77,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 			{ "status", Types.INTEGER },
 			{ "managedBy", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Attendee (id_ LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,surname VARCHAR(75) null,company VARCHAR(75) null,email VARCHAR(75) null,phone VARCHAR(75) null,registerDate DATE null,reservationCode VARCHAR(75) null,status INTEGER,managedBy LONG)";
+	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Attendee (attendeeId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,surname VARCHAR(75) null,company VARCHAR(75) null,email VARCHAR(75) null,phone VARCHAR(75) null,registerDate DATE null,reservationCode VARCHAR(75) null,status INTEGER,managedBy LONG)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_Attendee";
 	public static final String ORDER_BY_JPQL = " ORDER BY attendee.surname ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Attendee.surname ASC";
@@ -110,7 +110,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 		Attendee model = new AttendeeImpl();
 
-		model.setId(soapModel.getId());
+		model.setAttendeeId(soapModel.getAttendeeId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setName(soapModel.getName());
@@ -154,17 +154,17 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public long getPrimaryKey() {
-		return _id;
+		return _attendeeId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setAttendeeId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _id;
+		return _attendeeId;
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("attendeeId", getAttendeeId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
@@ -204,10 +204,10 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long attendeeId = (Long)attributes.get("attendeeId");
 
-		if (id != null) {
-			setId(id);
+		if (attendeeId != null) {
+			setAttendeeId(attendeeId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -279,13 +279,13 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@JSON
 	@Override
-	public long getId() {
-		return _id;
+	public long getAttendeeId() {
+		return _attendeeId;
 	}
 
 	@Override
-	public void setId(long id) {
-		_id = id;
+	public void setAttendeeId(long attendeeId) {
+		_attendeeId = attendeeId;
 	}
 
 	@JSON
@@ -496,7 +496,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	public Object clone() {
 		AttendeeImpl attendeeImpl = new AttendeeImpl();
 
-		attendeeImpl.setId(getId());
+		attendeeImpl.setAttendeeId(getAttendeeId());
 		attendeeImpl.setCompanyId(getCompanyId());
 		attendeeImpl.setGroupId(getGroupId());
 		attendeeImpl.setName(getName());
@@ -573,7 +573,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	public CacheModel<Attendee> toCacheModel() {
 		AttendeeCacheModel attendeeCacheModel = new AttendeeCacheModel();
 
-		attendeeCacheModel.id = getId();
+		attendeeCacheModel.attendeeId = getAttendeeId();
 
 		attendeeCacheModel.companyId = getCompanyId();
 
@@ -647,8 +647,8 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{id=");
-		sb.append(getId());
+		sb.append("{attendeeId=");
+		sb.append(getAttendeeId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
@@ -685,8 +685,8 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>attendeeId</column-name><column-value><![CDATA[");
+		sb.append(getAttendeeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -742,7 +742,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			Attendee.class
 		};
-	private long _id;
+	private long _attendeeId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

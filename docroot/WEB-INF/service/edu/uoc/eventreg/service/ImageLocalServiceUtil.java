@@ -55,25 +55,25 @@ public class ImageLocalServiceUtil {
 	/**
 	* Creates a new image with the primary key. Does not add the image to the database.
 	*
-	* @param id the primary key for the new image
+	* @param imageId the primary key for the new image
 	* @return the new image
 	*/
-	public static edu.uoc.eventreg.model.Image createImage(long id) {
-		return getService().createImage(id);
+	public static edu.uoc.eventreg.model.Image createImage(long imageId) {
+		return getService().createImage(imageId);
 	}
 
 	/**
 	* Deletes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the image
+	* @param imageId the primary key of the image
 	* @return the image that was removed
 	* @throws PortalException if a image with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Image deleteImage(long id)
+	public static edu.uoc.eventreg.model.Image deleteImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteImage(id);
+		return getService().deleteImage(imageId);
 	}
 
 	/**
@@ -179,23 +179,23 @@ public class ImageLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static edu.uoc.eventreg.model.Image fetchImage(long id)
+	public static edu.uoc.eventreg.model.Image fetchImage(long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchImage(id);
+		return getService().fetchImage(imageId);
 	}
 
 	/**
 	* Returns the image with the primary key.
 	*
-	* @param id the primary key of the image
+	* @param imageId the primary key of the image
 	* @return the image
 	* @throws PortalException if a image with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Image getImage(long id)
+	public static edu.uoc.eventreg.model.Image getImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getImage(id);
+		return getService().getImage(imageId);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(

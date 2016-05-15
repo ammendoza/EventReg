@@ -36,4 +36,5 @@ public class EventOptionServiceImpl extends EventOptionServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.EventOptionServiceUtil} to access the event option remote service.
 	 */
+	
 }

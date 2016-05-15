@@ -47,27 +47,27 @@ public class AttendeeLocalServiceWrapper implements AttendeeLocalService,
 	/**
 	* Creates a new attendee with the primary key. Does not add the attendee to the database.
 	*
-	* @param id the primary key for the new attendee
+	* @param attendeeId the primary key for the new attendee
 	* @return the new attendee
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Attendee createAttendee(long id) {
-		return _attendeeLocalService.createAttendee(id);
+	public edu.uoc.eventreg.model.Attendee createAttendee(long attendeeId) {
+		return _attendeeLocalService.createAttendee(attendeeId);
 	}
 
 	/**
 	* Deletes the attendee with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee that was removed
 	* @throws PortalException if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Attendee deleteAttendee(long id)
+	public edu.uoc.eventreg.model.Attendee deleteAttendee(long attendeeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _attendeeLocalService.deleteAttendee(id);
+		return _attendeeLocalService.deleteAttendee(attendeeId);
 	}
 
 	/**
@@ -181,24 +181,24 @@ public class AttendeeLocalServiceWrapper implements AttendeeLocalService,
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Attendee fetchAttendee(long id)
+	public edu.uoc.eventreg.model.Attendee fetchAttendee(long attendeeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _attendeeLocalService.fetchAttendee(id);
+		return _attendeeLocalService.fetchAttendee(attendeeId);
 	}
 
 	/**
 	* Returns the attendee with the primary key.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee
 	* @throws PortalException if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Attendee getAttendee(long id)
+	public edu.uoc.eventreg.model.Attendee getAttendee(long attendeeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _attendeeLocalService.getAttendee(id);
+		return _attendeeLocalService.getAttendee(attendeeId);
 	}
 
 	@Override

@@ -111,6 +111,167 @@ public class EventOptionUtil {
 	}
 
 	/**
+	* Returns all the event options where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @return the matching event options
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<edu.uoc.eventreg.model.EventOption> findByeventId(
+		long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByeventId(eventId);
+	}
+
+	/**
+	* Returns a range of all the event options where eventId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link edu.uoc.eventreg.model.impl.EventOptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param eventId the event ID
+	* @param start the lower bound of the range of event options
+	* @param end the upper bound of the range of event options (not inclusive)
+	* @return the range of matching event options
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<edu.uoc.eventreg.model.EventOption> findByeventId(
+		long eventId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByeventId(eventId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the event options where eventId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link edu.uoc.eventreg.model.impl.EventOptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param eventId the event ID
+	* @param start the lower bound of the range of event options
+	* @param end the upper bound of the range of event options (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching event options
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<edu.uoc.eventreg.model.EventOption> findByeventId(
+		long eventId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByeventId(eventId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first event option in the ordered set where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching event option
+	* @throws edu.uoc.eventreg.NoSuchEventOptionException if a matching event option could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.EventOption findByeventId_First(
+		long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchEventOptionException {
+		return getPersistence().findByeventId_First(eventId, orderByComparator);
+	}
+
+	/**
+	* Returns the first event option in the ordered set where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching event option, or <code>null</code> if a matching event option could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.EventOption fetchByeventId_First(
+		long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByeventId_First(eventId, orderByComparator);
+	}
+
+	/**
+	* Returns the last event option in the ordered set where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching event option
+	* @throws edu.uoc.eventreg.NoSuchEventOptionException if a matching event option could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.EventOption findByeventId_Last(
+		long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchEventOptionException {
+		return getPersistence().findByeventId_Last(eventId, orderByComparator);
+	}
+
+	/**
+	* Returns the last event option in the ordered set where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching event option, or <code>null</code> if a matching event option could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.EventOption fetchByeventId_Last(
+		long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByeventId_Last(eventId, orderByComparator);
+	}
+
+	/**
+	* Returns the event options before and after the current event option in the ordered set where eventId = &#63;.
+	*
+	* @param eventOptionId the primary key of the current event option
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next event option
+	* @throws edu.uoc.eventreg.NoSuchEventOptionException if a event option with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static edu.uoc.eventreg.model.EventOption[] findByeventId_PrevAndNext(
+		long eventOptionId, long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchEventOptionException {
+		return getPersistence()
+				   .findByeventId_PrevAndNext(eventOptionId, eventId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the event options where eventId = &#63; from the database.
+	*
+	* @param eventId the event ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByeventId(long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByeventId(eventId);
+	}
+
+	/**
+	* Returns the number of event options where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @return the number of matching event options
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByeventId(long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByeventId(eventId);
+	}
+
+	/**
 	* Caches the event option in the entity cache if it is enabled.
 	*
 	* @param eventOption the event option
@@ -133,25 +294,25 @@ public class EventOptionUtil {
 	/**
 	* Creates a new event option with the primary key. Does not add the event option to the database.
 	*
-	* @param id the primary key for the new event option
+	* @param eventOptionId the primary key for the new event option
 	* @return the new event option
 	*/
-	public static edu.uoc.eventreg.model.EventOption create(long id) {
-		return getPersistence().create(id);
+	public static edu.uoc.eventreg.model.EventOption create(long eventOptionId) {
+		return getPersistence().create(eventOptionId);
 	}
 
 	/**
 	* Removes the event option with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the event option
+	* @param eventOptionId the primary key of the event option
 	* @return the event option that was removed
 	* @throws edu.uoc.eventreg.NoSuchEventOptionException if a event option with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.EventOption remove(long id)
+	public static edu.uoc.eventreg.model.EventOption remove(long eventOptionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchEventOptionException {
-		return getPersistence().remove(id);
+		return getPersistence().remove(eventOptionId);
 	}
 
 	public static edu.uoc.eventreg.model.EventOption updateImpl(
@@ -163,27 +324,29 @@ public class EventOptionUtil {
 	/**
 	* Returns the event option with the primary key or throws a {@link edu.uoc.eventreg.NoSuchEventOptionException} if it could not be found.
 	*
-	* @param id the primary key of the event option
+	* @param eventOptionId the primary key of the event option
 	* @return the event option
 	* @throws edu.uoc.eventreg.NoSuchEventOptionException if a event option with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.EventOption findByPrimaryKey(long id)
+	public static edu.uoc.eventreg.model.EventOption findByPrimaryKey(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchEventOptionException {
-		return getPersistence().findByPrimaryKey(id);
+		return getPersistence().findByPrimaryKey(eventOptionId);
 	}
 
 	/**
 	* Returns the event option with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param id the primary key of the event option
+	* @param eventOptionId the primary key of the event option
 	* @return the event option, or <code>null</code> if a event option with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.EventOption fetchByPrimaryKey(long id)
+	public static edu.uoc.eventreg.model.EventOption fetchByPrimaryKey(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(id);
+		return getPersistence().fetchByPrimaryKey(eventOptionId);
 	}
 
 	/**

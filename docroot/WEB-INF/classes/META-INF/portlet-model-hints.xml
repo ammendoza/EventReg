@@ -2,7 +2,7 @@
 
 <model-hints>
 	<model name="edu.uoc.eventreg.model.Attendee">
-		<field name="id" type="long" />
+		<field name="attendeeId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="name" type="String" />
@@ -16,13 +16,14 @@
 		<field name="managedBy" type="long" />
 	</model>
 	<model name="edu.uoc.eventreg.model.Event">
-		<field name="id" type="long" />
+		<field name="eventId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="title" type="String" localized="true" />
 		<field name="description" type="String" localized="true" />
 		<field name="address" type="String" localized="true" />
 		<field name="location" type="String" localized="true" />
+		<field name="price" type="double" />
 		<field name="coordX" type="String" />
 		<field name="coordY" type="String" />
 		<field name="createDate" type="Date" />
@@ -34,15 +35,16 @@
 		<field name="endDate" type="Date" />
 	</model>
 	<model name="edu.uoc.eventreg.model.EventOption">
-		<field name="id" type="long" />
+		<field name="eventOptionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
-		<field name="price" type="double" />
+		<field name="seats" type="int" />
+		<field name="eventId" type="long" />
 	</model>
 	<model name="edu.uoc.eventreg.model.Image">
-		<field name="id" type="long" />
+		<field name="imageId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 	</model>

@@ -7,7 +7,7 @@
 	<entity name="Event" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="id" type="long" primary="true" id-type="increment" />
+		<column name="eventId" type="long" primary="true" id-type="increment" />
 
 		<!-- Other fields -->
 		<column name="companyId" type="long" />
@@ -16,6 +16,7 @@
 		<column name="description" type="String" localized="true" />
 		<column name="address" type="String" localized="true" />
 		<column name="location" type="String" localized="true" />
+		<column name="price" type="double" />
 		<column name="coordX" type="String" />
 		<column name="coordY" type="String" />
 		<column name="createDate" type="Date" />
@@ -25,6 +26,7 @@
 		<column name="createdBy" type="long" />
 		<column name="startDate" type="Date" />
 		<column name="endDate" type="Date" />
+		<column name="options" type="Collection" entity="EventOption" />
 		
 		<!-- Order -->
 		<order by="desc">
@@ -41,27 +43,32 @@
 	<entity name="EventOption" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="id" type="long" primary="true" id-type="increment" />
+		<column name="eventOptionId" type="long" primary="true" id-type="increment" />
 
 		<!-- Other fields -->
 		<column name="companyId" type="long" />
 		<column name="groupId" type="long" />
 		<column name="startDate" type="Date" />
 		<column name="endDate" type="Date" />
-		<column name="price" type="double" />
-		<column name="event" type="Collection" entity="Event" />
+		<column name="seats" type="int" />
+		<column name="eventId" type="long" />
 
 		<!-- Order -->
 		<order by="desc">
 			<order-column name="startDate" />
 		</order>
+		
+		<!-- Finders -->
+		<finder name="eventId" return-type="Collection">
+			<finder-column name="eventId" />
+		</finder>
 
 	</entity>
 	
 	<entity name="Attendee" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="id" type="long" primary="true" id-type="increment" />
+		<column name="attendeeId" type="long" primary="true" id-type="increment" />
 
 		<!-- Other fields -->
 		<column name="companyId" type="long" />
@@ -93,7 +100,7 @@
 	<entity name="Image" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="id" type="long" primary="true" id-type="increment" />
+		<column name="imageId" type="long" primary="true" id-type="increment" />
 
 		<!-- Other fields -->
 		<column name="companyId" type="long" />
@@ -103,7 +110,7 @@
 
 		<!-- Order -->
 		<order by="asc">
-			<order-column name="id" />
+			<order-column name="imageId" />
 		</order>
 
 	</entity>

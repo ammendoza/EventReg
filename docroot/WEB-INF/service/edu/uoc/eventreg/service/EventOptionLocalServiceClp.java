@@ -114,6 +114,10 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 		_methodName17 = "setBeanIdentifier";
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
+
+		_methodName19 = "findEventOptions";
+
+		_methodParameterTypes19 = new String[] { "long" };
 	}
 
 	@Override
@@ -147,12 +151,13 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.EventOption createEventOption(long id) {
+	public edu.uoc.eventreg.model.EventOption createEventOption(
+		long eventOptionId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { id });
+					_methodParameterTypes1, new Object[] { eventOptionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -170,14 +175,15 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.EventOption deleteEventOption(long id)
+	public edu.uoc.eventreg.model.EventOption deleteEventOption(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { id });
+					_methodParameterTypes2, new Object[] { eventOptionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -430,13 +436,14 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.EventOption fetchEventOption(long id)
+	public edu.uoc.eventreg.model.EventOption fetchEventOption(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { id });
+					_methodParameterTypes10, new Object[] { eventOptionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -458,14 +465,14 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.EventOption getEventOption(long id)
+	public edu.uoc.eventreg.model.EventOption getEventOption(long eventOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { id });
+					_methodParameterTypes11, new Object[] { eventOptionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -662,6 +669,30 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public java.util.List<edu.uoc.eventreg.model.EventOption> findEventOptions(
+		long eventId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] { eventId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<edu.uoc.eventreg.model.EventOption>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -699,4 +730,6 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
+	private String _methodName19;
+	private String[] _methodParameterTypes19;
 }

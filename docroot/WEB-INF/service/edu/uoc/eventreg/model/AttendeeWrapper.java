@@ -49,7 +49,7 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("attendeeId", getAttendeeId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
@@ -67,10 +67,10 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long attendeeId = (Long)attributes.get("attendeeId");
 
-		if (id != null) {
-			setId(id);
+		if (attendeeId != null) {
+			setAttendeeId(attendeeId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -161,23 +161,23 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 	}
 
 	/**
-	* Returns the ID of this attendee.
+	* Returns the attendee ID of this attendee.
 	*
-	* @return the ID of this attendee
+	* @return the attendee ID of this attendee
 	*/
 	@Override
-	public long getId() {
-		return _attendee.getId();
+	public long getAttendeeId() {
+		return _attendee.getAttendeeId();
 	}
 
 	/**
-	* Sets the ID of this attendee.
+	* Sets the attendee ID of this attendee.
 	*
-	* @param id the ID of this attendee
+	* @param attendeeId the attendee ID of this attendee
 	*/
 	@Override
-	public void setId(long id) {
-		_attendee.setId(id);
+	public void setAttendeeId(long attendeeId) {
+		_attendee.setAttendeeId(attendeeId);
 	}
 
 	/**

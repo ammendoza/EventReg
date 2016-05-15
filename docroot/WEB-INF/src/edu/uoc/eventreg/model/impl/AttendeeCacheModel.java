@@ -39,8 +39,8 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{id=");
-		sb.append(id);
+		sb.append("{attendeeId=");
+		sb.append(attendeeId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", groupId=");
@@ -72,7 +72,7 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 	public Attendee toEntityModel() {
 		AttendeeImpl attendeeImpl = new AttendeeImpl();
 
-		attendeeImpl.setId(id);
+		attendeeImpl.setAttendeeId(attendeeId);
 		attendeeImpl.setCompanyId(companyId);
 		attendeeImpl.setGroupId(groupId);
 
@@ -135,7 +135,7 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		id = objectInput.readLong();
+		attendeeId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -152,7 +152,7 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(id);
+		objectOutput.writeLong(attendeeId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 
@@ -204,7 +204,7 @@ public class AttendeeCacheModel implements CacheModel<Attendee>, Externalizable 
 		objectOutput.writeLong(managedBy);
 	}
 
-	public long id;
+	public long attendeeId;
 	public long companyId;
 	public long groupId;
 	public String name;

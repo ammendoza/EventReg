@@ -61,21 +61,21 @@ public interface AttendeeLocalService extends BaseLocalService,
 	/**
 	* Creates a new attendee with the primary key. Does not add the attendee to the database.
 	*
-	* @param id the primary key for the new attendee
+	* @param attendeeId the primary key for the new attendee
 	* @return the new attendee
 	*/
-	public edu.uoc.eventreg.model.Attendee createAttendee(long id);
+	public edu.uoc.eventreg.model.Attendee createAttendee(long attendeeId);
 
 	/**
 	* Deletes the attendee with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee that was removed
 	* @throws PortalException if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public edu.uoc.eventreg.model.Attendee deleteAttendee(long id)
+	public edu.uoc.eventreg.model.Attendee deleteAttendee(long attendeeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -169,19 +169,19 @@ public interface AttendeeLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public edu.uoc.eventreg.model.Attendee fetchAttendee(long id)
+	public edu.uoc.eventreg.model.Attendee fetchAttendee(long attendeeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the attendee with the primary key.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee
 	* @throws PortalException if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public edu.uoc.eventreg.model.Attendee getAttendee(long id)
+	public edu.uoc.eventreg.model.Attendee getAttendee(long attendeeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

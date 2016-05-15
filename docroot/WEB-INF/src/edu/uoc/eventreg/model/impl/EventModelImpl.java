@@ -71,13 +71,14 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	 */
 	public static final String TABLE_NAME = "EVENTREG_Event";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "id_", Types.BIGINT },
+			{ "eventId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "address", Types.VARCHAR },
 			{ "location", Types.VARCHAR },
+			{ "price", Types.DOUBLE },
 			{ "coordX", Types.VARCHAR },
 			{ "coordY", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -88,7 +89,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 			{ "startDate", Types.TIMESTAMP },
 			{ "endDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Event (id_ LONG not null primary key,companyId LONG,groupId LONG,title STRING null,description STRING null,address STRING null,location STRING null,coordX VARCHAR(75) null,coordY VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,requiresApproval BOOLEAN,status INTEGER,createdBy LONG,startDate DATE null,endDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Event (eventId LONG not null primary key,companyId LONG,groupId LONG,title STRING null,description STRING null,address STRING null,location STRING null,price DOUBLE,coordX VARCHAR(75) null,coordY VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,requiresApproval BOOLEAN,status INTEGER,createdBy LONG,startDate DATE null,endDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_Event";
 	public static final String ORDER_BY_JPQL = " ORDER BY event.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Event.createDate DESC";
@@ -121,13 +122,14 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		Event model = new EventImpl();
 
-		model.setId(soapModel.getId());
+		model.setEventId(soapModel.getEventId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setAddress(soapModel.getAddress());
 		model.setLocation(soapModel.getLocation());
+		model.setPrice(soapModel.getPrice());
 		model.setCoordX(soapModel.getCoordX());
 		model.setCoordY(soapModel.getCoordY());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -169,17 +171,17 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public long getPrimaryKey() {
-		return _id;
+		return _eventId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setEventId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _id;
+		return _eventId;
 	}
 
 	@Override
@@ -201,13 +203,14 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("eventId", getEventId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("address", getAddress());
 		attributes.put("location", getLocation());
+		attributes.put("price", getPrice());
 		attributes.put("coordX", getCoordX());
 		attributes.put("coordY", getCoordY());
 		attributes.put("createDate", getCreateDate());
@@ -223,10 +226,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long eventId = (Long)attributes.get("eventId");
 
-		if (id != null) {
-			setId(id);
+		if (eventId != null) {
+			setEventId(eventId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -263,6 +266,12 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		if (location != null) {
 			setLocation(location);
+		}
+
+		Double price = (Double)attributes.get("price");
+
+		if (price != null) {
+			setPrice(price);
 		}
 
 		String coordX = (String)attributes.get("coordX");
@@ -322,13 +331,13 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@JSON
 	@Override
-	public long getId() {
-		return _id;
+	public long getEventId() {
+		return _eventId;
 	}
 
 	@Override
-	public void setId(long id) {
-		_id = id;
+	public void setEventId(long eventId) {
+		_eventId = eventId;
 	}
 
 	@JSON
@@ -782,6 +791,17 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@JSON
 	@Override
+	public double getPrice() {
+		return _price;
+	}
+
+	@Override
+	public void setPrice(double price) {
+		_price = price;
+	}
+
+	@JSON
+	@Override
 	public String getCoordX() {
 		if (_coordX == null) {
 			return StringPool.BLANK;
@@ -1042,13 +1062,14 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	public Object clone() {
 		EventImpl eventImpl = new EventImpl();
 
-		eventImpl.setId(getId());
+		eventImpl.setEventId(getEventId());
 		eventImpl.setCompanyId(getCompanyId());
 		eventImpl.setGroupId(getGroupId());
 		eventImpl.setTitle(getTitle());
 		eventImpl.setDescription(getDescription());
 		eventImpl.setAddress(getAddress());
 		eventImpl.setLocation(getLocation());
+		eventImpl.setPrice(getPrice());
 		eventImpl.setCoordX(getCoordX());
 		eventImpl.setCoordY(getCoordY());
 		eventImpl.setCreateDate(getCreateDate());
@@ -1125,7 +1146,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	public CacheModel<Event> toCacheModel() {
 		EventCacheModel eventCacheModel = new EventCacheModel();
 
-		eventCacheModel.id = getId();
+		eventCacheModel.eventId = getEventId();
 
 		eventCacheModel.companyId = getCompanyId();
 
@@ -1162,6 +1183,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		if ((location != null) && (location.length() == 0)) {
 			eventCacheModel.location = null;
 		}
+
+		eventCacheModel.price = getPrice();
 
 		eventCacheModel.coordX = getCoordX();
 
@@ -1226,10 +1249,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{id=");
-		sb.append(getId());
+		sb.append("{eventId=");
+		sb.append(getEventId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
@@ -1242,6 +1265,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(getAddress());
 		sb.append(", location=");
 		sb.append(getLocation());
+		sb.append(", price=");
+		sb.append(getPrice());
 		sb.append(", coordX=");
 		sb.append(getCoordX());
 		sb.append(", coordY=");
@@ -1267,15 +1292,15 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Event");
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>eventId</column-name><column-value><![CDATA[");
+		sb.append(getEventId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -1300,6 +1325,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(
 			"<column><column-name>location</column-name><column-value><![CDATA[");
 		sb.append(getLocation());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>price</column-name><column-value><![CDATA[");
+		sb.append(getPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>coordX</column-name><column-value><![CDATA[");
@@ -1345,7 +1374,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	private static ClassLoader _classLoader = Event.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Event.class };
-	private long _id;
+	private long _eventId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
@@ -1360,6 +1389,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	private String _addressCurrentLanguageId;
 	private String _location;
 	private String _locationCurrentLanguageId;
+	private double _price;
 	private String _coordX;
 	private String _coordY;
 	private Date _createDate;

@@ -37,10 +37,10 @@ public class EventOptionCacheModel implements CacheModel<EventOption>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{id=");
-		sb.append(id);
+		sb.append("{eventOptionId=");
+		sb.append(eventOptionId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", groupId=");
@@ -49,8 +49,10 @@ public class EventOptionCacheModel implements CacheModel<EventOption>,
 		sb.append(startDate);
 		sb.append(", endDate=");
 		sb.append(endDate);
-		sb.append(", price=");
-		sb.append(price);
+		sb.append(", seats=");
+		sb.append(seats);
+		sb.append(", eventId=");
+		sb.append(eventId);
 		sb.append("}");
 
 		return sb.toString();
@@ -60,7 +62,7 @@ public class EventOptionCacheModel implements CacheModel<EventOption>,
 	public EventOption toEntityModel() {
 		EventOptionImpl eventOptionImpl = new EventOptionImpl();
 
-		eventOptionImpl.setId(id);
+		eventOptionImpl.setEventOptionId(eventOptionId);
 		eventOptionImpl.setCompanyId(companyId);
 		eventOptionImpl.setGroupId(groupId);
 
@@ -78,7 +80,8 @@ public class EventOptionCacheModel implements CacheModel<EventOption>,
 			eventOptionImpl.setEndDate(new Date(endDate));
 		}
 
-		eventOptionImpl.setPrice(price);
+		eventOptionImpl.setSeats(seats);
+		eventOptionImpl.setEventId(eventId);
 
 		eventOptionImpl.resetOriginalValues();
 
@@ -87,29 +90,32 @@ public class EventOptionCacheModel implements CacheModel<EventOption>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		id = objectInput.readLong();
+		eventOptionId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
-		price = objectInput.readDouble();
+		seats = objectInput.readInt();
+		eventId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(id);
+		objectOutput.writeLong(eventOptionId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(startDate);
 		objectOutput.writeLong(endDate);
-		objectOutput.writeDouble(price);
+		objectOutput.writeInt(seats);
+		objectOutput.writeLong(eventId);
 	}
 
-	public long id;
+	public long eventOptionId;
 	public long companyId;
 	public long groupId;
 	public long startDate;
 	public long endDate;
-	public double price;
+	public int seats;
+	public long eventId;
 }

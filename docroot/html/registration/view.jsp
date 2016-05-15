@@ -68,17 +68,21 @@
 		%>
 	</liferay-ui:search-container-results>
 		
-		<liferay-ui:search-container-row
-			className="edu.uoc.eventreg.model.Event"
-			modelVar="event"
-		>
-					
-			<liferay-ui:search-container-column-text
-				name="title"
-				value="<%= event.getTitle(locale) %>"
-			/>
-			
-		</liferay-ui:search-container-row>
+	<liferay-ui:search-container-row
+		className="edu.uoc.eventreg.model.Event"
+		modelVar="event"
+	>
+		<portlet:actionURL var="viewEventURL" name="viewEvent">
+			<portlet:param name="id" value="<%= String.valueOf(event.getEventId()) %>"/>
+		</portlet:actionURL>
+				
+		<liferay-ui:search-container-column-text
+			name="title"
+			value="<%= event.getTitle(locale) %>"
+			href="<%= viewEventURL %>"
+		/>
+		
+	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator paginate="<%= true %>" />
 

@@ -14,7 +14,13 @@
 
 package edu.uoc.eventreg.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+
+import edu.uoc.eventreg.model.EventOption;
 import edu.uoc.eventreg.service.base.EventOptionLocalServiceBaseImpl;
+import edu.uoc.eventreg.service.persistence.EventOptionUtil;
 
 /**
  * The implementation of the event option local service.
@@ -36,4 +42,16 @@ public class EventOptionLocalServiceImpl extends EventOptionLocalServiceBaseImpl
 	 *
 	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.EventOptionLocalServiceUtil} to access the event option local service.
 	 */
+	
+	public List<EventOption> findEventOptions (long eventId) {
+		List<EventOption> eventOptions = null;
+		
+		try {
+			eventOptions = EventOptionUtil.findByeventId(eventId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		return eventOptions;
+	}
 }

@@ -31,13 +31,14 @@ public class EventSoap implements Serializable {
 	public static EventSoap toSoapModel(Event model) {
 		EventSoap soapModel = new EventSoap();
 
-		soapModel.setId(model.getId());
+		soapModel.setEventId(model.getEventId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setAddress(model.getAddress());
 		soapModel.setLocation(model.getLocation());
+		soapModel.setPrice(model.getPrice());
 		soapModel.setCoordX(model.getCoordX());
 		soapModel.setCoordY(model.getCoordY());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -92,19 +93,19 @@ public class EventSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _id;
+		return _eventId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setId(pk);
+		setEventId(pk);
 	}
 
-	public long getId() {
-		return _id;
+	public long getEventId() {
+		return _eventId;
 	}
 
-	public void setId(long id) {
-		_id = id;
+	public void setEventId(long eventId) {
+		_eventId = eventId;
 	}
 
 	public long getCompanyId() {
@@ -153,6 +154,14 @@ public class EventSoap implements Serializable {
 
 	public void setLocation(String location) {
 		_location = location;
+	}
+
+	public double getPrice() {
+		return _price;
+	}
+
+	public void setPrice(double price) {
+		_price = price;
 	}
 
 	public String getCoordX() {
@@ -231,13 +240,14 @@ public class EventSoap implements Serializable {
 		_endDate = endDate;
 	}
 
-	private long _id;
+	private long _eventId;
 	private long _companyId;
 	private long _groupId;
 	private String _title;
 	private String _description;
 	private String _address;
 	private String _location;
+	private double _price;
 	private String _coordX;
 	private String _coordY;
 	private Date _createDate;

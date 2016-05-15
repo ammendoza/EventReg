@@ -31,7 +31,7 @@ public class AttendeeSoap implements Serializable {
 	public static AttendeeSoap toSoapModel(Attendee model) {
 		AttendeeSoap soapModel = new AttendeeSoap();
 
-		soapModel.setId(model.getId());
+		soapModel.setAttendeeId(model.getAttendeeId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setName(model.getName());
@@ -88,19 +88,19 @@ public class AttendeeSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _id;
+		return _attendeeId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setId(pk);
+		setAttendeeId(pk);
 	}
 
-	public long getId() {
-		return _id;
+	public long getAttendeeId() {
+		return _attendeeId;
 	}
 
-	public void setId(long id) {
-		_id = id;
+	public void setAttendeeId(long attendeeId) {
+		_attendeeId = attendeeId;
 	}
 
 	public long getCompanyId() {
@@ -191,7 +191,7 @@ public class AttendeeSoap implements Serializable {
 		_managedBy = managedBy;
 	}
 
-	private long _id;
+	private long _attendeeId;
 	private long _companyId;
 	private long _groupId;
 	private String _name;

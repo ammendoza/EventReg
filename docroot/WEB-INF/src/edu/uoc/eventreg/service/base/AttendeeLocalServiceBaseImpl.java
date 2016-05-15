@@ -82,27 +82,27 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 * Creates a new attendee with the primary key. Does not add the attendee to the database.
 	 *
-	 * @param id the primary key for the new attendee
+	 * @param attendeeId the primary key for the new attendee
 	 * @return the new attendee
 	 */
 	@Override
-	public Attendee createAttendee(long id) {
-		return attendeePersistence.create(id);
+	public Attendee createAttendee(long attendeeId) {
+		return attendeePersistence.create(attendeeId);
 	}
 
 	/**
 	 * Deletes the attendee with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param id the primary key of the attendee
+	 * @param attendeeId the primary key of the attendee
 	 * @return the attendee that was removed
 	 * @throws PortalException if a attendee with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Attendee deleteAttendee(long id)
+	public Attendee deleteAttendee(long attendeeId)
 		throws PortalException, SystemException {
-		return attendeePersistence.remove(id);
+		return attendeePersistence.remove(attendeeId);
 	}
 
 	/**
@@ -211,22 +211,22 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public Attendee fetchAttendee(long id) throws SystemException {
-		return attendeePersistence.fetchByPrimaryKey(id);
+	public Attendee fetchAttendee(long attendeeId) throws SystemException {
+		return attendeePersistence.fetchByPrimaryKey(attendeeId);
 	}
 
 	/**
 	 * Returns the attendee with the primary key.
 	 *
-	 * @param id the primary key of the attendee
+	 * @param attendeeId the primary key of the attendee
 	 * @return the attendee
 	 * @throws PortalException if a attendee with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Attendee getAttendee(long id)
+	public Attendee getAttendee(long attendeeId)
 		throws PortalException, SystemException {
-		return attendeePersistence.findByPrimaryKey(id);
+		return attendeePersistence.findByPrimaryKey(attendeeId);
 	}
 
 	@Override

@@ -60,18 +60,18 @@ public interface AttendeeModel extends BaseModel<Attendee> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the ID of this attendee.
+	 * Returns the attendee ID of this attendee.
 	 *
-	 * @return the ID of this attendee
+	 * @return the attendee ID of this attendee
 	 */
-	public long getId();
+	public long getAttendeeId();
 
 	/**
-	 * Sets the ID of this attendee.
+	 * Sets the attendee ID of this attendee.
 	 *
-	 * @param id the ID of this attendee
+	 * @param attendeeId the attendee ID of this attendee
 	 */
-	public void setId(long id);
+	public void setAttendeeId(long attendeeId);
 
 	/**
 	 * Returns the company ID of this attendee.

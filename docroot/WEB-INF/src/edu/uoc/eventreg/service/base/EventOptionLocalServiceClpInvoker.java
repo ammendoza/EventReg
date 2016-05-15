@@ -113,6 +113,10 @@ public class EventOptionLocalServiceClpInvoker {
 		_methodName53 = "setBeanIdentifier";
 
 		_methodParameterTypes53 = new String[] { "java.lang.String" };
+
+		_methodName58 = "findEventOptions";
+
+		_methodParameterTypes58 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +220,11 @@ public class EventOptionLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName58.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+			return EventOptionLocalServiceUtil.findEventOptions(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +264,6 @@ public class EventOptionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes52;
 	private String _methodName53;
 	private String[] _methodParameterTypes53;
+	private String _methodName58;
+	private String[] _methodParameterTypes58;
 }

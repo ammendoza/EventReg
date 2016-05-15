@@ -50,22 +50,23 @@ public class EventOptionWrapper implements EventOption,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("eventOptionId", getEventOptionId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
-		attributes.put("price", getPrice());
+		attributes.put("seats", getSeats());
+		attributes.put("eventId", getEventId());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long eventOptionId = (Long)attributes.get("eventOptionId");
 
-		if (id != null) {
-			setId(id);
+		if (eventOptionId != null) {
+			setEventOptionId(eventOptionId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -92,10 +93,16 @@ public class EventOptionWrapper implements EventOption,
 			setEndDate(endDate);
 		}
 
-		Double price = (Double)attributes.get("price");
+		Integer seats = (Integer)attributes.get("seats");
 
-		if (price != null) {
-			setPrice(price);
+		if (seats != null) {
+			setSeats(seats);
+		}
+
+		Long eventId = (Long)attributes.get("eventId");
+
+		if (eventId != null) {
+			setEventId(eventId);
 		}
 	}
 
@@ -120,23 +127,23 @@ public class EventOptionWrapper implements EventOption,
 	}
 
 	/**
-	* Returns the ID of this event option.
+	* Returns the event option ID of this event option.
 	*
-	* @return the ID of this event option
+	* @return the event option ID of this event option
 	*/
 	@Override
-	public long getId() {
-		return _eventOption.getId();
+	public long getEventOptionId() {
+		return _eventOption.getEventOptionId();
 	}
 
 	/**
-	* Sets the ID of this event option.
+	* Sets the event option ID of this event option.
 	*
-	* @param id the ID of this event option
+	* @param eventOptionId the event option ID of this event option
 	*/
 	@Override
-	public void setId(long id) {
-		_eventOption.setId(id);
+	public void setEventOptionId(long eventOptionId) {
+		_eventOption.setEventOptionId(eventOptionId);
 	}
 
 	/**
@@ -220,23 +227,43 @@ public class EventOptionWrapper implements EventOption,
 	}
 
 	/**
-	* Returns the price of this event option.
+	* Returns the seats of this event option.
 	*
-	* @return the price of this event option
+	* @return the seats of this event option
 	*/
 	@Override
-	public double getPrice() {
-		return _eventOption.getPrice();
+	public int getSeats() {
+		return _eventOption.getSeats();
 	}
 
 	/**
-	* Sets the price of this event option.
+	* Sets the seats of this event option.
 	*
-	* @param price the price of this event option
+	* @param seats the seats of this event option
 	*/
 	@Override
-	public void setPrice(double price) {
-		_eventOption.setPrice(price);
+	public void setSeats(int seats) {
+		_eventOption.setSeats(seats);
+	}
+
+	/**
+	* Returns the event ID of this event option.
+	*
+	* @return the event ID of this event option
+	*/
+	@Override
+	public long getEventId() {
+		return _eventOption.getEventId();
+	}
+
+	/**
+	* Sets the event ID of this event option.
+	*
+	* @param eventId the event ID of this event option
+	*/
+	@Override
+	public void setEventId(long eventId) {
+		_eventOption.setEventId(eventId);
 	}
 
 	@Override

@@ -31,12 +31,13 @@ public class EventOptionSoap implements Serializable {
 	public static EventOptionSoap toSoapModel(EventOption model) {
 		EventOptionSoap soapModel = new EventOptionSoap();
 
-		soapModel.setId(model.getId());
+		soapModel.setEventOptionId(model.getEventOptionId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
-		soapModel.setPrice(model.getPrice());
+		soapModel.setSeats(model.getSeats());
+		soapModel.setEventId(model.getEventId());
 
 		return soapModel;
 	}
@@ -82,19 +83,19 @@ public class EventOptionSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _id;
+		return _eventOptionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setId(pk);
+		setEventOptionId(pk);
 	}
 
-	public long getId() {
-		return _id;
+	public long getEventOptionId() {
+		return _eventOptionId;
 	}
 
-	public void setId(long id) {
-		_id = id;
+	public void setEventOptionId(long eventOptionId) {
+		_eventOptionId = eventOptionId;
 	}
 
 	public long getCompanyId() {
@@ -129,18 +130,27 @@ public class EventOptionSoap implements Serializable {
 		_endDate = endDate;
 	}
 
-	public double getPrice() {
-		return _price;
+	public int getSeats() {
+		return _seats;
 	}
 
-	public void setPrice(double price) {
-		_price = price;
+	public void setSeats(int seats) {
+		_seats = seats;
 	}
 
-	private long _id;
+	public long getEventId() {
+		return _eventId;
+	}
+
+	public void setEventId(long eventId) {
+		_eventId = eventId;
+	}
+
+	private long _eventOptionId;
 	private long _companyId;
 	private long _groupId;
 	private Date _startDate;
 	private Date _endDate;
-	private double _price;
+	private int _seats;
+	private long _eventId;
 }

@@ -49,13 +49,14 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("eventId", getEventId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("address", getAddress());
 		attributes.put("location", getLocation());
+		attributes.put("price", getPrice());
 		attributes.put("coordX", getCoordX());
 		attributes.put("coordY", getCoordY());
 		attributes.put("createDate", getCreateDate());
@@ -71,10 +72,10 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long eventId = (Long)attributes.get("eventId");
 
-		if (id != null) {
-			setId(id);
+		if (eventId != null) {
+			setEventId(eventId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -111,6 +112,12 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 
 		if (location != null) {
 			setLocation(location);
+		}
+
+		Double price = (Double)attributes.get("price");
+
+		if (price != null) {
+			setPrice(price);
 		}
 
 		String coordX = (String)attributes.get("coordX");
@@ -189,23 +196,23 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 	}
 
 	/**
-	* Returns the ID of this event.
+	* Returns the event ID of this event.
 	*
-	* @return the ID of this event
+	* @return the event ID of this event
 	*/
 	@Override
-	public long getId() {
-		return _event.getId();
+	public long getEventId() {
+		return _event.getEventId();
 	}
 
 	/**
-	* Sets the ID of this event.
+	* Sets the event ID of this event.
 	*
-	* @param id the ID of this event
+	* @param eventId the event ID of this event
 	*/
 	@Override
-	public void setId(long id) {
-		_event.setId(id);
+	public void setEventId(long eventId) {
+		_event.setEventId(eventId);
 	}
 
 	/**
@@ -810,6 +817,26 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 		java.util.Map<java.util.Locale, java.lang.String> locationMap,
 		java.util.Locale defaultLocale) {
 		_event.setLocationMap(locationMap, defaultLocale);
+	}
+
+	/**
+	* Returns the price of this event.
+	*
+	* @return the price of this event
+	*/
+	@Override
+	public double getPrice() {
+		return _event.getPrice();
+	}
+
+	/**
+	* Sets the price of this event.
+	*
+	* @param price the price of this event
+	*/
+	@Override
+	public void setPrice(double price) {
+		_event.setPrice(price);
 	}
 
 	/**

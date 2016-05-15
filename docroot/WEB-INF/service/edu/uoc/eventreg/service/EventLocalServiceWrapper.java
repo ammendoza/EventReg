@@ -46,27 +46,27 @@ public class EventLocalServiceWrapper implements EventLocalService,
 	/**
 	* Creates a new event with the primary key. Does not add the event to the database.
 	*
-	* @param id the primary key for the new event
+	* @param eventId the primary key for the new event
 	* @return the new event
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Event createEvent(long id) {
-		return _eventLocalService.createEvent(id);
+	public edu.uoc.eventreg.model.Event createEvent(long eventId) {
+		return _eventLocalService.createEvent(eventId);
 	}
 
 	/**
 	* Deletes the event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event that was removed
 	* @throws PortalException if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Event deleteEvent(long id)
+	public edu.uoc.eventreg.model.Event deleteEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _eventLocalService.deleteEvent(id);
+		return _eventLocalService.deleteEvent(eventId);
 	}
 
 	/**
@@ -180,24 +180,24 @@ public class EventLocalServiceWrapper implements EventLocalService,
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Event fetchEvent(long id)
+	public edu.uoc.eventreg.model.Event fetchEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _eventLocalService.fetchEvent(id);
+		return _eventLocalService.fetchEvent(eventId);
 	}
 
 	/**
 	* Returns the event with the primary key.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event
 	* @throws PortalException if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Event getEvent(long id)
+	public edu.uoc.eventreg.model.Event getEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _eventLocalService.getEvent(id);
+		return _eventLocalService.getEvent(eventId);
 	}
 
 	@Override

@@ -46,27 +46,27 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	/**
 	* Creates a new image with the primary key. Does not add the image to the database.
 	*
-	* @param id the primary key for the new image
+	* @param imageId the primary key for the new image
 	* @return the new image
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Image createImage(long id) {
-		return _imageLocalService.createImage(id);
+	public edu.uoc.eventreg.model.Image createImage(long imageId) {
+		return _imageLocalService.createImage(imageId);
 	}
 
 	/**
 	* Deletes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the image
+	* @param imageId the primary key of the image
 	* @return the image that was removed
 	* @throws PortalException if a image with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Image deleteImage(long id)
+	public edu.uoc.eventreg.model.Image deleteImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _imageLocalService.deleteImage(id);
+		return _imageLocalService.deleteImage(imageId);
 	}
 
 	/**
@@ -180,24 +180,24 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Image fetchImage(long id)
+	public edu.uoc.eventreg.model.Image fetchImage(long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _imageLocalService.fetchImage(id);
+		return _imageLocalService.fetchImage(imageId);
 	}
 
 	/**
 	* Returns the image with the primary key.
 	*
-	* @param id the primary key of the image
+	* @param imageId the primary key of the image
 	* @return the image
 	* @throws PortalException if a image with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public edu.uoc.eventreg.model.Image getImage(long id)
+	public edu.uoc.eventreg.model.Image getImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _imageLocalService.getImage(id);
+		return _imageLocalService.getImage(imageId);
 	}
 
 	@Override

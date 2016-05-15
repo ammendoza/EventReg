@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,7 +48,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the event service.
@@ -390,7 +388,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	/**
 	 * Returns the events before and after the current event in the ordered set where companyId = &#63; and groupId = &#63;.
 	 *
-	 * @param id the primary key of the current event
+	 * @param eventId the primary key of the current event
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -399,10 +397,10 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event[] findByGroupEvents_PrevAndNext(long id, long companyId,
+	public Event[] findByGroupEvents_PrevAndNext(long eventId, long companyId,
 		long groupId, OrderByComparator orderByComparator)
 		throws NoSuchEventException, SystemException {
-		Event event = findByPrimaryKey(id);
+		Event event = findByPrimaryKey(eventId);
 
 		Session session = null;
 
@@ -701,15 +699,15 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	/**
 	 * Creates a new event with the primary key. Does not add the event to the database.
 	 *
-	 * @param id the primary key for the new event
+	 * @param eventId the primary key for the new event
 	 * @return the new event
 	 */
 	@Override
-	public Event create(long id) {
+	public Event create(long eventId) {
 		Event event = new EventImpl();
 
 		event.setNew(true);
-		event.setPrimaryKey(id);
+		event.setPrimaryKey(eventId);
 
 		return event;
 	}
@@ -717,14 +715,15 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	/**
 	 * Removes the event with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param id the primary key of the event
+	 * @param eventId the primary key of the event
 	 * @return the event that was removed
 	 * @throws edu.uoc.eventreg.NoSuchEventException if a event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event remove(long id) throws NoSuchEventException, SystemException {
-		return remove((Serializable)id);
+	public Event remove(long eventId)
+		throws NoSuchEventException, SystemException {
+		return remove((Serializable)eventId);
 	}
 
 	/**
@@ -876,13 +875,14 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		eventImpl.setNew(event.isNew());
 		eventImpl.setPrimaryKey(event.getPrimaryKey());
 
-		eventImpl.setId(event.getId());
+		eventImpl.setEventId(event.getEventId());
 		eventImpl.setCompanyId(event.getCompanyId());
 		eventImpl.setGroupId(event.getGroupId());
 		eventImpl.setTitle(event.getTitle());
 		eventImpl.setDescription(event.getDescription());
 		eventImpl.setAddress(event.getAddress());
 		eventImpl.setLocation(event.getLocation());
+		eventImpl.setPrice(event.getPrice());
 		eventImpl.setCoordX(event.getCoordX());
 		eventImpl.setCoordY(event.getCoordY());
 		eventImpl.setCreateDate(event.getCreateDate());
@@ -924,15 +924,15 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	/**
 	 * Returns the event with the primary key or throws a {@link edu.uoc.eventreg.NoSuchEventException} if it could not be found.
 	 *
-	 * @param id the primary key of the event
+	 * @param eventId the primary key of the event
 	 * @return the event
 	 * @throws edu.uoc.eventreg.NoSuchEventException if a event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event findByPrimaryKey(long id)
+	public Event findByPrimaryKey(long eventId)
 		throws NoSuchEventException, SystemException {
-		return findByPrimaryKey((Serializable)id);
+		return findByPrimaryKey((Serializable)eventId);
 	}
 
 	/**
@@ -985,13 +985,13 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	/**
 	 * Returns the event with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param id the primary key of the event
+	 * @param eventId the primary key of the event
 	 * @return the event, or <code>null</code> if a event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event fetchByPrimaryKey(long id) throws SystemException {
-		return fetchByPrimaryKey((Serializable)id);
+	public Event fetchByPrimaryKey(long eventId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)eventId);
 	}
 
 	/**
@@ -1166,11 +1166,6 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		return count.intValue();
 	}
 
-	@Override
-	protected Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
 	/**
 	 * Initializes the event persistence.
 	 */
@@ -1213,9 +1208,6 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(EventPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"id"
-			});
 	private static Event _nullEvent = new EventImpl() {
 			@Override
 			public Object clone() {

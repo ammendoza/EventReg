@@ -53,17 +53,17 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 
 	@Override
 	public long getPrimaryKey() {
-		return _id;
+		return _eventOptionId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setEventOptionId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _id;
+		return _eventOptionId;
 	}
 
 	@Override
@@ -75,22 +75,23 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("eventOptionId", getEventOptionId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
-		attributes.put("price", getPrice());
+		attributes.put("seats", getSeats());
+		attributes.put("eventId", getEventId());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long eventOptionId = (Long)attributes.get("eventOptionId");
 
-		if (id != null) {
-			setId(id);
+		if (eventOptionId != null) {
+			setEventOptionId(eventOptionId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -117,29 +118,35 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 			setEndDate(endDate);
 		}
 
-		Double price = (Double)attributes.get("price");
+		Integer seats = (Integer)attributes.get("seats");
 
-		if (price != null) {
-			setPrice(price);
+		if (seats != null) {
+			setSeats(seats);
+		}
+
+		Long eventId = (Long)attributes.get("eventId");
+
+		if (eventId != null) {
+			setEventId(eventId);
 		}
 	}
 
 	@Override
-	public long getId() {
-		return _id;
+	public long getEventOptionId() {
+		return _eventOptionId;
 	}
 
 	@Override
-	public void setId(long id) {
-		_id = id;
+	public void setEventOptionId(long eventOptionId) {
+		_eventOptionId = eventOptionId;
 
 		if (_eventOptionRemoteModel != null) {
 			try {
 				Class<?> clazz = _eventOptionRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setId", long.class);
+				Method method = clazz.getMethod("setEventOptionId", long.class);
 
-				method.invoke(_eventOptionRemoteModel, id);
+				method.invoke(_eventOptionRemoteModel, eventOptionId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -240,21 +247,44 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 	}
 
 	@Override
-	public double getPrice() {
-		return _price;
+	public int getSeats() {
+		return _seats;
 	}
 
 	@Override
-	public void setPrice(double price) {
-		_price = price;
+	public void setSeats(int seats) {
+		_seats = seats;
 
 		if (_eventOptionRemoteModel != null) {
 			try {
 				Class<?> clazz = _eventOptionRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setPrice", double.class);
+				Method method = clazz.getMethod("setSeats", int.class);
 
-				method.invoke(_eventOptionRemoteModel, price);
+				method.invoke(_eventOptionRemoteModel, seats);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getEventId() {
+		return _eventId;
+	}
+
+	@Override
+	public void setEventId(long eventId) {
+		_eventId = eventId;
+
+		if (_eventOptionRemoteModel != null) {
+			try {
+				Class<?> clazz = _eventOptionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setEventId", long.class);
+
+				method.invoke(_eventOptionRemoteModel, eventId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -331,12 +361,13 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 	public Object clone() {
 		EventOptionClp clone = new EventOptionClp();
 
-		clone.setId(getId());
+		clone.setEventOptionId(getEventOptionId());
 		clone.setCompanyId(getCompanyId());
 		clone.setGroupId(getGroupId());
 		clone.setStartDate(getStartDate());
 		clone.setEndDate(getEndDate());
-		clone.setPrice(getPrice());
+		clone.setSeats(getSeats());
+		clone.setEventId(getEventId());
 
 		return clone;
 	}
@@ -389,10 +420,10 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{id=");
-		sb.append(getId());
+		sb.append("{eventOptionId=");
+		sb.append(getEventOptionId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
@@ -401,8 +432,10 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
-		sb.append(", price=");
-		sb.append(getPrice());
+		sb.append(", seats=");
+		sb.append(getSeats());
+		sb.append(", eventId=");
+		sb.append(getEventId());
 		sb.append("}");
 
 		return sb.toString();
@@ -410,15 +443,15 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.EventOption");
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>eventOptionId</column-name><column-value><![CDATA[");
+		sb.append(getEventOptionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -437,8 +470,12 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 		sb.append(getEndDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>price</column-name><column-value><![CDATA[");
-		sb.append(getPrice());
+			"<column><column-name>seats</column-name><column-value><![CDATA[");
+		sb.append(getSeats());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>eventId</column-name><column-value><![CDATA[");
+		sb.append(getEventId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -446,12 +483,13 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 		return sb.toString();
 	}
 
-	private long _id;
+	private long _eventOptionId;
 	private long _companyId;
 	private long _groupId;
 	private Date _startDate;
 	private Date _endDate;
-	private double _price;
+	private int _seats;
+	private long _eventId;
 	private BaseModel<?> _eventOptionRemoteModel;
 	private Class<?> _clpSerializerClass = edu.uoc.eventreg.service.ClpSerializer.class;
 }

@@ -48,7 +48,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("imageId", getImageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 
@@ -57,10 +57,10 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long imageId = (Long)attributes.get("imageId");
 
-		if (id != null) {
-			setId(id);
+		if (imageId != null) {
+			setImageId(imageId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -97,23 +97,23 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	/**
-	* Returns the ID of this image.
+	* Returns the image ID of this image.
 	*
-	* @return the ID of this image
+	* @return the image ID of this image
 	*/
 	@Override
-	public long getId() {
-		return _image.getId();
+	public long getImageId() {
+		return _image.getImageId();
 	}
 
 	/**
-	* Sets the ID of this image.
+	* Sets the image ID of this image.
 	*
-	* @param id the ID of this image
+	* @param imageId the image ID of this image
 	*/
 	@Override
-	public void setId(long id) {
-		_image.setId(id);
+	public void setImageId(long imageId) {
+		_image.setImageId(imageId);
 	}
 
 	/**

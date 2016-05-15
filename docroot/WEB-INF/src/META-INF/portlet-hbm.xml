@@ -8,7 +8,7 @@
 	<import class="edu.uoc.eventreg.model.Image" />
 	<class name="edu.uoc.eventreg.model.impl.AttendeeImpl" table="EVENTREG_Attendee">
 		<cache usage="read-write" />
-		<id name="id" column="id_" type="long">
+		<id name="attendeeId" type="long">
 			<generator class="increment" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -25,7 +25,7 @@
 	</class>
 	<class name="edu.uoc.eventreg.model.impl.EventImpl" table="EVENTREG_Event">
 		<cache usage="read-write" />
-		<id name="id" column="id_" type="long">
+		<id name="eventId" type="long">
 			<generator class="increment" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -34,6 +34,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="location" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="coordX" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="coordY" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -46,18 +47,19 @@
 	</class>
 	<class name="edu.uoc.eventreg.model.impl.EventOptionImpl" table="EVENTREG_EventOption">
 		<cache usage="read-write" />
-		<id name="id" column="id_" type="long">
+		<id name="eventOptionId" type="long">
 			<generator class="increment" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
-		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="seats" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="eventId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="edu.uoc.eventreg.model.impl.ImageImpl" table="EVENTREG_Image">
 		<cache usage="read-write" />
-		<id name="id" column="id_" type="long">
+		<id name="imageId" type="long">
 			<generator class="increment" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

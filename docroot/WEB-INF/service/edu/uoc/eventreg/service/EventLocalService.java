@@ -61,21 +61,21 @@ public interface EventLocalService extends BaseLocalService,
 	/**
 	* Creates a new event with the primary key. Does not add the event to the database.
 	*
-	* @param id the primary key for the new event
+	* @param eventId the primary key for the new event
 	* @return the new event
 	*/
-	public edu.uoc.eventreg.model.Event createEvent(long id);
+	public edu.uoc.eventreg.model.Event createEvent(long eventId);
 
 	/**
 	* Deletes the event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event that was removed
 	* @throws PortalException if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public edu.uoc.eventreg.model.Event deleteEvent(long id)
+	public edu.uoc.eventreg.model.Event deleteEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -169,19 +169,19 @@ public interface EventLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public edu.uoc.eventreg.model.Event fetchEvent(long id)
+	public edu.uoc.eventreg.model.Event fetchEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the event with the primary key.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event
 	* @throws PortalException if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public edu.uoc.eventreg.model.Event getEvent(long id)
+	public edu.uoc.eventreg.model.Event getEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

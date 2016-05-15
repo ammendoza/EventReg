@@ -17,11 +17,12 @@
     	</control-panel-entry-category>
 		<control-panel-entry-weight>1.5</control-panel-entry-weight>
 		<header-portlet-css>/css/main.css</header-portlet-css>
+		<header-portlet-javascript>https://code.jquery.com/jquery-2.2.3.min.js</header-portlet-javascript>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>
-			regevent-management-portlet
+			event-management-portlet
 		</css-class-wrapper>
 	</portlet>
 	<role-mapper>

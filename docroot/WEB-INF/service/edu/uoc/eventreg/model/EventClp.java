@@ -61,17 +61,17 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 
 	@Override
 	public long getPrimaryKey() {
-		return _id;
+		return _eventId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setEventId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _id;
+		return _eventId;
 	}
 
 	@Override
@@ -83,13 +83,14 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("eventId", getEventId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("address", getAddress());
 		attributes.put("location", getLocation());
+		attributes.put("price", getPrice());
 		attributes.put("coordX", getCoordX());
 		attributes.put("coordY", getCoordY());
 		attributes.put("createDate", getCreateDate());
@@ -105,10 +106,10 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long eventId = (Long)attributes.get("eventId");
 
-		if (id != null) {
-			setId(id);
+		if (eventId != null) {
+			setEventId(eventId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -145,6 +146,12 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 
 		if (location != null) {
 			setLocation(location);
+		}
+
+		Double price = (Double)attributes.get("price");
+
+		if (price != null) {
+			setPrice(price);
 		}
 
 		String coordX = (String)attributes.get("coordX");
@@ -203,21 +210,21 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
+	public long getEventId() {
+		return _eventId;
 	}
 
 	@Override
-	public void setId(long id) {
-		_id = id;
+	public void setEventId(long eventId) {
+		_eventId = eventId;
 
 		if (_eventRemoteModel != null) {
 			try {
 				Class<?> clazz = _eventRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setId", long.class);
+				Method method = clazz.getMethod("setEventId", long.class);
 
-				method.invoke(_eventRemoteModel, id);
+				method.invoke(_eventRemoteModel, eventId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -768,6 +775,29 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 	}
 
 	@Override
+	public double getPrice() {
+		return _price;
+	}
+
+	@Override
+	public void setPrice(double price) {
+		_price = price;
+
+		if (_eventRemoteModel != null) {
+			try {
+				Class<?> clazz = _eventRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPrice", double.class);
+
+				method.invoke(_eventRemoteModel, price);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public String getCoordX() {
 		return _coordX;
 	}
@@ -1164,13 +1194,14 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 	public Object clone() {
 		EventClp clone = new EventClp();
 
-		clone.setId(getId());
+		clone.setEventId(getEventId());
 		clone.setCompanyId(getCompanyId());
 		clone.setGroupId(getGroupId());
 		clone.setTitle(getTitle());
 		clone.setDescription(getDescription());
 		clone.setAddress(getAddress());
 		clone.setLocation(getLocation());
+		clone.setPrice(getPrice());
 		clone.setCoordX(getCoordX());
 		clone.setCoordY(getCoordY());
 		clone.setCreateDate(getCreateDate());
@@ -1232,10 +1263,10 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{id=");
-		sb.append(getId());
+		sb.append("{eventId=");
+		sb.append(getEventId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
@@ -1248,6 +1279,8 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		sb.append(getAddress());
 		sb.append(", location=");
 		sb.append(getLocation());
+		sb.append(", price=");
+		sb.append(getPrice());
 		sb.append(", coordX=");
 		sb.append(getCoordX());
 		sb.append(", coordY=");
@@ -1273,15 +1306,15 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Event");
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>eventId</column-name><column-value><![CDATA[");
+		sb.append(getEventId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -1306,6 +1339,10 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		sb.append(
 			"<column><column-name>location</column-name><column-value><![CDATA[");
 		sb.append(getLocation());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>price</column-name><column-value><![CDATA[");
+		sb.append(getPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>coordX</column-name><column-value><![CDATA[");
@@ -1349,7 +1386,7 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		return sb.toString();
 	}
 
-	private long _id;
+	private long _eventId;
 	private long _companyId;
 	private long _groupId;
 	private String _title;
@@ -1360,6 +1397,7 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 	private String _addressCurrentLanguageId;
 	private String _location;
 	private String _locationCurrentLanguageId;
+	private double _price;
 	private String _coordX;
 	private String _coordY;
 	private Date _createDate;

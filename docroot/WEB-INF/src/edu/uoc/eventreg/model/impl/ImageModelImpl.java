@@ -61,14 +61,14 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	 */
 	public static final String TABLE_NAME = "EVENTREG_Image";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "id_", Types.BIGINT },
+			{ "imageId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Image (id_ LONG not null primary key,companyId LONG,groupId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Image (imageId LONG not null primary key,companyId LONG,groupId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_Image";
-	public static final String ORDER_BY_JPQL = " ORDER BY image.id ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Image.id_ ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY image.imageId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Image.imageId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -93,7 +93,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		Image model = new ImageImpl();
 
-		model.setId(soapModel.getId());
+		model.setImageId(soapModel.getImageId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setGroupId(soapModel.getGroupId());
 
@@ -128,17 +128,17 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public long getPrimaryKey() {
-		return _id;
+		return _imageId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setImageId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _id;
+		return _imageId;
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("imageId", getImageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 
@@ -169,10 +169,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long imageId = (Long)attributes.get("imageId");
 
-		if (id != null) {
-			setId(id);
+		if (imageId != null) {
+			setImageId(imageId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -190,13 +190,13 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@JSON
 	@Override
-	public long getId() {
-		return _id;
+	public long getImageId() {
+		return _imageId;
 	}
 
 	@Override
-	public void setId(long id) {
-		_id = id;
+	public void setImageId(long imageId) {
+		_imageId = imageId;
 	}
 
 	@JSON
@@ -248,7 +248,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public Object clone() {
 		ImageImpl imageImpl = new ImageImpl();
 
-		imageImpl.setId(getId());
+		imageImpl.setImageId(getImageId());
 		imageImpl.setCompanyId(getCompanyId());
 		imageImpl.setGroupId(getGroupId());
 
@@ -261,10 +261,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public int compareTo(Image image) {
 		int value = 0;
 
-		if (getId() < image.getId()) {
+		if (getImageId() < image.getImageId()) {
 			value = -1;
 		}
-		else if (getId() > image.getId()) {
+		else if (getImageId() > image.getImageId()) {
 			value = 1;
 		}
 		else {
@@ -313,7 +313,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public CacheModel<Image> toCacheModel() {
 		ImageCacheModel imageCacheModel = new ImageCacheModel();
 
-		imageCacheModel.id = getId();
+		imageCacheModel.imageId = getImageId();
 
 		imageCacheModel.companyId = getCompanyId();
 
@@ -326,8 +326,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{id=");
-		sb.append(getId());
+		sb.append("{imageId=");
+		sb.append(getImageId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
@@ -346,8 +346,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>imageId</column-name><column-value><![CDATA[");
+		sb.append(getImageId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -365,7 +365,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	private static ClassLoader _classLoader = Image.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Image.class };
-	private long _id;
+	private long _imageId;
 	private long _companyId;
 	private long _groupId;
 	private Image _escapedModel;

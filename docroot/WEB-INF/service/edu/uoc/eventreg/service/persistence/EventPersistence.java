@@ -150,7 +150,7 @@ public interface EventPersistence extends BasePersistence<Event> {
 	/**
 	* Returns the events before and after the current event in the ordered set where companyId = &#63; and groupId = &#63;.
 	*
-	* @param id the primary key of the current event
+	* @param eventId the primary key of the current event
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -159,7 +159,7 @@ public interface EventPersistence extends BasePersistence<Event> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public edu.uoc.eventreg.model.Event[] findByGroupEvents_PrevAndNext(
-		long id, long companyId, long groupId,
+		long eventId, long companyId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchEventException;
@@ -202,20 +202,20 @@ public interface EventPersistence extends BasePersistence<Event> {
 	/**
 	* Creates a new event with the primary key. Does not add the event to the database.
 	*
-	* @param id the primary key for the new event
+	* @param eventId the primary key for the new event
 	* @return the new event
 	*/
-	public edu.uoc.eventreg.model.Event create(long id);
+	public edu.uoc.eventreg.model.Event create(long eventId);
 
 	/**
 	* Removes the event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event that was removed
 	* @throws edu.uoc.eventreg.NoSuchEventException if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public edu.uoc.eventreg.model.Event remove(long id)
+	public edu.uoc.eventreg.model.Event remove(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchEventException;
 
@@ -226,23 +226,23 @@ public interface EventPersistence extends BasePersistence<Event> {
 	/**
 	* Returns the event with the primary key or throws a {@link edu.uoc.eventreg.NoSuchEventException} if it could not be found.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event
 	* @throws edu.uoc.eventreg.NoSuchEventException if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public edu.uoc.eventreg.model.Event findByPrimaryKey(long id)
+	public edu.uoc.eventreg.model.Event findByPrimaryKey(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchEventException;
 
 	/**
 	* Returns the event with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event, or <code>null</code> if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public edu.uoc.eventreg.model.Event fetchByPrimaryKey(long id)
+	public edu.uoc.eventreg.model.Event fetchByPrimaryKey(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -1,6 +1,9 @@
+<%@page import="edu.uoc.eventreg.service.EventOptionLocalServiceUtil"%>
 <%@ include file="/html/init.jsp" %>
 <%
 	Event event = (Event) request.getAttribute("event");
+	List<EventOption> eventOptions = (List<EventOption>) request.getAttribute("eventOptions");
+	Calendar cal = Calendar.getInstance();
 %>
 <liferay-portlet:actionURL name="saveEvent" var="formActionURL" />
 
@@ -20,14 +23,14 @@
 	<aui:input type="hidden" name="cmd" id="cmd" value="save-draft" />
 	
 	<c:if test="<%= event != null %>">
-		<aui:input type="hidden" name="id" value="<%= event.getId() %>" />
+		<aui:input type="hidden" name="id" value="<%= event.getEventId() %>" />
 	</c:if>
 	
 	<aui:field-wrapper label="title" required="true">
 		<liferay-ui:input-localized 
 			name="title" 
-			xml="<%= (event != null)? event.getTitle() : StringPool.BLANK %>" 
-		/>
+			xml="<%= (event != null)? event.getTitle() : StringPool.BLANK %>">
+		</liferay-ui:input-localized>
 	</aui:field-wrapper>
 	
 	<aui:field-wrapper label="location" required="true">
@@ -45,15 +48,15 @@
 	</aui:field-wrapper>
 	
 	<aui:input 
-		name="coord-x" 
-		type="text" 
-		value="<%= (event != null)? event.getCoordX() : StringPool.BLANK %>"
-	/>
-	
-	<aui:input 
 		name="coord-y" 
 		type="text" 
 		value="<%= (event != null)? event.getCoordY() : StringPool.BLANK %>"
+	/>
+	
+		<aui:input 
+		name="coord-x" 
+		type="text" 
+		value="<%= (event != null)? event.getCoordX() : StringPool.BLANK %>"
 	/>
 	
 	<aui:field-wrapper label="description" required="true">
@@ -70,9 +73,60 @@
 		value="<%= (event != null)? event.getRequiresApproval() : false %>"
 	/>
 	
-	<div class="control-group">
-		<liferay-ui:input-date formName="startDate"></liferay-ui:input-date>
-		<liferay-ui:input-date formName="endDate"></liferay-ui:input-date>
+	<h2><liferay-ui:message key="event-options" /></h2>
+	
+	<div id="<portlet:namespace />event-options">
+		<div class="event-option">
+			<i class="icon-plus-sign pull-right"></i>
+			
+			<aui:input type="hidden" name="eventOptionId" value="0" />
+				
+			<aui:field-wrapper label="start-date">
+				<aui:field-wrapper inlineField="true">
+					<liferay-ui:input-date 
+						name="startDate"
+						dayValue="<%= cal.get(Calendar.DAY_OF_MONTH) %>"
+						monthValue="<%= cal.get(Calendar.MONTH) %>"
+						yearValue="<%= cal.get(Calendar.YEAR) %>"
+						/>
+				</aui:field-wrapper>
+					
+				<aui:field-wrapper inlineField="true">
+					<liferay-ui:input-time 
+						name="startHour"
+						hourParam="startHour"
+						amPmParam="startAmPm"
+						minuteParam="startMinute"
+						/>
+				</aui:field-wrapper>
+			</aui:field-wrapper>
+				
+			<aui:field-wrapper label="end-date">
+				<aui:field-wrapper inlineField="true">
+					<liferay-ui:input-date 
+						name="endDate" 
+						dayValue="<%= cal.get(Calendar.DAY_OF_MONTH) %>"
+						monthValue="<%= cal.get(Calendar.MONTH) %>"
+						yearValue="<%= cal.get(Calendar.YEAR) %>"
+						/>
+				</aui:field-wrapper>
+				
+				<aui:field-wrapper inlineField="true">
+					<liferay-ui:input-time 
+						name="endHour"
+						hourParam="endHour"
+						amPmParam="endAmPm"
+						minuteParam="endMinute"
+						/>
+				</aui:field-wrapper>
+			</aui:field-wrapper>
+				
+			<aui:input 
+				name="seats"
+				value="0">
+				<aui:validator name="digits" />
+			</aui:input>
+		</div>
 	</div>
 	
 	<c:if test="<%= event == null || event.getStatus() == WorkflowConstants.STATUS_DRAFT %>">
@@ -90,4 +144,9 @@
 	function publish () {
 		document.<portlet:namespace />fm.<portlet:namespace />cmd.value="add";
 	}
+	
+	$('#<portlet:namespace />event-options .icon-plus-sign').click(function (event) {
+		event.preventDefault();
+		$(this).parent('.event-option').clone(true, true).appendTo("#<portlet:namespace />event-options");
+	});
 </script>

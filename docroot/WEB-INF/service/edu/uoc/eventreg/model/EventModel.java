@@ -63,18 +63,18 @@ public interface EventModel extends BaseModel<Event> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the ID of this event.
+	 * Returns the event ID of this event.
 	 *
-	 * @return the ID of this event
+	 * @return the event ID of this event
 	 */
-	public long getId();
+	public long getEventId();
 
 	/**
-	 * Sets the ID of this event.
+	 * Sets the event ID of this event.
 	 *
-	 * @param id the ID of this event
+	 * @param eventId the event ID of this event
 	 */
-	public void setId(long id);
+	public void setEventId(long eventId);
 
 	/**
 	 * Returns the company ID of this event.
@@ -503,6 +503,20 @@ public interface EventModel extends BaseModel<Event> {
 	 */
 	public void setLocationMap(Map<Locale, String> locationMap,
 		Locale defaultLocale);
+
+	/**
+	 * Returns the price of this event.
+	 *
+	 * @return the price of this event
+	 */
+	public double getPrice();
+
+	/**
+	 * Sets the price of this event.
+	 *
+	 * @param price the price of this event
+	 */
+	public void setPrice(double price);
 
 	/**
 	 * Returns the coord x of this event.

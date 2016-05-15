@@ -61,21 +61,23 @@ public interface EventOptionLocalService extends BaseLocalService,
 	/**
 	* Creates a new event option with the primary key. Does not add the event option to the database.
 	*
-	* @param id the primary key for the new event option
+	* @param eventOptionId the primary key for the new event option
 	* @return the new event option
 	*/
-	public edu.uoc.eventreg.model.EventOption createEventOption(long id);
+	public edu.uoc.eventreg.model.EventOption createEventOption(
+		long eventOptionId);
 
 	/**
 	* Deletes the event option with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the event option
+	* @param eventOptionId the primary key of the event option
 	* @return the event option that was removed
 	* @throws PortalException if a event option with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public edu.uoc.eventreg.model.EventOption deleteEventOption(long id)
+	public edu.uoc.eventreg.model.EventOption deleteEventOption(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -169,19 +171,20 @@ public interface EventOptionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public edu.uoc.eventreg.model.EventOption fetchEventOption(long id)
+	public edu.uoc.eventreg.model.EventOption fetchEventOption(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the event option with the primary key.
 	*
-	* @param id the primary key of the event option
+	* @param eventOptionId the primary key of the event option
 	* @return the event option
 	* @throws PortalException if a event option with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public edu.uoc.eventreg.model.EventOption getEventOption(long id)
+	public edu.uoc.eventreg.model.EventOption getEventOption(long eventOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -249,4 +252,7 @@ public interface EventOptionLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public java.util.List<edu.uoc.eventreg.model.EventOption> findEventOptions(
+		long eventId);
 }

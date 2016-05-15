@@ -57,18 +57,18 @@ public interface ImageModel extends BaseModel<Image> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the ID of this image.
+	 * Returns the image ID of this image.
 	 *
-	 * @return the ID of this image
+	 * @return the image ID of this image
 	 */
-	public long getId();
+	public long getImageId();
 
 	/**
-	 * Sets the ID of this image.
+	 * Sets the image ID of this image.
 	 *
-	 * @param id the ID of this image
+	 * @param imageId the image ID of this image
 	 */
-	public void setId(long id);
+	public void setImageId(long imageId);
 
 	/**
 	 * Returns the company ID of this image.

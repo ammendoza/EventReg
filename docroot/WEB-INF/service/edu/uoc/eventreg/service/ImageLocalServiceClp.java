@@ -140,12 +140,12 @@ public class ImageLocalServiceClp implements ImageLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Image createImage(long id) {
+	public edu.uoc.eventreg.model.Image createImage(long imageId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { id });
+					_methodParameterTypes1, new Object[] { imageId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -163,14 +163,14 @@ public class ImageLocalServiceClp implements ImageLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Image deleteImage(long id)
+	public edu.uoc.eventreg.model.Image deleteImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { id });
+					_methodParameterTypes2, new Object[] { imageId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -423,13 +423,13 @@ public class ImageLocalServiceClp implements ImageLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Image fetchImage(long id)
+	public edu.uoc.eventreg.model.Image fetchImage(long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { id });
+					_methodParameterTypes10, new Object[] { imageId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -451,14 +451,14 @@ public class ImageLocalServiceClp implements ImageLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Image getImage(long id)
+	public edu.uoc.eventreg.model.Image getImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { id });
+					_methodParameterTypes11, new Object[] { imageId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

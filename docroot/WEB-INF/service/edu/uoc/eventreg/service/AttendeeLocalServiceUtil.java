@@ -55,25 +55,27 @@ public class AttendeeLocalServiceUtil {
 	/**
 	* Creates a new attendee with the primary key. Does not add the attendee to the database.
 	*
-	* @param id the primary key for the new attendee
+	* @param attendeeId the primary key for the new attendee
 	* @return the new attendee
 	*/
-	public static edu.uoc.eventreg.model.Attendee createAttendee(long id) {
-		return getService().createAttendee(id);
+	public static edu.uoc.eventreg.model.Attendee createAttendee(
+		long attendeeId) {
+		return getService().createAttendee(attendeeId);
 	}
 
 	/**
 	* Deletes the attendee with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee that was removed
 	* @throws PortalException if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Attendee deleteAttendee(long id)
+	public static edu.uoc.eventreg.model.Attendee deleteAttendee(
+		long attendeeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteAttendee(id);
+		return getService().deleteAttendee(attendeeId);
 	}
 
 	/**
@@ -179,23 +181,23 @@ public class AttendeeLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static edu.uoc.eventreg.model.Attendee fetchAttendee(long id)
+	public static edu.uoc.eventreg.model.Attendee fetchAttendee(long attendeeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchAttendee(id);
+		return getService().fetchAttendee(attendeeId);
 	}
 
 	/**
 	* Returns the attendee with the primary key.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee
 	* @throws PortalException if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Attendee getAttendee(long id)
+	public static edu.uoc.eventreg.model.Attendee getAttendee(long attendeeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAttendee(id);
+		return getService().getAttendee(attendeeId);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(

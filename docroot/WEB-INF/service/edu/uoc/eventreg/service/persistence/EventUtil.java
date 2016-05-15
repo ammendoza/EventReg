@@ -244,7 +244,7 @@ public class EventUtil {
 	/**
 	* Returns the events before and after the current event in the ordered set where companyId = &#63; and groupId = &#63;.
 	*
-	* @param id the primary key of the current event
+	* @param eventId the primary key of the current event
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -253,12 +253,12 @@ public class EventUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static edu.uoc.eventreg.model.Event[] findByGroupEvents_PrevAndNext(
-		long id, long companyId, long groupId,
+		long eventId, long companyId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchEventException {
 		return getPersistence()
-				   .findByGroupEvents_PrevAndNext(id, companyId, groupId,
+				   .findByGroupEvents_PrevAndNext(eventId, companyId, groupId,
 			orderByComparator);
 	}
 
@@ -309,25 +309,25 @@ public class EventUtil {
 	/**
 	* Creates a new event with the primary key. Does not add the event to the database.
 	*
-	* @param id the primary key for the new event
+	* @param eventId the primary key for the new event
 	* @return the new event
 	*/
-	public static edu.uoc.eventreg.model.Event create(long id) {
-		return getPersistence().create(id);
+	public static edu.uoc.eventreg.model.Event create(long eventId) {
+		return getPersistence().create(eventId);
 	}
 
 	/**
 	* Removes the event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event that was removed
 	* @throws edu.uoc.eventreg.NoSuchEventException if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Event remove(long id)
+	public static edu.uoc.eventreg.model.Event remove(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchEventException {
-		return getPersistence().remove(id);
+		return getPersistence().remove(eventId);
 	}
 
 	public static edu.uoc.eventreg.model.Event updateImpl(
@@ -339,27 +339,27 @@ public class EventUtil {
 	/**
 	* Returns the event with the primary key or throws a {@link edu.uoc.eventreg.NoSuchEventException} if it could not be found.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event
 	* @throws edu.uoc.eventreg.NoSuchEventException if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Event findByPrimaryKey(long id)
+	public static edu.uoc.eventreg.model.Event findByPrimaryKey(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchEventException {
-		return getPersistence().findByPrimaryKey(id);
+		return getPersistence().findByPrimaryKey(eventId);
 	}
 
 	/**
 	* Returns the event with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param id the primary key of the event
+	* @param eventId the primary key of the event
 	* @return the event, or <code>null</code> if a event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Event fetchByPrimaryKey(long id)
+	public static edu.uoc.eventreg.model.Event fetchByPrimaryKey(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(id);
+		return getPersistence().fetchByPrimaryKey(eventId);
 	}
 
 	/**

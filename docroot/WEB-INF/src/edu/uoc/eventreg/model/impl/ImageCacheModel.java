@@ -36,8 +36,8 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{id=");
-		sb.append(id);
+		sb.append("{imageId=");
+		sb.append(imageId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", groupId=");
@@ -51,7 +51,7 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 	public Image toEntityModel() {
 		ImageImpl imageImpl = new ImageImpl();
 
-		imageImpl.setId(id);
+		imageImpl.setImageId(imageId);
 		imageImpl.setCompanyId(companyId);
 		imageImpl.setGroupId(groupId);
 
@@ -62,7 +62,7 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		id = objectInput.readLong();
+		imageId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 	}
@@ -70,12 +70,12 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(id);
+		objectOutput.writeLong(imageId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 	}
 
-	public long id;
+	public long imageId;
 	public long companyId;
 	public long groupId;
 }

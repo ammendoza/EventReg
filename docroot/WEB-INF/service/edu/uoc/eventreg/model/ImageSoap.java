@@ -30,7 +30,7 @@ public class ImageSoap implements Serializable {
 	public static ImageSoap toSoapModel(Image model) {
 		ImageSoap soapModel = new ImageSoap();
 
-		soapModel.setId(model.getId());
+		soapModel.setImageId(model.getImageId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
 
@@ -78,19 +78,19 @@ public class ImageSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _id;
+		return _imageId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setId(pk);
+		setImageId(pk);
 	}
 
-	public long getId() {
-		return _id;
+	public long getImageId() {
+		return _imageId;
 	}
 
-	public void setId(long id) {
-		_id = id;
+	public void setImageId(long imageId) {
+		_imageId = imageId;
 	}
 
 	public long getCompanyId() {
@@ -109,7 +109,7 @@ public class ImageSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	private long _id;
+	private long _imageId;
 	private long _companyId;
 	private long _groupId;
 }

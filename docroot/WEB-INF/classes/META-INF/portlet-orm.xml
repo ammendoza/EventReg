@@ -9,9 +9,7 @@
 	</persistence-unit-metadata>
 	<mapped-superclass class="edu.uoc.eventreg.model.impl.AttendeeModelImpl">
 		<attributes>
-			<id name="id">
-				<column name="ID_" />
-			</id>
+			<id name="attendeeId" />
 			<basic name="companyId" />
 			<basic name="groupId" />
 			<basic name="name" />
@@ -32,15 +30,14 @@
 	</mapped-superclass>
 	<mapped-superclass class="edu.uoc.eventreg.model.impl.EventModelImpl">
 		<attributes>
-			<id name="id">
-				<column name="ID_" />
-			</id>
+			<id name="eventId" />
 			<basic name="companyId" />
 			<basic name="groupId" />
 			<basic name="title" />
 			<basic name="description" />
 			<basic name="address" />
 			<basic name="location" />
+			<basic name="price" />
 			<basic name="coordX" />
 			<basic name="coordY" />
 			<basic name="createDate">
@@ -73,9 +70,7 @@
 	</mapped-superclass>
 	<mapped-superclass class="edu.uoc.eventreg.model.impl.EventOptionModelImpl">
 		<attributes>
-			<id name="id">
-				<column name="ID_" />
-			</id>
+			<id name="eventOptionId" />
 			<basic name="companyId" />
 			<basic name="groupId" />
 			<basic name="startDate">
@@ -84,7 +79,8 @@
 			<basic name="endDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="price" />
+			<basic name="seats" />
+			<basic name="eventId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -92,9 +88,7 @@
 	</mapped-superclass>
 	<mapped-superclass class="edu.uoc.eventreg.model.impl.ImageModelImpl">
 		<attributes>
-			<id name="id">
-				<column name="ID_" />
-			</id>
+			<id name="imageId" />
 			<basic name="companyId" />
 			<basic name="groupId" />
 			<transient name="modelAttributes" />

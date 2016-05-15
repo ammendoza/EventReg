@@ -158,12 +158,12 @@ public class EventLocalServiceClp implements EventLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Event createEvent(long id) {
+	public edu.uoc.eventreg.model.Event createEvent(long eventId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { id });
+					_methodParameterTypes1, new Object[] { eventId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -181,14 +181,14 @@ public class EventLocalServiceClp implements EventLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Event deleteEvent(long id)
+	public edu.uoc.eventreg.model.Event deleteEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { id });
+					_methodParameterTypes2, new Object[] { eventId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -441,13 +441,13 @@ public class EventLocalServiceClp implements EventLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Event fetchEvent(long id)
+	public edu.uoc.eventreg.model.Event fetchEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { id });
+					_methodParameterTypes10, new Object[] { eventId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -469,14 +469,14 @@ public class EventLocalServiceClp implements EventLocalService {
 	}
 
 	@Override
-	public edu.uoc.eventreg.model.Event getEvent(long id)
+	public edu.uoc.eventreg.model.Event getEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { id });
+					_methodParameterTypes11, new Object[] { eventId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

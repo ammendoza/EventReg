@@ -59,18 +59,18 @@ public interface EventOptionModel extends BaseModel<EventOption> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the ID of this event option.
+	 * Returns the event option ID of this event option.
 	 *
-	 * @return the ID of this event option
+	 * @return the event option ID of this event option
 	 */
-	public long getId();
+	public long getEventOptionId();
 
 	/**
-	 * Sets the ID of this event option.
+	 * Sets the event option ID of this event option.
 	 *
-	 * @param id the ID of this event option
+	 * @param eventOptionId the event option ID of this event option
 	 */
-	public void setId(long id);
+	public void setEventOptionId(long eventOptionId);
 
 	/**
 	 * Returns the company ID of this event option.
@@ -129,18 +129,32 @@ public interface EventOptionModel extends BaseModel<EventOption> {
 	public void setEndDate(Date endDate);
 
 	/**
-	 * Returns the price of this event option.
+	 * Returns the seats of this event option.
 	 *
-	 * @return the price of this event option
+	 * @return the seats of this event option
 	 */
-	public double getPrice();
+	public int getSeats();
 
 	/**
-	 * Sets the price of this event option.
+	 * Sets the seats of this event option.
 	 *
-	 * @param price the price of this event option
+	 * @param seats the seats of this event option
 	 */
-	public void setPrice(double price);
+	public void setSeats(int seats);
+
+	/**
+	 * Returns the event ID of this event option.
+	 *
+	 * @return the event ID of this event option
+	 */
+	public long getEventId();
+
+	/**
+	 * Sets the event ID of this event option.
+	 *
+	 * @param eventId the event ID of this event option
+	 */
+	public void setEventId(long eventId);
 
 	@Override
 	public boolean isNew();

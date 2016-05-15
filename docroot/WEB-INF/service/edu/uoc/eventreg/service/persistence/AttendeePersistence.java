@@ -150,7 +150,7 @@ public interface AttendeePersistence extends BasePersistence<Attendee> {
 	/**
 	* Returns the attendees before and after the current attendee in the ordered set where companyId = &#63; and groupId = &#63;.
 	*
-	* @param id the primary key of the current attendee
+	* @param attendeeId the primary key of the current attendee
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -159,7 +159,7 @@ public interface AttendeePersistence extends BasePersistence<Attendee> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public edu.uoc.eventreg.model.Attendee[] findByGroupAttendees_PrevAndNext(
-		long id, long companyId, long groupId,
+		long attendeeId, long companyId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchAttendeeException;
@@ -203,20 +203,20 @@ public interface AttendeePersistence extends BasePersistence<Attendee> {
 	/**
 	* Creates a new attendee with the primary key. Does not add the attendee to the database.
 	*
-	* @param id the primary key for the new attendee
+	* @param attendeeId the primary key for the new attendee
 	* @return the new attendee
 	*/
-	public edu.uoc.eventreg.model.Attendee create(long id);
+	public edu.uoc.eventreg.model.Attendee create(long attendeeId);
 
 	/**
 	* Removes the attendee with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee that was removed
 	* @throws edu.uoc.eventreg.NoSuchAttendeeException if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public edu.uoc.eventreg.model.Attendee remove(long id)
+	public edu.uoc.eventreg.model.Attendee remove(long attendeeId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchAttendeeException;
 
@@ -227,23 +227,23 @@ public interface AttendeePersistence extends BasePersistence<Attendee> {
 	/**
 	* Returns the attendee with the primary key or throws a {@link edu.uoc.eventreg.NoSuchAttendeeException} if it could not be found.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee
 	* @throws edu.uoc.eventreg.NoSuchAttendeeException if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public edu.uoc.eventreg.model.Attendee findByPrimaryKey(long id)
+	public edu.uoc.eventreg.model.Attendee findByPrimaryKey(long attendeeId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchAttendeeException;
 
 	/**
 	* Returns the attendee with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param id the primary key of the attendee
+	* @param attendeeId the primary key of the attendee
 	* @return the attendee, or <code>null</code> if a attendee with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public edu.uoc.eventreg.model.Attendee fetchByPrimaryKey(long id)
+	public edu.uoc.eventreg.model.Attendee fetchByPrimaryKey(long attendeeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

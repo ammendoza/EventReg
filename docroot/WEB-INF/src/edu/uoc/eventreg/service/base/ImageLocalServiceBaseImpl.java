@@ -82,26 +82,27 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *
-	 * @param id the primary key for the new image
+	 * @param imageId the primary key for the new image
 	 * @return the new image
 	 */
 	@Override
-	public Image createImage(long id) {
-		return imagePersistence.create(id);
+	public Image createImage(long imageId) {
+		return imagePersistence.create(imageId);
 	}
 
 	/**
 	 * Deletes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param id the primary key of the image
+	 * @param imageId the primary key of the image
 	 * @return the image that was removed
 	 * @throws PortalException if a image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Image deleteImage(long id) throws PortalException, SystemException {
-		return imagePersistence.remove(id);
+	public Image deleteImage(long imageId)
+		throws PortalException, SystemException {
+		return imagePersistence.remove(imageId);
 	}
 
 	/**
@@ -209,21 +210,21 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public Image fetchImage(long id) throws SystemException {
-		return imagePersistence.fetchByPrimaryKey(id);
+	public Image fetchImage(long imageId) throws SystemException {
+		return imagePersistence.fetchByPrimaryKey(imageId);
 	}
 
 	/**
 	 * Returns the image with the primary key.
 	 *
-	 * @param id the primary key of the image
+	 * @param imageId the primary key of the image
 	 * @return the image
 	 * @throws PortalException if a image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Image getImage(long id) throws PortalException, SystemException {
-		return imagePersistence.findByPrimaryKey(id);
+	public Image getImage(long imageId) throws PortalException, SystemException {
+		return imagePersistence.findByPrimaryKey(imageId);
 	}
 
 	@Override

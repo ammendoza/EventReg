@@ -64,14 +64,15 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 	 */
 	public static final String TABLE_NAME = "EVENTREG_EventOption";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "id_", Types.BIGINT },
+			{ "eventOptionId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "startDate", Types.TIMESTAMP },
 			{ "endDate", Types.TIMESTAMP },
-			{ "price", Types.DOUBLE }
+			{ "seats", Types.INTEGER },
+			{ "eventId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EVENTREG_EventOption (id_ LONG not null primary key,companyId LONG,groupId LONG,startDate DATE null,endDate DATE null,price DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table EVENTREG_EventOption (eventOptionId LONG not null primary key,companyId LONG,groupId LONG,startDate DATE null,endDate DATE null,seats INTEGER,eventId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_EventOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY eventOption.startDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_EventOption.startDate DESC";
@@ -84,7 +85,11 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.edu.uoc.eventreg.model.EventOption"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.edu.uoc.eventreg.model.EventOption"),
+			true);
+	public static long EVENTID_COLUMN_BITMASK = 1L;
+	public static long STARTDATE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -99,12 +104,13 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 
 		EventOption model = new EventOptionImpl();
 
-		model.setId(soapModel.getId());
+		model.setEventOptionId(soapModel.getEventOptionId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
-		model.setPrice(soapModel.getPrice());
+		model.setSeats(soapModel.getSeats());
+		model.setEventId(soapModel.getEventId());
 
 		return model;
 	}
@@ -137,17 +143,17 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 
 	@Override
 	public long getPrimaryKey() {
-		return _id;
+		return _eventOptionId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setEventOptionId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _id;
+		return _eventOptionId;
 	}
 
 	@Override
@@ -169,22 +175,23 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("eventOptionId", getEventOptionId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
-		attributes.put("price", getPrice());
+		attributes.put("seats", getSeats());
+		attributes.put("eventId", getEventId());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long eventOptionId = (Long)attributes.get("eventOptionId");
 
-		if (id != null) {
-			setId(id);
+		if (eventOptionId != null) {
+			setEventOptionId(eventOptionId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -211,22 +218,28 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 			setEndDate(endDate);
 		}
 
-		Double price = (Double)attributes.get("price");
+		Integer seats = (Integer)attributes.get("seats");
 
-		if (price != null) {
-			setPrice(price);
+		if (seats != null) {
+			setSeats(seats);
+		}
+
+		Long eventId = (Long)attributes.get("eventId");
+
+		if (eventId != null) {
+			setEventId(eventId);
 		}
 	}
 
 	@JSON
 	@Override
-	public long getId() {
-		return _id;
+	public long getEventOptionId() {
+		return _eventOptionId;
 	}
 
 	@Override
-	public void setId(long id) {
-		_id = id;
+	public void setEventOptionId(long eventOptionId) {
+		_eventOptionId = eventOptionId;
 	}
 
 	@JSON
@@ -259,6 +272,8 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 
 	@Override
 	public void setStartDate(Date startDate) {
+		_columnBitmask = -1L;
+
 		_startDate = startDate;
 	}
 
@@ -275,13 +290,40 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 
 	@JSON
 	@Override
-	public double getPrice() {
-		return _price;
+	public int getSeats() {
+		return _seats;
 	}
 
 	@Override
-	public void setPrice(double price) {
-		_price = price;
+	public void setSeats(int seats) {
+		_seats = seats;
+	}
+
+	@JSON
+	@Override
+	public long getEventId() {
+		return _eventId;
+	}
+
+	@Override
+	public void setEventId(long eventId) {
+		_columnBitmask |= EVENTID_COLUMN_BITMASK;
+
+		if (!_setOriginalEventId) {
+			_setOriginalEventId = true;
+
+			_originalEventId = _eventId;
+		}
+
+		_eventId = eventId;
+	}
+
+	public long getOriginalEventId() {
+		return _originalEventId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -311,12 +353,13 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 	public Object clone() {
 		EventOptionImpl eventOptionImpl = new EventOptionImpl();
 
-		eventOptionImpl.setId(getId());
+		eventOptionImpl.setEventOptionId(getEventOptionId());
 		eventOptionImpl.setCompanyId(getCompanyId());
 		eventOptionImpl.setGroupId(getGroupId());
 		eventOptionImpl.setStartDate(getStartDate());
 		eventOptionImpl.setEndDate(getEndDate());
-		eventOptionImpl.setPrice(getPrice());
+		eventOptionImpl.setSeats(getSeats());
+		eventOptionImpl.setEventId(getEventId());
 
 		eventOptionImpl.resetOriginalValues();
 
@@ -367,13 +410,20 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 
 	@Override
 	public void resetOriginalValues() {
+		EventOptionModelImpl eventOptionModelImpl = this;
+
+		eventOptionModelImpl._originalEventId = eventOptionModelImpl._eventId;
+
+		eventOptionModelImpl._setOriginalEventId = false;
+
+		eventOptionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<EventOption> toCacheModel() {
 		EventOptionCacheModel eventOptionCacheModel = new EventOptionCacheModel();
 
-		eventOptionCacheModel.id = getId();
+		eventOptionCacheModel.eventOptionId = getEventOptionId();
 
 		eventOptionCacheModel.companyId = getCompanyId();
 
@@ -397,17 +447,19 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 			eventOptionCacheModel.endDate = Long.MIN_VALUE;
 		}
 
-		eventOptionCacheModel.price = getPrice();
+		eventOptionCacheModel.seats = getSeats();
+
+		eventOptionCacheModel.eventId = getEventId();
 
 		return eventOptionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{id=");
-		sb.append(getId());
+		sb.append("{eventOptionId=");
+		sb.append(getEventOptionId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
@@ -416,8 +468,10 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
-		sb.append(", price=");
-		sb.append(getPrice());
+		sb.append(", seats=");
+		sb.append(getSeats());
+		sb.append(", eventId=");
+		sb.append(getEventId());
 		sb.append("}");
 
 		return sb.toString();
@@ -425,15 +479,15 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.EventOption");
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>eventOptionId</column-name><column-value><![CDATA[");
+		sb.append(getEventOptionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -452,8 +506,12 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 		sb.append(getEndDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>price</column-name><column-value><![CDATA[");
-		sb.append(getPrice());
+			"<column><column-name>seats</column-name><column-value><![CDATA[");
+		sb.append(getSeats());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>eventId</column-name><column-value><![CDATA[");
+		sb.append(getEventId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -465,11 +523,15 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			EventOption.class
 		};
-	private long _id;
+	private long _eventOptionId;
 	private long _companyId;
 	private long _groupId;
 	private Date _startDate;
 	private Date _endDate;
-	private double _price;
+	private int _seats;
+	private long _eventId;
+	private long _originalEventId;
+	private boolean _setOriginalEventId;
+	private long _columnBitmask;
 	private EventOption _escapedModel;
 }

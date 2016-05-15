@@ -50,17 +50,17 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 
 	@Override
 	public long getPrimaryKey() {
-		return _id;
+		return _imageId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setImageId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _id;
+		return _imageId;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
+		attributes.put("imageId", getImageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 
@@ -81,10 +81,10 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Long imageId = (Long)attributes.get("imageId");
 
-		if (id != null) {
-			setId(id);
+		if (imageId != null) {
+			setImageId(imageId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -101,21 +101,21 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
+	public long getImageId() {
+		return _imageId;
 	}
 
 	@Override
-	public void setId(long id) {
-		_id = id;
+	public void setImageId(long imageId) {
+		_imageId = imageId;
 
 		if (_imageRemoteModel != null) {
 			try {
 				Class<?> clazz = _imageRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setId", long.class);
+				Method method = clazz.getMethod("setImageId", long.class);
 
-				method.invoke(_imageRemoteModel, id);
+				method.invoke(_imageRemoteModel, imageId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -238,7 +238,7 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 	public Object clone() {
 		ImageClp clone = new ImageClp();
 
-		clone.setId(getId());
+		clone.setImageId(getImageId());
 		clone.setCompanyId(getCompanyId());
 		clone.setGroupId(getGroupId());
 
@@ -249,10 +249,10 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 	public int compareTo(Image image) {
 		int value = 0;
 
-		if (getId() < image.getId()) {
+		if (getImageId() < image.getImageId()) {
 			value = -1;
 		}
-		else if (getId() > image.getId()) {
+		else if (getImageId() > image.getImageId()) {
 			value = 1;
 		}
 		else {
@@ -301,8 +301,8 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{id=");
-		sb.append(getId());
+		sb.append("{imageId=");
+		sb.append(getImageId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
@@ -321,8 +321,8 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>imageId</column-name><column-value><![CDATA[");
+		sb.append(getImageId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -338,7 +338,7 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 		return sb.toString();
 	}
 
-	private long _id;
+	private long _imageId;
 	private long _companyId;
 	private long _groupId;
 	private BaseModel<?> _imageRemoteModel;

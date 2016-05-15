@@ -37,10 +37,10 @@ import java.util.Date;
 public class EventCacheModel implements CacheModel<Event>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{id=");
-		sb.append(id);
+		sb.append("{eventId=");
+		sb.append(eventId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", groupId=");
@@ -53,6 +53,8 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 		sb.append(address);
 		sb.append(", location=");
 		sb.append(location);
+		sb.append(", price=");
+		sb.append(price);
 		sb.append(", coordX=");
 		sb.append(coordX);
 		sb.append(", coordY=");
@@ -80,7 +82,7 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 	public Event toEntityModel() {
 		EventImpl eventImpl = new EventImpl();
 
-		eventImpl.setId(id);
+		eventImpl.setEventId(eventId);
 		eventImpl.setCompanyId(companyId);
 		eventImpl.setGroupId(groupId);
 
@@ -111,6 +113,8 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 		else {
 			eventImpl.setLocation(location);
 		}
+
+		eventImpl.setPrice(price);
 
 		if (coordX == null) {
 			eventImpl.setCoordX(StringPool.BLANK);
@@ -165,13 +169,14 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		id = objectInput.readLong();
+		eventId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		address = objectInput.readUTF();
 		location = objectInput.readUTF();
+		price = objectInput.readDouble();
 		coordX = objectInput.readUTF();
 		coordY = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -186,7 +191,7 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(id);
+		objectOutput.writeLong(eventId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 
@@ -218,6 +223,8 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 			objectOutput.writeUTF(location);
 		}
 
+		objectOutput.writeDouble(price);
+
 		if (coordX == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -241,13 +248,14 @@ public class EventCacheModel implements CacheModel<Event>, Externalizable {
 		objectOutput.writeLong(endDate);
 	}
 
-	public long id;
+	public long eventId;
 	public long companyId;
 	public long groupId;
 	public String title;
 	public String description;
 	public String address;
 	public String location;
+	public double price;
 	public String coordX;
 	public String coordY;
 	public long createDate;

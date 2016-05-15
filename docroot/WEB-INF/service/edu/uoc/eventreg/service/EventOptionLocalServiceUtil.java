@@ -55,25 +55,27 @@ public class EventOptionLocalServiceUtil {
 	/**
 	* Creates a new event option with the primary key. Does not add the event option to the database.
 	*
-	* @param id the primary key for the new event option
+	* @param eventOptionId the primary key for the new event option
 	* @return the new event option
 	*/
-	public static edu.uoc.eventreg.model.EventOption createEventOption(long id) {
-		return getService().createEventOption(id);
+	public static edu.uoc.eventreg.model.EventOption createEventOption(
+		long eventOptionId) {
+		return getService().createEventOption(eventOptionId);
 	}
 
 	/**
 	* Deletes the event option with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the event option
+	* @param eventOptionId the primary key of the event option
 	* @return the event option that was removed
 	* @throws PortalException if a event option with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.EventOption deleteEventOption(long id)
+	public static edu.uoc.eventreg.model.EventOption deleteEventOption(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteEventOption(id);
+		return getService().deleteEventOption(eventOptionId);
 	}
 
 	/**
@@ -179,23 +181,25 @@ public class EventOptionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static edu.uoc.eventreg.model.EventOption fetchEventOption(long id)
+	public static edu.uoc.eventreg.model.EventOption fetchEventOption(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchEventOption(id);
+		return getService().fetchEventOption(eventOptionId);
 	}
 
 	/**
 	* Returns the event option with the primary key.
 	*
-	* @param id the primary key of the event option
+	* @param eventOptionId the primary key of the event option
 	* @return the event option
 	* @throws PortalException if a event option with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.EventOption getEventOption(long id)
+	public static edu.uoc.eventreg.model.EventOption getEventOption(
+		long eventOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getEventOption(id);
+		return getService().getEventOption(eventOptionId);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -269,6 +273,11 @@ public class EventOptionLocalServiceUtil {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return getService().invokeMethod(name, parameterTypes, arguments);
+	}
+
+	public static java.util.List<edu.uoc.eventreg.model.EventOption> findEventOptions(
+		long eventId) {
+		return getService().findEventOptions(eventId);
 	}
 
 	public static void clearService() {

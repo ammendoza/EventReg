@@ -7,7 +7,7 @@
 
 	if (row != null) {
 		event = (Event)row.getObject();
-		eventId = String.valueOf(event.getId());
+		eventId = String.valueOf(event.getEventId());
 	}
 %>
 

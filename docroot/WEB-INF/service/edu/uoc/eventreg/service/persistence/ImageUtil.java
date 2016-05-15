@@ -130,25 +130,25 @@ public class ImageUtil {
 	/**
 	* Creates a new image with the primary key. Does not add the image to the database.
 	*
-	* @param id the primary key for the new image
+	* @param imageId the primary key for the new image
 	* @return the new image
 	*/
-	public static edu.uoc.eventreg.model.Image create(long id) {
-		return getPersistence().create(id);
+	public static edu.uoc.eventreg.model.Image create(long imageId) {
+		return getPersistence().create(imageId);
 	}
 
 	/**
 	* Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the image
+	* @param imageId the primary key of the image
 	* @return the image that was removed
 	* @throws edu.uoc.eventreg.NoSuchImageException if a image with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Image remove(long id)
+	public static edu.uoc.eventreg.model.Image remove(long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchImageException {
-		return getPersistence().remove(id);
+		return getPersistence().remove(imageId);
 	}
 
 	public static edu.uoc.eventreg.model.Image updateImpl(
@@ -160,27 +160,27 @@ public class ImageUtil {
 	/**
 	* Returns the image with the primary key or throws a {@link edu.uoc.eventreg.NoSuchImageException} if it could not be found.
 	*
-	* @param id the primary key of the image
+	* @param imageId the primary key of the image
 	* @return the image
 	* @throws edu.uoc.eventreg.NoSuchImageException if a image with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Image findByPrimaryKey(long id)
+	public static edu.uoc.eventreg.model.Image findByPrimaryKey(long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			edu.uoc.eventreg.NoSuchImageException {
-		return getPersistence().findByPrimaryKey(id);
+		return getPersistence().findByPrimaryKey(imageId);
 	}
 
 	/**
 	* Returns the image with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param id the primary key of the image
+	* @param imageId the primary key of the image
 	* @return the image, or <code>null</code> if a image with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static edu.uoc.eventreg.model.Image fetchByPrimaryKey(long id)
+	public static edu.uoc.eventreg.model.Image fetchByPrimaryKey(long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(id);
+		return getPersistence().fetchByPrimaryKey(imageId);
 	}
 
 	/**

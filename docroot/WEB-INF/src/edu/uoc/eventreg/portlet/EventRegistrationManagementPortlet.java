@@ -1,6 +1,8 @@
 package edu.uoc.eventreg.portlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -12,7 +14,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -26,8 +27,11 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import edu.uoc.eventreg.model.Event;
+import edu.uoc.eventreg.model.EventOption;
 import edu.uoc.eventreg.model.impl.EventImpl;
+import edu.uoc.eventreg.model.impl.EventOptionImpl;
 import edu.uoc.eventreg.service.EventLocalServiceUtil;
+import edu.uoc.eventreg.service.EventOptionLocalServiceUtil;
 
 /**
  * Portlet implementation class EventRegistrationManagementPortlet
@@ -63,6 +67,8 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		Date createDate = new Date();
 		User user = (User) request.getAttribute(WebKeys.USER);
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long companyId = themeDisplay.getCompanyId();
+		long groupId = themeDisplay.getDoAsGroupId();
 		
 		Event event = null;
 		if (Validator.isNull(id)) {
@@ -92,17 +98,96 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		
 		try {
 			if (Validator.isNull(id)) {
-				event.setCompanyId(themeDisplay.getCompanyId());
-				event.setGroupId(themeDisplay.getDoAsGroupId());
+				event.setCompanyId(companyId);
+				event.setGroupId(groupId);
 				event.setCreatedBy(user.getUserId());
 				event.setCreateDate(createDate);
 				
-				EventLocalServiceUtil.addEvent(event);
+				event = EventLocalServiceUtil.addEvent(event);
 			} else {
 				event.persist();
 			}
 		} catch (SystemException e) {
 			e.printStackTrace();
+		}
+		
+		//Add event options
+		String[] eventOptionIds = ParamUtil.getParameterValues(request, "eventOptionId");
+		String[] startDates = ParamUtil.getParameterValues(request, "startDate");
+		String[] startHours = ParamUtil.getParameterValues(request, "startHour");
+		String[] endDates = ParamUtil.getParameterValues(request, "endDate");
+		String[] endHours = ParamUtil.getParameterValues(request, "endHour");
+		String[] seats = ParamUtil.getParameterValues(request, "seats");
+		
+		System.out.println("startDate " + startDates[0] + " | num: " + startDates.length);
+		System.out.println("endDate " + endDates[0] + " | num: " + endDates.length);
+		System.out.println("startHour " + startHours[0] + " - " + startHours[1] + " | num: " + startHours.length);
+		System.out.println("endHour " + endHours[0] + " - " + endHours[1] + " | num: " + endHours.length);
+		System.out.println("seats " + seats[0] + " | num: " + seats.length);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy HH:mm");
+		int hourCount = 0;
+		
+		if (Validator.isNull(id)) {
+			
+			for (int i=0; i<startDates.length; i++) {
+				EventOption eventOption = new EventOptionImpl();
+				eventOption.setGroupId(groupId);
+				eventOption.setCompanyId(companyId);
+				eventOption.setEventId(event.getEventId());
+				
+				try {
+					Date startDate = formatter.parse(startDates[i] + " " + startHours[hourCount]);
+					Date endDate = formatter.parse(endDates[i] + " " + endHours[hourCount]);
+					eventOption.setStartDate(startDate);
+					eventOption.setEndDate(endDate);
+					
+					int seatNum = Integer.parseInt(seats[i]);
+					eventOption.setSeats(seatNum);
+					
+					EventOptionLocalServiceUtil.addEventOption(eventOption);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				hourCount = hourCount + 2;
+			}
+		} else {
+			
+			for (int i=0; i<startDates.length; i++) {
+				int eventOptionId = Integer.parseInt(eventOptionIds[i]);
+				EventOption eventOption = null;
+				
+				try {
+					if (eventOptionId != 0) {
+						eventOption = EventOptionLocalServiceUtil.getEventOption(eventOptionId);
+					} else {
+						eventOption = new EventOptionImpl();
+						eventOption.setGroupId(groupId);
+						eventOption.setCompanyId(companyId);
+						eventOption.setEventId(event.getEventId());
+					}
+
+					Date startDate = formatter.parse(startDates[i] + " " + startHours[hourCount]);
+					Date endDate = formatter.parse(endDates[i] + " " + endHours[hourCount]);
+					eventOption.setStartDate(startDate);
+					eventOption.setEndDate(endDate);
+					
+					int seatNum = Integer.parseInt(seats[i]);
+					eventOption.setSeats(seatNum);
+					
+					if (eventOptionId != 0) {
+						EventOptionLocalServiceUtil.addEventOption(eventOption);
+					} else {
+						eventOption.persist();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				hourCount = hourCount + 2;
+			}
+			
 		}
 		
 		SessionMessages.add(request, "event-added-successfuly");
@@ -117,7 +202,6 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 			EventLocalServiceUtil.deleteEvent(eventId);
 			SessionMessages.add(request, "event-deleted-successfuly");
 		} catch (PortalException | SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -126,14 +210,19 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 	public void editEventForm (ActionRequest request, ActionResponse response) {
 		
 		long eventId = ParamUtil.getLong(request, "id");
+		Event event = null;
+		List<EventOption> eventOptions = null;
+		
 		try {
-			Event event = (Event) EventLocalServiceUtil.getEvent(eventId);
-			request.setAttribute("event", event);
-			response.setRenderParameter("mvcPath", "/html/management/event_form.jsp");
+			event = (Event) EventLocalServiceUtil.getEvent(eventId);
+			eventOptions = (List<EventOption>) EventOptionLocalServiceUtil.findEventOptions(eventId);
 		} catch (PortalException | SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		request.setAttribute("event", event);
+		request.setAttribute("eventOptions", eventOptions);
+		response.setRenderParameter("mvcPath", "/html/management/event_form.jsp");
 	}
 	
 	public void listAttendees(ActionRequest request, ActionResponse response) {

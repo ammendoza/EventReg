@@ -1,5 +1,5 @@
 create table EVENTREG_Attendee (
-	id_ LONG not null primary key,
+	attendeeId LONG not null primary key,
 	companyId LONG,
 	groupId LONG,
 	name VARCHAR(75) null,
@@ -14,13 +14,14 @@ create table EVENTREG_Attendee (
 );
 
 create table EVENTREG_Event (
-	id_ LONG not null primary key,
+	eventId LONG not null primary key,
 	companyId LONG,
 	groupId LONG,
 	title STRING null,
 	description STRING null,
 	address STRING null,
 	location STRING null,
+	price DOUBLE,
 	coordX VARCHAR(75) null,
 	coordY VARCHAR(75) null,
 	createDate DATE null,
@@ -33,16 +34,17 @@ create table EVENTREG_Event (
 );
 
 create table EVENTREG_EventOption (
-	id_ LONG not null primary key,
+	eventOptionId LONG not null primary key,
 	companyId LONG,
 	groupId LONG,
 	startDate DATE null,
 	endDate DATE null,
-	price DOUBLE
+	seats INTEGER,
+	eventId LONG
 );
 
 create table EVENTREG_Image (
-	id_ LONG not null primary key,
+	imageId LONG not null primary key,
 	companyId LONG,
 	groupId LONG
 );
