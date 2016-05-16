@@ -10,6 +10,7 @@ create table EVENTREG_Attendee (
 	registerDate DATE null,
 	reservationCode VARCHAR(75) null,
 	status INTEGER,
+	eventOptionId LONG,
 	managedBy LONG
 );
 

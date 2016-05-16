@@ -7,6 +7,8 @@
 	Locale locale = request.getLocale();
 %>
 
+<liferay-ui:success key="registration-success" message="registration-success" />
+
 <liferay-ui:icon 
 	image="print"
 	label="<%= true %>"
@@ -15,9 +17,7 @@
 	cssClass="pull-right"
 />
 
-<p><liferay-ui:message key="registration-success" /></p>
-
-<h2><liferay-ui:message key="event" /></h2>
+<h2><liferay-ui:message key="event-information" /></h2>
 <dl class="dl-horizontal">
 	<dt><liferay-ui:message key="event" /></dt>
 	<dd><%= event.getTitle(locale) %>
@@ -29,13 +29,13 @@
 	<dd><%= event.getLocation(locale) %>
 	<dt><liferay-ui:message key="address" /></dt>
 	<dd><%= event.getAddress(locale) %>
-	<dt><liferay-ui:message key="reservation-code" /></dt>
+	<dt><liferay-ui:message key="registration-code" /></dt>
 	<dd><%= attendee.getReservationCode() %>
 	<dt><liferay-ui:message key="status" /></dt>
 	<dd><%= event.getAddress(locale) %>
 </dl>
 
-<h2><liferay-ui:message key="user-info" /></h2>
+<h2><liferay-ui:message key="contact-information" /></h2>
 <dl class="dl-horizontal">
 	<dt><liferay-ui:message key="name" /></dt>
 	<dd><%= attendee.getName() %>

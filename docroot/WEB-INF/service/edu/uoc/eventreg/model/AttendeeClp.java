@@ -84,6 +84,7 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 		attributes.put("registerDate", getRegisterDate());
 		attributes.put("reservationCode", getReservationCode());
 		attributes.put("status", getStatus());
+		attributes.put("eventOptionId", getEventOptionId());
 		attributes.put("managedBy", getManagedBy());
 
 		return attributes;
@@ -155,6 +156,12 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long eventOptionId = (Long)attributes.get("eventOptionId");
+
+		if (eventOptionId != null) {
+			setEventOptionId(eventOptionId);
 		}
 
 		Long managedBy = (Long)attributes.get("managedBy");
@@ -419,6 +426,29 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 	}
 
 	@Override
+	public long getEventOptionId() {
+		return _eventOptionId;
+	}
+
+	@Override
+	public void setEventOptionId(long eventOptionId) {
+		_eventOptionId = eventOptionId;
+
+		if (_attendeeRemoteModel != null) {
+			try {
+				Class<?> clazz = _attendeeRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setEventOptionId", long.class);
+
+				method.invoke(_attendeeRemoteModel, eventOptionId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public long getManagedBy() {
 		return _managedBy;
 	}
@@ -521,6 +551,7 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 		clone.setRegisterDate(getRegisterDate());
 		clone.setReservationCode(getReservationCode());
 		clone.setStatus(getStatus());
+		clone.setEventOptionId(getEventOptionId());
 		clone.setManagedBy(getManagedBy());
 
 		return clone;
@@ -572,7 +603,7 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{attendeeId=");
 		sb.append(getAttendeeId());
@@ -596,6 +627,8 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 		sb.append(getReservationCode());
 		sb.append(", status=");
 		sb.append(getStatus());
+		sb.append(", eventOptionId=");
+		sb.append(getEventOptionId());
 		sb.append(", managedBy=");
 		sb.append(getManagedBy());
 		sb.append("}");
@@ -605,7 +638,7 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Attendee");
@@ -656,6 +689,10 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>eventOptionId</column-name><column-value><![CDATA[");
+		sb.append(getEventOptionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>managedBy</column-name><column-value><![CDATA[");
 		sb.append(getManagedBy());
 		sb.append("]]></column-value></column>");
@@ -676,6 +713,7 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 	private Date _registerDate;
 	private String _reservationCode;
 	private int _status;
+	private long _eventOptionId;
 	private long _managedBy;
 	private BaseModel<?> _attendeeRemoteModel;
 	private Class<?> _clpSerializerClass = edu.uoc.eventreg.service.ClpSerializer.class;

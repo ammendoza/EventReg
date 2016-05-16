@@ -26,10 +26,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.model.Event;
 import edu.uoc.eventreg.model.EventOption;
 import edu.uoc.eventreg.model.impl.EventImpl;
 import edu.uoc.eventreg.model.impl.EventOptionImpl;
+import edu.uoc.eventreg.service.AttendeeLocalServiceUtil;
 import edu.uoc.eventreg.service.EventLocalServiceUtil;
 import edu.uoc.eventreg.service.EventOptionLocalServiceUtil;
 
@@ -234,6 +236,28 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		request.setAttribute("eventId", eventId);
 		
 		response.setRenderParameter("mvcPath", "/html/management/attendee_list.jsp");
+	}
+	
+	public void viewAttendee(ActionRequest request, ActionResponse response) {
+		long attendeeId = ParamUtil.getLong(request, "attendeeId");
+		
+		Attendee attendee = null;
+		EventOption eventOption = null;
+		Event event = null;
+		
+		try {
+			attendee = AttendeeLocalServiceUtil.getAttendee(attendeeId);
+			eventOption = EventOptionLocalServiceUtil.getEventOption(attendee.getEventOptionId());
+			event = EventLocalServiceUtil.getEvent(eventOption.getEventId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("attendee", attendee);
+		request.setAttribute("eventOption", eventOption);
+		request.setAttribute("event", event);
+		
+		response.setRenderParameter("mvcPath", "/html/management/attendee_view.jsp");
 	}
 
 }

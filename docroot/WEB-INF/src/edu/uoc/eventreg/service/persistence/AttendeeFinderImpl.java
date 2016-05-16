@@ -6,13 +6,15 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import edu.uoc.eventreg.model.Attendee;
+import edu.uoc.eventreg.model.impl.AttendeeImpl;
 
-public class AttendeeFinderImpl extends AttendeePersistenceImpl {
+public class AttendeeFinderImpl extends BasePersistenceImpl<Attendee> implements AttendeeFinder {
 	
+	@SuppressWarnings("unchecked")
 	public List<Attendee> findByEvent (long eventId) {
 		List<Attendee> list = null;
 		
@@ -24,18 +26,14 @@ public class AttendeeFinderImpl extends AttendeePersistenceImpl {
 
 	        SQLQuery q = session.createSQLQuery(sql);
 	        q.setCacheable(false);
-	        q.addEntity("Attendee", Attendee.class);
+	        q.addEntity("REGEVENT_Attendee", AttendeeImpl.class);
 
 	        QueryPos qPos = QueryPos.getInstance(q);  
 	        qPos.add(eventId);
 
 	        list = (List<Attendee>) QueryUtil.list(q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	    } catch (Exception e) {
-	        try {
-	            throw new SystemException(e);
-	        } catch (SystemException se) {
-	            se.printStackTrace();
-	        }
+	    	e.printStackTrace();
 	    } finally {
 	        closeSession(session);
 	    }
@@ -44,7 +42,7 @@ public class AttendeeFinderImpl extends AttendeePersistenceImpl {
 	}
 	
 	public static final String FIND_BY_EVENT =
-		    Attendee.class.getName() +
+		    AttendeeFinder.class.getName() +
 		        ".findByEvent";
 
 }

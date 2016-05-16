@@ -24,8 +24,9 @@ AttendeeDisplayTerms displayTerms = (AttendeeDisplayTerms)searchContainer.getDis
 
 			<aui:select name="<%= displayTerms.STATUS %>">
 				<aui:option value="0" label="all" />
-				<aui:option value="<%= WorkflowConstants.STATUS_APPROVED %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_APPROVED) %>" />
 				<aui:option value="<%= WorkflowConstants.STATUS_PENDING %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_PENDING) %>" />
+ 				<aui:option value="<%= WorkflowConstants.STATUS_APPROVED %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_APPROVED) %>" />
+ 				<aui:option value="<%= WorkflowConstants.STATUS_DENIED %>" label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DENIED) %>" />
  			</aui:select>
 
 		</aui:fieldset>

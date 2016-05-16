@@ -61,6 +61,7 @@ public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 		return events;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Event> searchEvents (long companyId, long groupId, String title, String description, String location, int status, boolean andSearch, int start, int end) {
 			
 		List<Event> events = null;

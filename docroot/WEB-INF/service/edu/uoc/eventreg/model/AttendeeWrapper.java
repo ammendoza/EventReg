@@ -60,6 +60,7 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 		attributes.put("registerDate", getRegisterDate());
 		attributes.put("reservationCode", getReservationCode());
 		attributes.put("status", getStatus());
+		attributes.put("eventOptionId", getEventOptionId());
 		attributes.put("managedBy", getManagedBy());
 
 		return attributes;
@@ -131,6 +132,12 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long eventOptionId = (Long)attributes.get("eventOptionId");
+
+		if (eventOptionId != null) {
+			setEventOptionId(eventOptionId);
 		}
 
 		Long managedBy = (Long)attributes.get("managedBy");
@@ -378,6 +385,26 @@ public class AttendeeWrapper implements Attendee, ModelWrapper<Attendee> {
 	@Override
 	public void setStatus(int status) {
 		_attendee.setStatus(status);
+	}
+
+	/**
+	* Returns the event option ID of this attendee.
+	*
+	* @return the event option ID of this attendee
+	*/
+	@Override
+	public long getEventOptionId() {
+		return _attendee.getEventOptionId();
+	}
+
+	/**
+	* Sets the event option ID of this attendee.
+	*
+	* @param eventOptionId the event option ID of this attendee
+	*/
+	@Override
+	public void setEventOptionId(long eventOptionId) {
+		_attendee.setEventOptionId(eventOptionId);
 	}
 
 	/**

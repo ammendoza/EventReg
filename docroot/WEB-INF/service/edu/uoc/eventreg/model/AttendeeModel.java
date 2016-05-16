@@ -220,6 +220,20 @@ public interface AttendeeModel extends BaseModel<Attendee> {
 	public void setStatus(int status);
 
 	/**
+	 * Returns the event option ID of this attendee.
+	 *
+	 * @return the event option ID of this attendee
+	 */
+	public long getEventOptionId();
+
+	/**
+	 * Sets the event option ID of this attendee.
+	 *
+	 * @param eventOptionId the event option ID of this attendee
+	 */
+	public void setEventOptionId(long eventOptionId);
+
+	/**
 	 * Returns the managed by of this attendee.
 	 *
 	 * @return the managed by of this attendee

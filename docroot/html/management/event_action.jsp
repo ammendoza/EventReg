@@ -32,14 +32,14 @@
 				url="<%= deleteURL %>"
 			/>
 			
-			<portlet:actionURL var="manageRegistrationURL" name="manageRegistration">
+			<portlet:actionURL var="listEventAttendeesURL" name="listAttendees">
 				<portlet:param name="eventId" value="<%= eventId %>"/>
 			</portlet:actionURL>
 
 			<liferay-ui:icon
-				image="assign-user-group-roles"
-				label="manage-registrations"
-				url="<%= manageRegistrationURL %>"
+				image="assign_user_group_roles"
+				message="manage-registered-users"
+				url="<%= listEventAttendeesURL %>"
 			/>
 	</liferay-ui:icon-menu>
 </span>

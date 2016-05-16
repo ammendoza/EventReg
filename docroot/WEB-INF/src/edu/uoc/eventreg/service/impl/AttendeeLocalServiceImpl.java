@@ -27,6 +27,7 @@ import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.service.AttendeeLocalServiceUtil;
 import edu.uoc.eventreg.service.EventLocalServiceUtil;
 import edu.uoc.eventreg.service.base.AttendeeLocalServiceBaseImpl;
+import edu.uoc.eventreg.service.persistence.AttendeeFinderUtil;
 import edu.uoc.eventreg.service.persistence.AttendeeUtil;
 
 /**
@@ -51,8 +52,8 @@ public class AttendeeLocalServiceImpl extends AttendeeLocalServiceBaseImpl {
 	 */
 	
 	public List<Attendee> findByEvent (long eventId) {
-		
-		List<Attendee> list = attendeeFinder.findByEvent(eventId);
+
+		List<Attendee> list = AttendeeFinderUtil.findByEvent(eventId);
 		
 		return list;
 	}

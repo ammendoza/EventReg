@@ -13,6 +13,7 @@
 		<field name="registerDate" type="Date" />
 		<field name="reservationCode" type="String" />
 		<field name="status" type="int" />
+		<field name="eventOptionId" type="long" />
 		<field name="managedBy" type="long" />
 	</model>
 	<model name="edu.uoc.eventreg.model.Event">

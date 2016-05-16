@@ -81,7 +81,7 @@
 		<column name="registerDate" type="Date" />
 		<column name="reservationCode" type="String" />
 		<column name="status" type="int" />
-		<column name="eventOptionId" type="Collection" entity="EventOption" />
+		<column name="eventOptionId" type="long" />
 		<column name="managedBy" type="long" />
 
 		<!-- Order -->
@@ -93,6 +93,11 @@
 		<finder name="GroupAttendees" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="groupId" />
+		</finder>
+		
+		<finder name="EmailAndEventOption" return-type="Collection">
+			<finder-column name="email" />
+			<finder-column name="eventOptionId" />
 		</finder>
 	</entity>
 	

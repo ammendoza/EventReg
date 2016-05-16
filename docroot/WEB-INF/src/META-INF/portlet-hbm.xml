@@ -21,6 +21,7 @@
 		<property name="registerDate" type="org.hibernate.type.TimestampType" />
 		<property name="reservationCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="eventOptionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="managedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="edu.uoc.eventreg.model.impl.EventImpl" table="EVENTREG_Event">

@@ -22,6 +22,7 @@
 			</basic>
 			<basic name="reservationCode" />
 			<basic name="status" />
+			<basic name="eventOptionId" />
 			<basic name="managedBy" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />

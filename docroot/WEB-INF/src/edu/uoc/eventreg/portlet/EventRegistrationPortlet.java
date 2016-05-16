@@ -1,6 +1,7 @@
 package edu.uoc.eventreg.portlet;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -11,11 +12,12 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.util.PwdGenerator;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import edu.uoc.eventreg.model.Attendee;
@@ -86,7 +88,7 @@ public class EventRegistrationPortlet extends MVCPortlet {
 		String company = ParamUtil.getString(request, "company");
 		String email = ParamUtil.getString(request, "email");
 		String phone = ParamUtil.getString(request, "phone");
-		String reservationCode = PortalUtil.generateRandomKey(PortalUtil.getHttpServletRequest(request), name + surname);
+		String reservationCode = PwdGenerator.getPassword(10) + "-" + eventOptionId;
 				
 		try {
 			eventOption = (EventOption) EventOptionLocalServiceUtil.getEventOption(eventOptionId);
@@ -101,6 +103,8 @@ public class EventRegistrationPortlet extends MVCPortlet {
 			attendee.setEmail(email);
 			attendee.setPhone(phone);
 			attendee.setReservationCode(reservationCode);
+			attendee.setRegisterDate(new Date());
+			attendee.setEventOptionId(eventOptionId);
 			
 			if (event.getRequiresApproval())
 				attendee.setStatus(WorkflowConstants.STATUS_PENDING);
@@ -116,6 +120,8 @@ public class EventRegistrationPortlet extends MVCPortlet {
 		request.setAttribute("event", event);
 		request.setAttribute("eventOption", eventOption);
 		request.setAttribute("attendee", attendee);
+		
+		SessionMessages.add(request, "registration-success");
 		
 		response.setRenderParameter("mvcPath", "/html/registration/register_details.jsp");
 	}

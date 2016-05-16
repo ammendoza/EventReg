@@ -75,9 +75,10 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 			{ "registerDate", Types.TIMESTAMP },
 			{ "reservationCode", Types.VARCHAR },
 			{ "status", Types.INTEGER },
+			{ "eventOptionId", Types.BIGINT },
 			{ "managedBy", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Attendee (attendeeId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,surname VARCHAR(75) null,company VARCHAR(75) null,email VARCHAR(75) null,phone VARCHAR(75) null,registerDate DATE null,reservationCode VARCHAR(75) null,status INTEGER,managedBy LONG)";
+	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Attendee (attendeeId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,surname VARCHAR(75) null,company VARCHAR(75) null,email VARCHAR(75) null,phone VARCHAR(75) null,registerDate DATE null,reservationCode VARCHAR(75) null,status INTEGER,eventOptionId LONG,managedBy LONG)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_Attendee";
 	public static final String ORDER_BY_JPQL = " ORDER BY attendee.surname ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Attendee.surname ASC";
@@ -94,8 +95,10 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 				"value.object.column.bitmask.enabled.edu.uoc.eventreg.model.Attendee"),
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long SURNAME_COLUMN_BITMASK = 4L;
+	public static long EMAIL_COLUMN_BITMASK = 2L;
+	public static long EVENTOPTIONID_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 8L;
+	public static long SURNAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -121,6 +124,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		model.setRegisterDate(soapModel.getRegisterDate());
 		model.setReservationCode(soapModel.getReservationCode());
 		model.setStatus(soapModel.getStatus());
+		model.setEventOptionId(soapModel.getEventOptionId());
 		model.setManagedBy(soapModel.getManagedBy());
 
 		return model;
@@ -197,6 +201,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		attributes.put("registerDate", getRegisterDate());
 		attributes.put("reservationCode", getReservationCode());
 		attributes.put("status", getStatus());
+		attributes.put("eventOptionId", getEventOptionId());
 		attributes.put("managedBy", getManagedBy());
 
 		return attributes;
@@ -268,6 +273,12 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long eventOptionId = (Long)attributes.get("eventOptionId");
+
+		if (eventOptionId != null) {
+			setEventOptionId(eventOptionId);
 		}
 
 		Long managedBy = (Long)attributes.get("managedBy");
@@ -397,7 +408,17 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public void setEmail(String email) {
+		_columnBitmask |= EMAIL_COLUMN_BITMASK;
+
+		if (_originalEmail == null) {
+			_originalEmail = _email;
+		}
+
 		_email = email;
+	}
+
+	public String getOriginalEmail() {
+		return GetterUtil.getString(_originalEmail);
 	}
 
 	@JSON
@@ -456,6 +477,29 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@JSON
 	@Override
+	public long getEventOptionId() {
+		return _eventOptionId;
+	}
+
+	@Override
+	public void setEventOptionId(long eventOptionId) {
+		_columnBitmask |= EVENTOPTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalEventOptionId) {
+			_setOriginalEventOptionId = true;
+
+			_originalEventOptionId = _eventOptionId;
+		}
+
+		_eventOptionId = eventOptionId;
+	}
+
+	public long getOriginalEventOptionId() {
+		return _originalEventOptionId;
+	}
+
+	@JSON
+	@Override
 	public long getManagedBy() {
 		return _managedBy;
 	}
@@ -507,6 +551,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		attendeeImpl.setRegisterDate(getRegisterDate());
 		attendeeImpl.setReservationCode(getReservationCode());
 		attendeeImpl.setStatus(getStatus());
+		attendeeImpl.setEventOptionId(getEventOptionId());
 		attendeeImpl.setManagedBy(getManagedBy());
 
 		attendeeImpl.resetOriginalValues();
@@ -565,6 +610,12 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		attendeeModelImpl._originalGroupId = attendeeModelImpl._groupId;
 
 		attendeeModelImpl._setOriginalGroupId = false;
+
+		attendeeModelImpl._originalEmail = attendeeModelImpl._email;
+
+		attendeeModelImpl._originalEventOptionId = attendeeModelImpl._eventOptionId;
+
+		attendeeModelImpl._setOriginalEventOptionId = false;
 
 		attendeeModelImpl._columnBitmask = 0;
 	}
@@ -638,6 +689,8 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 		attendeeCacheModel.status = getStatus();
 
+		attendeeCacheModel.eventOptionId = getEventOptionId();
+
 		attendeeCacheModel.managedBy = getManagedBy();
 
 		return attendeeCacheModel;
@@ -645,7 +698,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{attendeeId=");
 		sb.append(getAttendeeId());
@@ -669,6 +722,8 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		sb.append(getReservationCode());
 		sb.append(", status=");
 		sb.append(getStatus());
+		sb.append(", eventOptionId=");
+		sb.append(getEventOptionId());
 		sb.append(", managedBy=");
 		sb.append(getManagedBy());
 		sb.append("}");
@@ -678,7 +733,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Attendee");
@@ -729,6 +784,10 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>eventOptionId</column-name><column-value><![CDATA[");
+		sb.append(getEventOptionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>managedBy</column-name><column-value><![CDATA[");
 		sb.append(getManagedBy());
 		sb.append("]]></column-value></column>");
@@ -753,10 +812,14 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	private String _surname;
 	private String _company;
 	private String _email;
+	private String _originalEmail;
 	private String _phone;
 	private Date _registerDate;
 	private String _reservationCode;
 	private int _status;
+	private long _eventOptionId;
+	private long _originalEventOptionId;
+	private boolean _setOriginalEventOptionId;
 	private long _managedBy;
 	private long _columnBitmask;
 	private Attendee _escapedModel;

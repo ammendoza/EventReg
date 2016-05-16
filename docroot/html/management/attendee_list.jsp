@@ -16,7 +16,7 @@
 %>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
-	<portlet:param name="eventId" value="<%= eventId %>" />
+	<portlet:param name="eventId" value="<%= String.valueOf(eventId) %>" />
 	<portlet:param name="name" value="<%= name %>" />
 	<portlet:param name="surname" value="<%= surname %>" />
 	<portlet:param name="email" value="<%= email %>" />
@@ -38,18 +38,18 @@
 			String searchkeywords = displayTerms.getKeywords().trim();
 			
 			if (searchkeywords.isEmpty()) {
-				results = AttendeeLocalServiceUtil.findGroupAttendees(companyId, groupId);
-				total = results.size();
-				results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
-			} else {
 				if (eventId != 0) {
-					total = AttendeeLocalServiceUtil.searchAttendeeCount(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false);
-					results = AttendeeLocalServiceUtil.searchAttendees(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false, searchContainer.getStart(), searchContainer.getEnd());
-				} else {
 					results = AttendeeLocalServiceUtil.findByEvent(eventId);
 					total = results.size();
 					results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
+				} else {
+					results = AttendeeLocalServiceUtil.findGroupAttendees(companyId, groupId);
+					total = results.size();
+					results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
 				}
+			} else {
+				total = AttendeeLocalServiceUtil.searchAttendeeCount(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false);
+				results = AttendeeLocalServiceUtil.searchAttendees(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false, searchContainer.getStart(), searchContainer.getEnd());
 			}
 		}
 		
@@ -71,6 +71,11 @@
 		<aui:nav id="toolbarContainer">
 			<liferay-portlet:renderURL var="viewEventsURL" />
 			<aui:nav-item href="<%= viewEventsURL %>" iconCssClass="icon-th-list" label="view-events" />
+			
+			<c:if test="<%= eventId != 0 %>">
+				<liferay-portlet:actionURL name="listAttendees" var="listAttendeesURL" />
+				<aui:nav-item href="<%= listAttendeesURL %>" iconCssClass="icon-th-list" label="view-registered" />
+			</c:if>
 		</aui:nav>
 		
 		<c:if test="<%= results != null && results.size() != 0 %>">
@@ -101,9 +106,9 @@
 			value="<%= WorkflowConstants.getStatusLabel(user.getStatus()) %>"
 		/>
 					
-		<!-- <liferay-ui:search-container-column-jsp 
-			path="/html/management/event_action.jsp" 
-		/> -->
+		<liferay-ui:search-container-column-jsp 
+			path="/html/management/attendee_action.jsp" 
+		/>
 		
 	</liferay-ui:search-container-row>
 
