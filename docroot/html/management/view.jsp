@@ -99,6 +99,7 @@
 		<liferay-ui:search-container-column-text
 			name="status"
 			value="<%= WorkflowConstants.getStatusLabel(event.getStatus()) %>"
+			translate="true"
 		/>
 					
 		<liferay-ui:search-container-column-jsp 

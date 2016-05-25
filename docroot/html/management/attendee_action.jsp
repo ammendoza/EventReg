@@ -23,26 +23,29 @@
 				url="<%= viewURL %>"
 			/>
 			
-			<portlet:actionURL var="approveAttendeeURL" name="approveAttendee">
-				<portlet:param name="attendeeId" value="<%= attendeeId %>"/>
-			</portlet:actionURL>
-
-			<liferay-ui:icon
-				image="check"
-				message="approve"
-				useDialog="approve-user-confirmation"
-				url="<%= approveAttendeeURL %>"
-			/>
-
-			<portlet:actionURL var="rejectAttendeeURL" name="rejectAttendee">
-				<portlet:param name="attendeeId" value="<%= attendeeId %>"/>
-			</portlet:actionURL>
-
-			<liferay-ui:icon-delete
-				message="reject"
-				confirmation="reject-user-confirmation"
-				url="<%= rejectAttendeeURL %>"
-			/>
+			<c:if test="<%= attendee.getStatus() == WorkflowConstants.STATUS_PENDING %>">
+				<portlet:actionURL var="approveAttendeeURL" name="changeAttendeeStatus">
+					<portlet:param name="attendeeId" value="<%= attendeeId %>"/>
+					<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>" />
+				</portlet:actionURL>
+	
+				<liferay-ui:icon
+					image="check"
+					message="approve"
+					url="<%= approveAttendeeURL %>"
+				/>
+	
+				<portlet:actionURL var="rejectAttendeeURL" name="changeAttendeeStatus">
+					<portlet:param name="attendeeId" value="<%= attendeeId %>"/>
+					<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_DENIED) %>" />
+				</portlet:actionURL>
+	
+				<liferay-ui:icon
+					image="delete"
+					message="reject"
+					url="<%= rejectAttendeeURL %>"
+				/>
+			</c:if>
 			
 	</liferay-ui:icon-menu>
 </span>

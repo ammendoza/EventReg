@@ -15,6 +15,8 @@
 	int status = ParamUtil.getInteger(request, "status");
 %>
 
+<liferay-ui:success key="the-email-was-sent-successfully" message="the-email-was-sent-successfully" />
+
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="eventId" value="<%= String.valueOf(eventId) %>" />
 	<portlet:param name="name" value="<%= name %>" />
@@ -97,13 +99,14 @@
 		/>
 		
 		<liferay-ui:search-container-column-date
-			name="registration-date"
+			name="register-date"
 			value="<%= user.getRegisterDate() %>"
 		/>
 		
 		<liferay-ui:search-container-column-text
 			name="status"
 			value="<%= WorkflowConstants.getStatusLabel(user.getStatus()) %>"
+			translate="true"
 		/>
 					
 		<liferay-ui:search-container-column-jsp 

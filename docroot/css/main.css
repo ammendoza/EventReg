@@ -17,5 +17,10 @@
 	    @include border-radius(5px);
 	}
 	
+	.email-user-text {
+		width: 50%;
+		height: 100px;
+	}
+	
 	
 }

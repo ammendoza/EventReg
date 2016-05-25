@@ -8,23 +8,32 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.liferay.util.mail.MailEngine;
 
 import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.model.Event;
@@ -258,6 +267,65 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		request.setAttribute("event", event);
 		
 		response.setRenderParameter("mvcPath", "/html/management/attendee_view.jsp");
+	}
+	
+	public void changeAttendeeStatus(ActionRequest request, ActionResponse response){
+		
+		long attendeeId = ParamUtil.getLong(request, "attendeeId");
+		int status = ParamUtil.getInteger(request, "status");
+		
+		request.setAttribute("attendeeId", attendeeId);
+		request.setAttribute("status", status);
+		response.setRenderParameter("mvcPath", "/html/management/attendee_send_email.jsp");
+		
+	}
+	
+	public void changeAttendeeStatusSend(ActionRequest request, ActionResponse response){
+		
+		long attendeeId = ParamUtil.getLong(request, "attendeeId");
+		int status = ParamUtil.getInteger(request, "status");
+		String message = ParamUtil.getString(request, "message");
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		Locale locale = themeDisplay.getLocale();
+		PortletConfig portletConfig = (PortletConfig) request.getAttribute(JavaConstants.JAVAX_PORTLET_CONFIG);
+		
+		Attendee attendee = null;
+
+		try {
+			attendee = AttendeeLocalServiceUtil.getAttendee(attendeeId);
+			
+			String fromAddress = PrefsPropsUtil.getString(themeDisplay.getCompanyId(),PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+			String emailBodyKey = "";
+			String subjectKey = "";
+			if (status == WorkflowConstants.STATUS_APPROVED) {
+					emailBodyKey = "email-body-accepted";
+					subjectKey = "email-subject-accepted";
+			} else {
+					emailBodyKey = "email-body-rejected";
+					subjectKey = "email-subject-rejected";
+			}
+			String emailBody = LanguageUtil.get(portletConfig, locale, emailBodyKey).replace("{0}", attendee.getReservationCode());
+			
+			if (!message.isEmpty()) {
+				emailBody += "\n\n" + LanguageUtil.get(portletConfig, locale, "reviewer-message");
+				emailBody += "\n" + message;
+			}
+			
+			MailMessage mail = new MailMessage();
+			mail.setSubject(LanguageUtil.get(portletConfig, locale, subjectKey));
+			mail.setFrom(new InternetAddress(fromAddress));
+			mail.setTo(new InternetAddress(attendee.getEmail(), attendee.getName()));
+			mail.setBody(emailBody);
+			MailEngine.send(mail);
+			
+			attendee.setStatus(status);
+			attendee.persist();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		SessionMessages.add(request, "the-email-was-sent-successfully");
+		listAttendees(request, response);
 	}
 
 }
