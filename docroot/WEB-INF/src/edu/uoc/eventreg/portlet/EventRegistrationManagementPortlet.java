@@ -1,19 +1,19 @@
 package edu.uoc.eventreg.portlet;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -52,13 +52,73 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 	public void doView (RenderRequest request, RenderResponse response) throws IOException, PortletException {
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long companyId = themeDisplay.getCompanyId();
+		long groupId = themeDisplay.getDoAsGroupId();
+		List<Object[]> eventDayCount = EventLocalServiceUtil.findDayCount(companyId, groupId);
+		List<Object[]> attendeeDayCount = AttendeeLocalServiceUtil.findDayCount(companyId, groupId);
 		
-		request.setAttribute("companyId", themeDisplay.getCompanyId());
-		request.setAttribute("groupId", themeDisplay.getDoAsGroupId());
+		
+		setStatistics(request, eventDayCount, attendeeDayCount);
+		
+		request.setAttribute("companyId", companyId);
+		request.setAttribute("groupId", groupId);
 		
 		super.doView(request, response);
 	}
 	
+	private void setStatistics(PortletRequest request,
+			List<Object[]> eventDayCount, List<Object[]> attendeeDayCount) {
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MILLISECOND, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.HOUR, 0);
+		int eventIndex = 0;
+		int attendeeIndex = 0;
+		Date eventDate = (eventDayCount != null) ? (Date) eventDayCount.get(eventIndex)[0] : null;
+		Date attendeeDate = (Date) attendeeDayCount.get(attendeeIndex)[0];
+		String eventStats = "";
+		String attendeeStats = "";
+		String categoryStats = "";
+		
+		for (int i=0; i<=30; i++) {
+			cal.add(Calendar.DAY_OF_MONTH, -1);
+			
+			if (i != 0) {
+				eventStats += ",";
+				attendeeStats += ",";
+				categoryStats += ",";
+			}
+			
+			categoryStats += "'"+ cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH)+1) + "'";
+			
+			if (eventDayCount != null && eventIndex < eventDayCount.size() && cal.getTimeInMillis() == eventDate.getTime()) {
+				eventStats += eventDayCount.get(eventIndex)[1];
+				eventIndex++;
+				if (eventIndex < eventDayCount.size())
+					eventDate = (Date) eventDayCount.get(eventIndex)[0];
+			} else {
+				eventStats += "0";
+			}
+			
+			if (attendeeDayCount != null && attendeeIndex < attendeeDayCount.size() && cal.getTimeInMillis() == attendeeDate.getTime()) {
+				attendeeStats += attendeeDayCount.get(attendeeIndex)[1];
+				attendeeIndex++;
+				if (attendeeIndex < attendeeDayCount.size())
+					attendeeDate = (Date) attendeeDayCount.get(attendeeIndex)[0];
+			} else {
+				attendeeStats += "0";
+			}
+			
+		}
+		
+		request.setAttribute("categoryStats", categoryStats);
+		request.setAttribute("eventStats", eventStats);
+		request.setAttribute("attendeeStats", attendeeStats);
+		
+	}
+
 	public void addEventForm(ActionRequest request, ActionResponse response) {
 		
 		response.setRenderParameter("mvcPath", "/html/management/event_form.jsp");
@@ -234,6 +294,17 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		request.setAttribute("event", event);
 		request.setAttribute("eventOptions", eventOptions);
 		response.setRenderParameter("mvcPath", "/html/management/event_form.jsp");
+	}
+	
+	public void eventStats (ActionRequest request, ActionResponse response) {
+		
+		long eventId = ParamUtil.getLong(request, "eventId");
+
+		List<Object[]> attendeeDayCount = AttendeeLocalServiceUtil.findDayCount(eventId);
+		
+		setStatistics(request, null, attendeeDayCount);
+		
+		response.setRenderParameter("mvcPath", "/html/management/event_stats.jsp");
 	}
 	
 	public void listAttendees(ActionRequest request, ActionResponse response) {

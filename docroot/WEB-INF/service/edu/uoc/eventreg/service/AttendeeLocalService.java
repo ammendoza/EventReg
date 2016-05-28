@@ -253,6 +253,11 @@ public interface AttendeeLocalService extends BaseLocalService,
 	public java.util.List<edu.uoc.eventreg.model.Attendee> findByEvent(
 		long eventId);
 
+	public java.util.List<java.lang.Object[]> findDayCount(long companyId,
+		long groupId);
+
+	public java.util.List<java.lang.Object[]> findDayCount(long eventId);
+
 	public java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
 		long companyId, long groupId);
 

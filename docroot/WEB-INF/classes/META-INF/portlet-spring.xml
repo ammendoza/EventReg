@@ -8,6 +8,7 @@
 	<bean id="edu.uoc.eventreg.service.EventLocalService" class="edu.uoc.eventreg.service.impl.EventLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.EventService" class="edu.uoc.eventreg.service.impl.EventServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.EventPersistence" class="edu.uoc.eventreg.service.persistence.EventPersistenceImpl" parent="basePersistence" />
+	<bean id="edu.uoc.eventreg.service.persistence.EventFinder" class="edu.uoc.eventreg.service.persistence.EventFinderImpl" parent="basePersistence" />
 	<bean id="edu.uoc.eventreg.service.EventOptionLocalService" class="edu.uoc.eventreg.service.impl.EventOptionLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.EventOptionService" class="edu.uoc.eventreg.service.impl.EventOptionServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.EventOptionPersistence" class="edu.uoc.eventreg.service.persistence.EventOptionPersistenceImpl" parent="basePersistence" />

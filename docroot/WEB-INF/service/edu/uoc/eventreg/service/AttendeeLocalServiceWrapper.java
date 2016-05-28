@@ -289,6 +289,17 @@ public class AttendeeLocalServiceWrapper implements AttendeeLocalService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Object[]> findDayCount(long companyId,
+		long groupId) {
+		return _attendeeLocalService.findDayCount(companyId, groupId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object[]> findDayCount(long eventId) {
+		return _attendeeLocalService.findDayCount(eventId);
+	}
+
+	@Override
 	public java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
 		long companyId, long groupId) {
 		return _attendeeLocalService.findGroupAttendees(companyId, groupId);

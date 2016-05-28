@@ -249,6 +249,9 @@ public interface EventLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public java.util.List<java.lang.Object[]> findDayCount(long companyId,
+		long groupId);
+
 	public java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
 		long companyId, long groupId);
 

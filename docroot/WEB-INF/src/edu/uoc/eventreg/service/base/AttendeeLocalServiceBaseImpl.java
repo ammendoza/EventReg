@@ -35,6 +35,7 @@ import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.service.AttendeeLocalService;
 import edu.uoc.eventreg.service.persistence.AttendeeFinder;
 import edu.uoc.eventreg.service.persistence.AttendeePersistence;
+import edu.uoc.eventreg.service.persistence.EventFinder;
 import edu.uoc.eventreg.service.persistence.EventOptionPersistence;
 import edu.uoc.eventreg.service.persistence.EventPersistence;
 import edu.uoc.eventreg.service.persistence.ImagePersistence;
@@ -409,6 +410,24 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the event finder.
+	 *
+	 * @return the event finder
+	 */
+	public EventFinder getEventFinder() {
+		return eventFinder;
+	}
+
+	/**
+	 * Sets the event finder.
+	 *
+	 * @param eventFinder the event finder
+	 */
+	public void setEventFinder(EventFinder eventFinder) {
+		this.eventFinder = eventFinder;
+	}
+
+	/**
 	 * Returns the event option local service.
 	 *
 	 * @return the event option local service
@@ -711,6 +730,8 @@ public abstract class AttendeeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected edu.uoc.eventreg.service.EventService eventService;
 	@BeanReference(type = EventPersistence.class)
 	protected EventPersistence eventPersistence;
+	@BeanReference(type = EventFinder.class)
+	protected EventFinder eventFinder;
 	@BeanReference(type = edu.uoc.eventreg.service.EventOptionLocalService.class)
 	protected edu.uoc.eventreg.service.EventOptionLocalService eventOptionLocalService;
 	@BeanReference(type = edu.uoc.eventreg.service.EventOptionService.class)

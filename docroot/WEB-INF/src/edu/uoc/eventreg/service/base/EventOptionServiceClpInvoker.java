@@ -24,24 +24,24 @@ import java.util.Arrays;
  */
 public class EventOptionServiceClpInvoker {
 	public EventOptionServiceClpInvoker() {
-		_methodName38 = "getBeanIdentifier";
+		_methodName40 = "getBeanIdentifier";
 
-		_methodParameterTypes38 = new String[] {  };
+		_methodParameterTypes40 = new String[] {  };
 
-		_methodName39 = "setBeanIdentifier";
+		_methodName41 = "setBeanIdentifier";
 
-		_methodParameterTypes39 = new String[] { "java.lang.String" };
+		_methodParameterTypes41 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName38.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes38, parameterTypes)) {
+		if (_methodName40.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
 			return EventOptionServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName39.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes39, parameterTypes)) {
+		if (_methodName41.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
 			EventOptionServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -50,8 +50,8 @@ public class EventOptionServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName38;
-	private String[] _methodParameterTypes38;
-	private String _methodName39;
-	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
 }

@@ -278,6 +278,15 @@ public class AttendeeLocalServiceUtil {
 		return getService().findByEvent(eventId);
 	}
 
+	public static java.util.List<java.lang.Object[]> findDayCount(
+		long companyId, long groupId) {
+		return getService().findDayCount(companyId, groupId);
+	}
+
+	public static java.util.List<java.lang.Object[]> findDayCount(long eventId) {
+		return getService().findDayCount(eventId);
+	}
+
 	public static java.util.List<edu.uoc.eventreg.model.Attendee> findGroupAttendees(
 		long companyId, long groupId) {
 		return getService().findGroupAttendees(companyId, groupId);

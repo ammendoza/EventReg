@@ -41,5 +41,17 @@
 				message="manage-registered-users"
 				url="<%= listEventAttendeesURL %>"
 			/>
+			
+			<portlet:actionURL var="viewStatisticsURL" name="eventStats">
+				<portlet:param name="eventId" value="<%= eventId %>"/>
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				image="view"
+				message="view-statistics"
+				url="<%= viewStatisticsURL %>"
+			/>
+			
+			
 	</liferay-ui:icon-menu>
 </span>

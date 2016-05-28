@@ -20,38 +20,28 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 /**
  * @author Ana Mendoza
  */
-public class AttendeeFinderUtil {
-	public static java.util.List<edu.uoc.eventreg.model.Attendee> findByEvent(
-		long eventId) {
-		return getFinder().findByEvent(eventId);
-	}
-
+public class EventFinderUtil {
 	public static java.util.List<java.lang.Object[]> findDayCount(
 		long companyId, long groupId) {
 		return getFinder().findDayCount(companyId, groupId);
 	}
 
-	public static java.util.List<java.lang.Object[]> findDayCount(long eventId) {
-		return getFinder().findDayCount(eventId);
-	}
-
-	public static AttendeeFinder getFinder() {
+	public static EventFinder getFinder() {
 		if (_finder == null) {
-			_finder = (AttendeeFinder)PortletBeanLocatorUtil.locate(edu.uoc.eventreg.service.ClpSerializer.getServletContextName(),
-					AttendeeFinder.class.getName());
+			_finder = (EventFinder)PortletBeanLocatorUtil.locate(edu.uoc.eventreg.service.ClpSerializer.getServletContextName(),
+					EventFinder.class.getName());
 
-			ReferenceRegistry.registerReference(AttendeeFinderUtil.class,
-				"_finder");
+			ReferenceRegistry.registerReference(EventFinderUtil.class, "_finder");
 		}
 
 		return _finder;
 	}
 
-	public void setFinder(AttendeeFinder finder) {
+	public void setFinder(EventFinder finder) {
 		_finder = finder;
 
-		ReferenceRegistry.registerReference(AttendeeFinderUtil.class, "_finder");
+		ReferenceRegistry.registerReference(EventFinderUtil.class, "_finder");
 	}
 
-	private static AttendeeFinder _finder;
+	private static EventFinder _finder;
 }

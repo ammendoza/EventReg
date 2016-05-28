@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import edu.uoc.eventreg.model.Event;
 import edu.uoc.eventreg.service.EventLocalServiceUtil;
 import edu.uoc.eventreg.service.base.EventLocalServiceBaseImpl;
+import edu.uoc.eventreg.service.persistence.EventFinderUtil;
 import edu.uoc.eventreg.service.persistence.EventUtil;
 
 /**
@@ -48,6 +49,11 @@ public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.EventLocalServiceUtil} to access the event local service.
 	 */
+	
+	public List<Object[]> findDayCount (long companyId, long groupId) {
+		
+		return EventFinderUtil.findDayCount(companyId, groupId);
+	}
 	
 	public List<Event> findGroupEvents (long companyId, long groupId) {
 		List<Event> events = null;

@@ -10,4 +10,48 @@
     	]]>
 
     </sql>
+    
+    <sql id="edu.uoc.eventreg.service.persistence.AttendeeFinder.findDayCount">
+    	<![CDATA[
+    		SELECT 
+			    DATE(registerDate) AS date,
+			    COUNT(attendeeId) AS total
+			FROM
+			    EVENTREG_Attendee
+			WHERE companyId = ? AND groupId = ?
+			GROUP BY 
+			    DATE(registerDate)
+			ORDER BY DATE(registerDate) DESC
+    	]]>
+    </sql>
+    
+    <sql id="edu.uoc.eventreg.service.persistence.AttendeeFinder.findDayCountByEvent">
+    	<![CDATA[
+    		SELECT 
+			    DATE(a.registerDate) AS date,
+			    COUNT(a.attendeeId) AS total
+			FROM
+			    EVENTREG_Attendee a
+			INNER JOIN 
+				EVENTREG_EventOption o ON a.eventOptionId = o.eventOptionId AND o.eventid = ?
+			GROUP BY 
+			    DATE(a.registerDate)
+			ORDER BY DATE(a.registerDate) DESC
+    	]]>
+    </sql>
+    
+    <sql id="edu.uoc.eventreg.service.persistence.EventFinder.findDayCount">
+    	<![CDATA[
+    		SELECT 
+			    DATE(createDate) AS date,
+			    COUNT(eventId) AS total
+			FROM
+			    EVENTREG_Event
+			WHERE companyId = ? AND groupId = ?
+			GROUP BY 
+			    DATE(createDate)
+			ORDER BY DATE(createDate) DESC
+    	]]>
+    </sql>
+
 </custom-sql>

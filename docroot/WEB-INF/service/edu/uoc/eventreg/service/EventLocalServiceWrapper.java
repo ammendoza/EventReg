@@ -280,6 +280,12 @@ public class EventLocalServiceWrapper implements EventLocalService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Object[]> findDayCount(long companyId,
+		long groupId) {
+		return _eventLocalService.findDayCount(companyId, groupId);
+	}
+
+	@Override
 	public java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
 		long companyId, long groupId) {
 		return _eventLocalService.findGroupEvents(companyId, groupId);

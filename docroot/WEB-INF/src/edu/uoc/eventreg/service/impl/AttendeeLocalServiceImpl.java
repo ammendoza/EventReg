@@ -53,9 +53,17 @@ public class AttendeeLocalServiceImpl extends AttendeeLocalServiceBaseImpl {
 	
 	public List<Attendee> findByEvent (long eventId) {
 
-		List<Attendee> list = AttendeeFinderUtil.findByEvent(eventId);
-		
-		return list;
+		return AttendeeFinderUtil.findByEvent(eventId);
+	}
+	
+	public List<Object[]> findDayCount (long companyId, long groupId) {
+
+		return AttendeeFinderUtil.findDayCount(companyId, groupId);
+	}
+	
+	public List<Object[]> findDayCount (long eventId) {
+
+		return AttendeeFinderUtil.findDayCount(eventId);
 	}
 	
 	public List<Attendee> findGroupAttendees (long companyId, long groupId) {
