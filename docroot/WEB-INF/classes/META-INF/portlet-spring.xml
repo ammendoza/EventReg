@@ -12,6 +12,7 @@
 	<bean id="edu.uoc.eventreg.service.EventOptionLocalService" class="edu.uoc.eventreg.service.impl.EventOptionLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.EventOptionService" class="edu.uoc.eventreg.service.impl.EventOptionServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.EventOptionPersistence" class="edu.uoc.eventreg.service.persistence.EventOptionPersistenceImpl" parent="basePersistence" />
+	<bean id="edu.uoc.eventreg.service.persistence.EventOptionFinder" class="edu.uoc.eventreg.service.persistence.EventOptionFinderImpl" parent="basePersistence" />
 	<bean id="edu.uoc.eventreg.service.ImageLocalService" class="edu.uoc.eventreg.service.impl.ImageLocalServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.ImageService" class="edu.uoc.eventreg.service.impl.ImageServiceImpl" />
 	<bean id="edu.uoc.eventreg.service.persistence.ImagePersistence" class="edu.uoc.eventreg.service.persistence.ImagePersistenceImpl" parent="basePersistence" />

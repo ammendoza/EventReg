@@ -14,7 +14,13 @@
 
 package edu.uoc.eventreg.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+
+import edu.uoc.eventreg.model.Image;
 import edu.uoc.eventreg.service.base.ImageLocalServiceBaseImpl;
+import edu.uoc.eventreg.service.persistence.ImageUtil;
 
 /**
  * The implementation of the image local service.
@@ -36,4 +42,17 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link edu.uoc.eventreg.service.ImageLocalServiceUtil} to access the image local service.
 	 */
+	
+	public List<Image> findByEvent(long eventId) {
+		List<Image> images = null;
+		
+		try {
+			images = ImageUtil.findByeventId(eventId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		return images;
+	}
+	
 }

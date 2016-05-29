@@ -252,6 +252,8 @@ public interface EventLocalService extends BaseLocalService,
 	public java.util.List<java.lang.Object[]> findDayCount(long companyId,
 		long groupId);
 
+	public long findAvailableSeats(long eventId);
+
 	public java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
 		long companyId, long groupId);
 

@@ -53,5 +53,29 @@
 			ORDER BY DATE(createDate) DESC
     	]]>
     </sql>
+    
+     <sql id="edu.uoc.eventreg.service.persistence.EventFinder.findDayCount">
+    	<![CDATA[
+    		SELECT 
+    			(SELECT SUM(seats) FROM EVENTREG_EventOption WHERE eventId = ?)-COUNT(a.attendeeId) AS seats
+			FROM 
+				EVENTREG_EventOption o 
+			LEFT JOIN 
+				EVENTREG_Attendee a ON a.eventOptionId = o.eventOptionId
+			WHERE o.eventId = ?;
+    	]]>
+    </sql>
+    
+    <sql id="edu.uoc.eventreg.service.persistence.EventOptionFinder.findAvailableSeats">
+    	<![CDATA[
+    		SELECT 
+    			MAX(o.seats)-COUNT(attendeeId) AS seats
+			FROM 
+				EVENTREG_EventOption o 
+			LEFT JOIN 
+				EVENTREG_Attendee a ON a.eventOptionId = o.eventOptionId
+			WHERE o.eventOptionId = ?
+    	]]>
+    </sql>
 
 </custom-sql>

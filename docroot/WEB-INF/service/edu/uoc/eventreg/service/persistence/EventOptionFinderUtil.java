@@ -20,32 +20,29 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 /**
  * @author Ana Mendoza
  */
-public class EventFinderUtil {
-	public static java.util.List<java.lang.Object[]> findDayCount(
-		long companyId, long groupId) {
-		return getFinder().findDayCount(companyId, groupId);
+public class EventOptionFinderUtil {
+	public static long findAvailableSeats(long eventOptionId) {
+		return getFinder().findAvailableSeats(eventOptionId);
 	}
 
-	public static long findAvailableSeats(long eventId) {
-		return getFinder().findAvailableSeats(eventId);
-	}
-
-	public static EventFinder getFinder() {
+	public static EventOptionFinder getFinder() {
 		if (_finder == null) {
-			_finder = (EventFinder)PortletBeanLocatorUtil.locate(edu.uoc.eventreg.service.ClpSerializer.getServletContextName(),
-					EventFinder.class.getName());
+			_finder = (EventOptionFinder)PortletBeanLocatorUtil.locate(edu.uoc.eventreg.service.ClpSerializer.getServletContextName(),
+					EventOptionFinder.class.getName());
 
-			ReferenceRegistry.registerReference(EventFinderUtil.class, "_finder");
+			ReferenceRegistry.registerReference(EventOptionFinderUtil.class,
+				"_finder");
 		}
 
 		return _finder;
 	}
 
-	public void setFinder(EventFinder finder) {
+	public void setFinder(EventOptionFinder finder) {
 		_finder = finder;
 
-		ReferenceRegistry.registerReference(EventFinderUtil.class, "_finder");
+		ReferenceRegistry.registerReference(EventOptionFinderUtil.class,
+			"_finder");
 	}
 
-	private static EventFinder _finder;
+	private static EventOptionFinder _finder;
 }

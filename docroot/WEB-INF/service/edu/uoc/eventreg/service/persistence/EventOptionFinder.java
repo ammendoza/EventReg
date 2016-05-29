@@ -17,9 +17,6 @@ package edu.uoc.eventreg.service.persistence;
 /**
  * @author Ana Mendoza
  */
-public interface EventFinder {
-	public java.util.List<java.lang.Object[]> findDayCount(long companyId,
-		long groupId);
-
-	public long findAvailableSeats(long eventId);
+public interface EventOptionFinder {
+	public long findAvailableSeats(long eventOptionId);
 }

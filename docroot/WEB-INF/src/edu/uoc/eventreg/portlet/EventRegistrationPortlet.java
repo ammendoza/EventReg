@@ -23,10 +23,12 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.model.Event;
 import edu.uoc.eventreg.model.EventOption;
+import edu.uoc.eventreg.model.Image;
 import edu.uoc.eventreg.model.impl.AttendeeImpl;
 import edu.uoc.eventreg.service.AttendeeLocalServiceUtil;
 import edu.uoc.eventreg.service.EventLocalServiceUtil;
 import edu.uoc.eventreg.service.EventOptionLocalServiceUtil;
+import edu.uoc.eventreg.service.ImageLocalServiceUtil;
 
 public class EventRegistrationPortlet extends MVCPortlet {
 	 
@@ -44,16 +46,19 @@ public class EventRegistrationPortlet extends MVCPortlet {
 		long eventId = ParamUtil.getLong(request, "id");
 		Event event = null;
 		List<EventOption> eventOptions = null;
+		List<Image> imageList = null;
 				
 		try {
 			event = (Event) EventLocalServiceUtil.getEvent(eventId);
 			eventOptions = (List<EventOption>) EventOptionLocalServiceUtil.findEventOptions(eventId);
+			imageList = (List<Image>) ImageLocalServiceUtil.findByEvent(eventId);
 		} catch (PortalException | SystemException e) {
 			e.printStackTrace();
 		}
 		
 		request.setAttribute("event", event);
 		request.setAttribute("eventOptions", eventOptions);
+		request.setAttribute("imageList", imageList);
 		response.setRenderParameter("mvcPath", "/html/registration/view_event.jsp");
 	}
 	
@@ -71,7 +76,6 @@ public class EventRegistrationPortlet extends MVCPortlet {
 		
 		request.setAttribute("requiresApproval", event.getRequiresApproval());
 		request.setAttribute("eventOptionId", eventOptionId);
-		System.out.println(eventOptionId);
 		
 		response.setRenderParameter("mvcPath", "/html/registration/register_form.jsp");
 	}

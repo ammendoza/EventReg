@@ -118,6 +118,10 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 		_methodName19 = "findEventOptions";
 
 		_methodParameterTypes19 = new String[] { "long" };
+
+		_methodName20 = "findAvailableSeats";
+
+		_methodParameterTypes20 = new String[] { "long" };
 	}
 
 	@Override
@@ -693,6 +697,29 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 		return (java.util.List<edu.uoc.eventreg.model.EventOption>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public long findAvailableSeats(long eventOptionId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { eventOptionId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -732,4 +759,6 @@ public class EventOptionLocalServiceClp implements EventOptionLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

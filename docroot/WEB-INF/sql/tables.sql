@@ -47,7 +47,9 @@ create table EVENTREG_EventOption (
 create table EVENTREG_Image (
 	imageId LONG not null primary key,
 	companyId LONG,
-	groupId LONG
+	groupId LONG,
+	eventId LONG,
+	dlFileEntryId VARCHAR(75) null
 );
 
 create table EVENTREG_RegEvent (

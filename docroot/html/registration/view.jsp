@@ -29,7 +29,12 @@
 	String description = ParamUtil.getString(request, "description");
 	String location = ParamUtil.getString(request, "location");
 	int status = WorkflowConstants.STATUS_APPROVED;
+	SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d");
+	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM d k:mm");
+	SimpleDateFormat timeFormat = new SimpleDateFormat("k:mm");
 %>
+
+<liferay-ui:calendar year="2016" month="5" />
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="title" value="<%= title %>" />
@@ -75,12 +80,70 @@
 		<portlet:actionURL var="viewEventURL" name="viewEvent">
 			<portlet:param name="id" value="<%= String.valueOf(event.getEventId()) %>"/>
 		</portlet:actionURL>
+		
+		<%
+			long seats = event.getAvailableSeats();
+		%>
 				
 		<liferay-ui:search-container-column-text
-			name="title"
-			value="<%= event.getTitle(locale) %>"
-			href="<%= viewEventURL %>"
-		/>
+			name="title">
+			
+				<span class="event-title">
+					<c:if test="<%= seats != 0 %>">
+						<a href="<%= viewEventURL %>">
+					</c:if>
+					<%= event.getTitle(locale) %>
+					<c:if test="<%= seats != 0 %>">
+						</a>
+					</c:if>
+				</span>
+				<span class="dates">
+					<%
+						Calendar startDate = Calendar.getInstance();
+						startDate.setTime(event.getStartDate());
+						
+						Calendar endDate = Calendar.getInstance();
+						endDate.setTime(event.getEndDate());
+						
+						boolean sameDay = false;
+						if (startDate.get(Calendar.DAY_OF_MONTH) == endDate.get(Calendar.DAY_OF_MONTH) &&
+								startDate.get(Calendar.MONTH) == endDate.get(Calendar.MONTH) &&
+								startDate.get(Calendar.YEAR) == endDate.get(Calendar.YEAR))
+							sameDay = true;
+					%>
+					<c:choose>
+						<c:when test="<%= sameDay %>">
+							<%= dateFormat.format(event.getStartDate()) %> | 
+							<%= timeFormat.format(event.getStartDate()) %> - 
+							<%= timeFormat.format(event.getEndDate()) %>
+						</c:when>
+						<c:otherwise>
+							<%= dateTimeFormat.format(event.getStartDate()) %> | 
+							<%= dateTimeFormat.format(event.getEndDate()) %>
+						</c:otherwise>
+					</c:choose>
+				</span>
+				<c:if test="<%= seats < 5 %>">
+					<span class="seats"><liferay-ui:message key="last-available-seats" /></span>
+				</c:if>
+		</liferay-ui:search-container-column-text>
+		
+		<liferay-ui:search-container-column-text
+			name="price">
+				<c:choose>
+					<c:when test="<%= event.getPrice() == 0 %>">
+						<liferay-ui:message key="free" />
+					</c:when>
+					<c:otherwise>
+						<%= event.getPrice() %>
+					</c:otherwise>
+				</c:choose>
+		</liferay-ui:search-container-column-text>
+		
+		<liferay-ui:search-container-column-text
+			align="right">
+				<aui:button value="<%= (seats == 0) ? \"agotado\" : \"register\" %>" href="<%= viewEventURL %>" cssClass="<%= (seats == 0) ? \"btn\" : \"btn btn-primary\" %>" />
+		</liferay-ui:search-container-column-text>
 		
 	</liferay-ui:search-container-row>
 

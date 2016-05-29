@@ -14,6 +14,7 @@
 
 package edu.uoc.eventreg.model;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -97,6 +98,35 @@ public interface ImageModel extends BaseModel<Image> {
 	 * @param groupId the group ID of this image
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the event ID of this image.
+	 *
+	 * @return the event ID of this image
+	 */
+	public long getEventId();
+
+	/**
+	 * Sets the event ID of this image.
+	 *
+	 * @param eventId the event ID of this image
+	 */
+	public void setEventId(long eventId);
+
+	/**
+	 * Returns the dl file entry ID of this image.
+	 *
+	 * @return the dl file entry ID of this image
+	 */
+	@AutoEscape
+	public String getDlFileEntryId();
+
+	/**
+	 * Sets the dl file entry ID of this image.
+	 *
+	 * @param dlFileEntryId the dl file entry ID of this image
+	 */
+	public void setDlFileEntryId(String dlFileEntryId);
 
 	@Override
 	public boolean isNew();

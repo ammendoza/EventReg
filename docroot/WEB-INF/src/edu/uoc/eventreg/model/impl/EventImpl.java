@@ -14,6 +14,9 @@
 
 package edu.uoc.eventreg.model.impl;
 
+import edu.uoc.eventreg.service.EventLocalServiceUtil;
+import edu.uoc.eventreg.service.persistence.EventFinderUtil;
+
 /**
  * The extended model implementation for the Event service. Represents a row in the &quot;EVENTREG_Event&quot; database table, with each column mapped to a property of this class.
  *
@@ -30,5 +33,10 @@ public class EventImpl extends EventBaseImpl {
 	 * Never reference this class directly. All methods that expect a event model instance should use the {@link edu.uoc.eventreg.model.Event} interface instead.
 	 */
 	public EventImpl() {
+
+	}
+	
+	public long getAvailableSeats() {
+		return EventLocalServiceUtil.findAvailableSeats(this.getEventId());
 	}
 }

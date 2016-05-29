@@ -33,6 +33,8 @@ public class ImageSoap implements Serializable {
 		soapModel.setImageId(model.getImageId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
+		soapModel.setEventId(model.getEventId());
+		soapModel.setDlFileEntryId(model.getDlFileEntryId());
 
 		return soapModel;
 	}
@@ -109,7 +111,25 @@ public class ImageSoap implements Serializable {
 		_groupId = groupId;
 	}
 
+	public long getEventId() {
+		return _eventId;
+	}
+
+	public void setEventId(long eventId) {
+		_eventId = eventId;
+	}
+
+	public String getDlFileEntryId() {
+		return _dlFileEntryId;
+	}
+
+	public void setDlFileEntryId(String dlFileEntryId) {
+		_dlFileEntryId = dlFileEntryId;
+	}
+
 	private long _imageId;
 	private long _companyId;
 	private long _groupId;
+	private long _eventId;
+	private String _dlFileEntryId;
 }

@@ -55,6 +55,10 @@ public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 		return EventFinderUtil.findDayCount(companyId, groupId);
 	}
 	
+	public long findAvailableSeats (long eventId) {
+		return EventFinderUtil.findAvailableSeats(eventId);
+	}
+	
 	public List<Event> findGroupEvents (long companyId, long groupId) {
 		List<Event> events = null;
 		

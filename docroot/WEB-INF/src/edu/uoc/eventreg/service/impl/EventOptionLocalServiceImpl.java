@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import edu.uoc.eventreg.model.EventOption;
 import edu.uoc.eventreg.service.base.EventOptionLocalServiceBaseImpl;
+import edu.uoc.eventreg.service.persistence.EventOptionFinderUtil;
 import edu.uoc.eventreg.service.persistence.EventOptionUtil;
 
 /**
@@ -53,5 +54,9 @@ public class EventOptionLocalServiceImpl extends EventOptionLocalServiceBaseImpl
 		}
 		
 		return eventOptions;
+	}
+	
+	public long findAvailableSeats (long eventOptionId) {
+		return EventOptionFinderUtil.findAvailableSeats(eventOptionId);
 	}
 }

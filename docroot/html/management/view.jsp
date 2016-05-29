@@ -54,6 +54,31 @@
 		%>
 	</liferay-ui:search-container-results>
 
+	<aui:nav-bar>
+		<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
+			<aui:nav-item>
+				<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
+					
+				</span>
+			</aui:nav-item>
+		</aui:nav>
+	
+		<aui:nav id="toolbarContainer">
+			<liferay-portlet:actionURL name="addEventForm" var="addEventFormURL" />
+			<aui:nav-item href="<%= addEventFormURL %>" iconCssClass="icon-plus" label="add-event" />
+			
+			<liferay-portlet:actionURL name="listAttendees" var="listAttendeesURL" />
+			<aui:nav-item href="<%= listAttendeesURL %>" iconCssClass="icon-th-list" label="view-registered" />
+		</aui:nav>
+	
+		<c:if test="<%= results != null && results.size() != 0 %>">
+			<aui:nav-bar-search cssClass="pull-right">
+				<liferay-ui:search-form servletContext="<%= this.getServletContext()%>"
+					 page="/html/management/event_search.jsp" />
+			</aui:nav-bar-search>
+		</c:if>
+	</aui:nav-bar>
+	
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<div id="container" style="height: 300px"></div>
 	<script type="text/javascript">
@@ -89,31 +114,6 @@
 		    });
 		});
 	</script>
-
-	<aui:nav-bar>
-		<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
-			<aui:nav-item>
-				<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
-					
-				</span>
-			</aui:nav-item>
-		</aui:nav>
-	
-		<aui:nav id="toolbarContainer">
-			<liferay-portlet:actionURL name="addEventForm" var="addEventFormURL" />
-			<aui:nav-item href="<%= addEventFormURL %>" iconCssClass="icon-plus" label="add-event" />
-			
-			<liferay-portlet:actionURL name="listAttendees" var="listAttendeesURL" />
-			<aui:nav-item href="<%= listAttendeesURL %>" iconCssClass="icon-th-list" label="view-registered" />
-		</aui:nav>
-	
-		<c:if test="<%= results != null && results.size() != 0 %>">
-			<aui:nav-bar-search cssClass="pull-right">
-				<liferay-ui:search-form servletContext="<%= this.getServletContext()%>"
-					 page="/html/management/event_search.jsp" />
-			</aui:nav-bar-search>
-		</c:if>
-	</aui:nav-bar>
 		
 	<liferay-ui:search-container-row
 		className="edu.uoc.eventreg.model.Event"

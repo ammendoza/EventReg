@@ -280,6 +280,10 @@ public class EventOptionLocalServiceUtil {
 		return getService().findEventOptions(eventId);
 	}
 
+	public static long findAvailableSeats(long eventOptionId) {
+		return getService().findAvailableSeats(eventOptionId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

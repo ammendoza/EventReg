@@ -48,5 +48,7 @@
 		<field name="imageId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="eventId" type="long" />
+		<field name="dlFileEntryId" type="String" />
 	</model>
 </model-hints>

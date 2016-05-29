@@ -38,11 +38,14 @@ import com.liferay.util.mail.MailEngine;
 import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.model.Event;
 import edu.uoc.eventreg.model.EventOption;
+import edu.uoc.eventreg.model.Image;
 import edu.uoc.eventreg.model.impl.EventImpl;
 import edu.uoc.eventreg.model.impl.EventOptionImpl;
+import edu.uoc.eventreg.model.impl.ImageImpl;
 import edu.uoc.eventreg.service.AttendeeLocalServiceUtil;
 import edu.uoc.eventreg.service.EventLocalServiceUtil;
 import edu.uoc.eventreg.service.EventOptionLocalServiceUtil;
+import edu.uoc.eventreg.service.ImageLocalServiceUtil;
 
 /**
  * Portlet implementation class EventRegistrationManagementPortlet
@@ -56,7 +59,6 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		long groupId = themeDisplay.getDoAsGroupId();
 		List<Object[]> eventDayCount = EventLocalServiceUtil.findDayCount(companyId, groupId);
 		List<Object[]> attendeeDayCount = AttendeeLocalServiceUtil.findDayCount(companyId, groupId);
-		
 		
 		setStatistics(request, eventDayCount, attendeeDayCount);
 		
@@ -73,7 +75,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		cal.set(Calendar.MILLISECOND, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
 		int eventIndex = 0;
 		int attendeeIndex = 0;
 		Date eventDate = (eventDayCount != null) ? (Date) eventDayCount.get(eventIndex)[0] : null;
@@ -175,8 +177,6 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 				event.setCreateDate(createDate);
 				
 				event = EventLocalServiceUtil.addEvent(event);
-			} else {
-				event.persist();
 			}
 		} catch (SystemException e) {
 			e.printStackTrace();
@@ -190,11 +190,10 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		String[] endHours = ParamUtil.getParameterValues(request, "endHour");
 		String[] seats = ParamUtil.getParameterValues(request, "seats");
 		
-		System.out.println("startDate " + startDates[0] + " | num: " + startDates.length);
-		System.out.println("endDate " + endDates[0] + " | num: " + endDates.length);
-		System.out.println("startHour " + startHours[0] + " - " + startHours[1] + " | num: " + startHours.length);
-		System.out.println("endHour " + endHours[0] + " - " + endHours[1] + " | num: " + endHours.length);
-		System.out.println("seats " + seats[0] + " | num: " + seats.length);
+		Date minDate = null;
+		Date maxDate = null;
+		
+		int totalSeats = 0;
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy HH:mm");
 		int hourCount = 0;
@@ -213,8 +212,15 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 					eventOption.setStartDate(startDate);
 					eventOption.setEndDate(endDate);
 					
+					if (minDate == null || minDate.compareTo(startDate) == 1)
+						minDate = startDate;
+					
+					if (maxDate == null || maxDate.compareTo(endDate) == -1)
+						maxDate = endDate;
+					
 					int seatNum = Integer.parseInt(seats[i]);
 					eventOption.setSeats(seatNum);
+					totalSeats += seatNum;
 					
 					EventOptionLocalServiceUtil.addEventOption(eventOption);
 				} catch (Exception e) {
@@ -244,10 +250,17 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 					eventOption.setStartDate(startDate);
 					eventOption.setEndDate(endDate);
 					
+					if (minDate == null || minDate.compareTo(startDate) == 1)
+						minDate = startDate;
+					
+					if (maxDate == null || maxDate.compareTo(endDate) == -1)
+						maxDate = endDate;
+					
 					int seatNum = Integer.parseInt(seats[i]);
 					eventOption.setSeats(seatNum);
+					totalSeats += seatNum;
 					
-					if (eventOptionId != 0) {
+					if (eventOptionId == 0) {
 						EventOptionLocalServiceUtil.addEventOption(eventOption);
 					} else {
 						eventOption.persist();
@@ -259,6 +272,15 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 				hourCount = hourCount + 2;
 			}
 			
+		}
+		
+		try {
+			event.setStartDate(minDate);
+			event.setEndDate(maxDate);
+			
+			event.persist();
+		} catch (SystemException e) {
+			e.printStackTrace();
 		}
 		
 		SessionMessages.add(request, "event-added-successfuly");
@@ -397,6 +419,85 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		
 		SessionMessages.add(request, "the-email-was-sent-successfully");
 		listAttendees(request, response);
+	}
+	
+	public void listImages (ActionRequest request, ActionResponse response) {
+		
+		long eventId = ParamUtil.getLong(request, "eventId");
+		
+		List<Image> imageList = ImageLocalServiceUtil.findByEvent(eventId);
+		
+		request.setAttribute("imageList", imageList);
+		request.setAttribute("eventId", eventId);
+		response.setRenderParameter("mvcPath", "/html/management/event_images.jsp");
+	}
+	
+	public void imageForm (ActionRequest request, ActionResponse response) {
+		
+		long imageId = ParamUtil.getLong(request, "imageId");
+		long eventId = ParamUtil.getLong(request, "eventId");
+		Image image = null;
+		
+		if (imageId > 0) {
+			try {
+				image = (Image) ImageLocalServiceUtil.getImage(imageId);
+			} catch (PortalException | SystemException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		request.setAttribute("image", image);
+		request.setAttribute("eventId", eventId);
+		response.setRenderParameter("mvcPath", "/html/management/event_image_form.jsp");
+	}
+	
+	public void saveImage (ActionRequest request, ActionResponse response) {
+		
+		long imageId = ParamUtil.getLong(request, "imageId");
+		long eventId = ParamUtil.getLong(request, "eventId");
+		String dlFileEntryUuid = ParamUtil.getString(request, "fileId");
+		long groupId = ParamUtil.getLong(request, "groupId");
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long companyId = themeDisplay.getCompanyId();
+		
+		Image image = null;
+		
+		try {
+			if (imageId > 0) {
+				image = (Image) ImageLocalServiceUtil.getImage(imageId);
+				image.setDlFileEntryId(dlFileEntryUuid);
+				image.setGroupId(groupId);
+				image.persist();
+			} else {
+				image = new ImageImpl();
+				image.setDlFileEntryId(dlFileEntryUuid);
+				image.setGroupId(groupId);
+				image.setEventId(eventId);
+				image.setCompanyId(companyId);
+				
+				ImageLocalServiceUtil.addImage(image);
+			}
+		} catch (PortalException | SystemException e) {
+			e.printStackTrace();
+		}
+		
+		SessionMessages.add(request, "the-image-was-saved-successfully");
+		listImages(request, response);
+		
+	}
+	
+	public void deleteImage (ActionRequest request, ActionResponse response) {
+		
+		long imageId = ParamUtil.getLong(request, "imageId");
+		
+		try {
+			ImageLocalServiceUtil.deleteImage(imageId);
+			SessionMessages.add(request, "image-deleted-successfuly");
+		} catch (PortalException | SystemException e) {
+			e.printStackTrace();
+		}
+		
+		listImages(request, response);
 	}
 
 }

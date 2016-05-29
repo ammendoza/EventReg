@@ -14,6 +14,8 @@
 
 package edu.uoc.eventreg.model.impl;
 
+import edu.uoc.eventreg.service.EventOptionLocalServiceUtil;
+
 /**
  * The extended model implementation for the EventOption service. Represents a row in the &quot;EVENTREG_EventOption&quot; database table, with each column mapped to a property of this class.
  *
@@ -30,5 +32,9 @@ public class EventOptionImpl extends EventOptionBaseImpl {
 	 * Never reference this class directly. All methods that expect a event option model instance should use the {@link edu.uoc.eventreg.model.EventOption} interface instead.
 	 */
 	public EventOptionImpl() {
+	}
+	
+	public long getAvailableSeats () {
+		return EventOptionLocalServiceUtil.findAvailableSeats(this.getEventOptionId());
 	}
 }

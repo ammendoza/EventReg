@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -63,9 +64,11 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "imageId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
-			{ "groupId", Types.BIGINT }
+			{ "groupId", Types.BIGINT },
+			{ "eventId", Types.BIGINT },
+			{ "dlFileEntryId", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Image (imageId LONG not null primary key,companyId LONG,groupId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Image (imageId LONG not null primary key,companyId LONG,groupId LONG,eventId LONG,dlFileEntryId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_Image";
 	public static final String ORDER_BY_JPQL = " ORDER BY image.imageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Image.imageId ASC";
@@ -78,7 +81,11 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.edu.uoc.eventreg.model.Image"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.edu.uoc.eventreg.model.Image"),
+			true);
+	public static long EVENTID_COLUMN_BITMASK = 1L;
+	public static long IMAGEID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -96,6 +103,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		model.setImageId(soapModel.getImageId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setGroupId(soapModel.getGroupId());
+		model.setEventId(soapModel.getEventId());
+		model.setDlFileEntryId(soapModel.getDlFileEntryId());
 
 		return model;
 	}
@@ -163,6 +172,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		attributes.put("imageId", getImageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("eventId", getEventId());
+		attributes.put("dlFileEntryId", getDlFileEntryId());
 
 		return attributes;
 	}
@@ -186,6 +197,18 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		if (groupId != null) {
 			setGroupId(groupId);
 		}
+
+		Long eventId = (Long)attributes.get("eventId");
+
+		if (eventId != null) {
+			setEventId(eventId);
+		}
+
+		String dlFileEntryId = (String)attributes.get("dlFileEntryId");
+
+		if (dlFileEntryId != null) {
+			setDlFileEntryId(dlFileEntryId);
+		}
 	}
 
 	@JSON
@@ -196,6 +219,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void setImageId(long imageId) {
+		_columnBitmask = -1L;
+
 		_imageId = imageId;
 	}
 
@@ -219,6 +244,49 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+	}
+
+	@JSON
+	@Override
+	public long getEventId() {
+		return _eventId;
+	}
+
+	@Override
+	public void setEventId(long eventId) {
+		_columnBitmask |= EVENTID_COLUMN_BITMASK;
+
+		if (!_setOriginalEventId) {
+			_setOriginalEventId = true;
+
+			_originalEventId = _eventId;
+		}
+
+		_eventId = eventId;
+	}
+
+	public long getOriginalEventId() {
+		return _originalEventId;
+	}
+
+	@JSON
+	@Override
+	public String getDlFileEntryId() {
+		if (_dlFileEntryId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dlFileEntryId;
+		}
+	}
+
+	@Override
+	public void setDlFileEntryId(String dlFileEntryId) {
+		_dlFileEntryId = dlFileEntryId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -251,6 +319,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		imageImpl.setImageId(getImageId());
 		imageImpl.setCompanyId(getCompanyId());
 		imageImpl.setGroupId(getGroupId());
+		imageImpl.setEventId(getEventId());
+		imageImpl.setDlFileEntryId(getDlFileEntryId());
 
 		imageImpl.resetOriginalValues();
 
@@ -307,6 +377,13 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void resetOriginalValues() {
+		ImageModelImpl imageModelImpl = this;
+
+		imageModelImpl._originalEventId = imageModelImpl._eventId;
+
+		imageModelImpl._setOriginalEventId = false;
+
+		imageModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -319,12 +396,22 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		imageCacheModel.groupId = getGroupId();
 
+		imageCacheModel.eventId = getEventId();
+
+		imageCacheModel.dlFileEntryId = getDlFileEntryId();
+
+		String dlFileEntryId = imageCacheModel.dlFileEntryId;
+
+		if ((dlFileEntryId != null) && (dlFileEntryId.length() == 0)) {
+			imageCacheModel.dlFileEntryId = null;
+		}
+
 		return imageCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{imageId=");
 		sb.append(getImageId());
@@ -332,6 +419,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", eventId=");
+		sb.append(getEventId());
+		sb.append(", dlFileEntryId=");
+		sb.append(getDlFileEntryId());
 		sb.append("}");
 
 		return sb.toString();
@@ -339,7 +430,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Image");
@@ -357,6 +448,14 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>eventId</column-name><column-value><![CDATA[");
+		sb.append(getEventId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dlFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getDlFileEntryId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -368,5 +467,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private long _imageId;
 	private long _companyId;
 	private long _groupId;
+	private long _eventId;
+	private long _originalEventId;
+	private boolean _setOriginalEventId;
+	private String _dlFileEntryId;
+	private long _columnBitmask;
 	private Image _escapedModel;
 }

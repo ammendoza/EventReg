@@ -286,6 +286,11 @@ public class EventLocalServiceWrapper implements EventLocalService,
 	}
 
 	@Override
+	public long findAvailableSeats(long eventId) {
+		return _eventLocalService.findAvailableSeats(eventId);
+	}
+
+	@Override
 	public java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
 		long companyId, long groupId) {
 		return _eventLocalService.findGroupEvents(companyId, groupId);

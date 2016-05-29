@@ -292,6 +292,11 @@ public class EventOptionLocalServiceWrapper implements EventOptionLocalService,
 		return _eventOptionLocalService.findEventOptions(eventId);
 	}
 
+	@Override
+	public long findAvailableSeats(long eventOptionId) {
+		return _eventOptionLocalService.findAvailableSeats(eventOptionId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

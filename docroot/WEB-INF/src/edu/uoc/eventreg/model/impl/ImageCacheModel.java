@@ -15,6 +15,7 @@
 package edu.uoc.eventreg.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
 import edu.uoc.eventreg.model.Image;
@@ -34,7 +35,7 @@ import java.io.ObjectOutput;
 public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{imageId=");
 		sb.append(imageId);
@@ -42,6 +43,10 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", eventId=");
+		sb.append(eventId);
+		sb.append(", dlFileEntryId=");
+		sb.append(dlFileEntryId);
 		sb.append("}");
 
 		return sb.toString();
@@ -54,6 +59,14 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 		imageImpl.setImageId(imageId);
 		imageImpl.setCompanyId(companyId);
 		imageImpl.setGroupId(groupId);
+		imageImpl.setEventId(eventId);
+
+		if (dlFileEntryId == null) {
+			imageImpl.setDlFileEntryId(StringPool.BLANK);
+		}
+		else {
+			imageImpl.setDlFileEntryId(dlFileEntryId);
+		}
 
 		imageImpl.resetOriginalValues();
 
@@ -65,6 +78,8 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 		imageId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
+		eventId = objectInput.readLong();
+		dlFileEntryId = objectInput.readUTF();
 	}
 
 	@Override
@@ -73,9 +88,19 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 		objectOutput.writeLong(imageId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(eventId);
+
+		if (dlFileEntryId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dlFileEntryId);
+		}
 	}
 
 	public long imageId;
 	public long companyId;
 	public long groupId;
+	public long eventId;
+	public String dlFileEntryId;
 }

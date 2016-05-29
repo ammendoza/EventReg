@@ -75,63 +75,6 @@
 	
 	<h2><liferay-ui:message key="event-options" /></h2>
 	
-	
-	<c:if test="<%= event == null %>">
-		<div id="<portlet:namespace />event-options">
-			<div class="event-option">
-				<i class="icon-plus-sign pull-right"></i>
-				
-				<aui:input type="hidden" name="eventOptionId" value="0" />
-					
-				<aui:field-wrapper label="start-date">
-					<aui:field-wrapper inlineField="true">
-						<liferay-ui:input-date 
-							name="startDate"
-							dayValue="<%= cal.get(Calendar.DAY_OF_MONTH) %>"
-							monthValue="<%= cal.get(Calendar.MONTH) %>"
-							yearValue="<%= cal.get(Calendar.YEAR) %>"
-							/>
-					</aui:field-wrapper>
-						
-					<aui:field-wrapper inlineField="true">
-						<liferay-ui:input-time 
-							name="startHour"
-							hourParam="startHour"
-							amPmParam="startAmPm"
-							minuteParam="startMinute"
-							/>
-					</aui:field-wrapper>
-				</aui:field-wrapper>
-					
-				<aui:field-wrapper label="end-date">
-					<aui:field-wrapper inlineField="true">
-						<liferay-ui:input-date 
-							name="endDate" 
-							dayValue="<%= cal.get(Calendar.DAY_OF_MONTH) %>"
-							monthValue="<%= cal.get(Calendar.MONTH) %>"
-							yearValue="<%= cal.get(Calendar.YEAR) %>"
-							/>
-					</aui:field-wrapper>
-					
-					<aui:field-wrapper inlineField="true">
-						<liferay-ui:input-time 
-							name="endHour"
-							hourParam="endHour"
-							amPmParam="endAmPm"
-							minuteParam="endMinute"
-							/>
-					</aui:field-wrapper>
-				</aui:field-wrapper>
-					
-				<aui:input 
-					name="seats"
-					value="0">
-					<aui:validator name="digits" />
-				</aui:input>
-			</div>
-		</div>
-	</c:if>
-	
 	<% for (EventOption option : eventOptions) { 
 
 		Calendar startDate = Calendar.getInstance();
@@ -202,6 +145,62 @@
 		</div>
 	<% } %>
 	
+	<c:if test="<%= event == null %>">
+		<div id="<portlet:namespace />event-options">
+			<div class="event-option">
+				<i class="icon-plus-sign pull-right"></i>
+				
+				<aui:input type="hidden" name="eventOptionId" value="0" />
+					
+				<aui:field-wrapper label="start-date">
+					<aui:field-wrapper inlineField="true">
+						<liferay-ui:input-date 
+							name="startDate"
+							dayValue="<%= cal.get(Calendar.DAY_OF_MONTH) %>"
+							monthValue="<%= cal.get(Calendar.MONTH) %>"
+							yearValue="<%= cal.get(Calendar.YEAR) %>"
+							/>
+					</aui:field-wrapper>
+						
+					<aui:field-wrapper inlineField="true">
+						<liferay-ui:input-time 
+							name="startHour"
+							hourParam="startHour"
+							amPmParam="startAmPm"
+							minuteParam="startMinute"
+							/>
+					</aui:field-wrapper>
+				</aui:field-wrapper>
+					
+				<aui:field-wrapper label="end-date">
+					<aui:field-wrapper inlineField="true">
+						<liferay-ui:input-date 
+							name="endDate" 
+							dayValue="<%= cal.get(Calendar.DAY_OF_MONTH) %>"
+							monthValue="<%= cal.get(Calendar.MONTH) %>"
+							yearValue="<%= cal.get(Calendar.YEAR) %>"
+							/>
+					</aui:field-wrapper>
+					
+					<aui:field-wrapper inlineField="true">
+						<liferay-ui:input-time 
+							name="endHour"
+							hourParam="endHour"
+							amPmParam="endAmPm"
+							minuteParam="endMinute"
+							/>
+					</aui:field-wrapper>
+				</aui:field-wrapper>
+					
+				<aui:input 
+					name="seats"
+					value="0">
+					<aui:validator name="digits" />
+				</aui:input>
+			</div>
+		</div>
+	</c:if>
+	
 	<c:if test="<%= event == null || event.getStatus() == WorkflowConstants.STATUS_DRAFT %>">
 		<aui:button type="submit" name="save" value="save-draft" onclick="saveDraft()"></aui:button>
 	</c:if>
@@ -210,6 +209,7 @@
 </aui:form>
 
 <script type="text/javascript">
+	
 	function saveDraft () {
 		document.<portlet:namespace />fm.<portlet:namespace />cmd.value="save-draft";
 	}
@@ -220,6 +220,10 @@
 	
 	$('#<portlet:namespace />event-options .icon-plus-sign').click(function (event) {
 		event.preventDefault();
-		$(this).parent('.event-option').clone(true, true).appendTo("#<portlet:namespace />event-options");
+		var $clone = $(this).parent('.event-option').clone(true, true);
+		
+		$clone.children("#<portlet:namespace />eventOptionId").val("0");
+		
+		$clone.appendTo("#<portlet:namespace />event-options");
 	});
 </script>

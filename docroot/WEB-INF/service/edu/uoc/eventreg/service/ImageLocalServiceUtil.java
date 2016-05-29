@@ -271,6 +271,11 @@ public class ImageLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<edu.uoc.eventreg.model.Image> findByEvent(
+		long eventId) {
+		return getService().findByEvent(eventId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -1010,6 +1010,25 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		}
 	}
 
+	@Override
+	public long getAvailableSeats() {
+		try {
+			String methodName = "getAvailableSeats";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			Long returnObj = (Long)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
 	public BaseModel<?> getEventRemoteModel() {
 		return _eventRemoteModel;
 	}

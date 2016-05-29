@@ -52,6 +52,15 @@
 				url="<%= viewStatisticsURL %>"
 			/>
 			
+			<portlet:actionURL var="listImagesURL" name="listImages">
+				<portlet:param name="eventId" value="<%= eventId %>"/>
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				image="view_locations"
+				message="image-gallery"
+				url="<%= listImagesURL %>"
+			/>
 			
 	</liferay-ui:icon-menu>
 </span>

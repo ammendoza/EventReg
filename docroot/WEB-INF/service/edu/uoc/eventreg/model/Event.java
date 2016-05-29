@@ -31,4 +31,5 @@ public interface Event extends EventModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link edu.uoc.eventreg.model.impl.EventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public long getAvailableSeats();
 }

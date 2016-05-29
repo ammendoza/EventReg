@@ -255,4 +255,6 @@ public interface EventOptionLocalService extends BaseLocalService,
 
 	public java.util.List<edu.uoc.eventreg.model.EventOption> findEventOptions(
 		long eventId);
+
+	public long findAvailableSeats(long eventOptionId);
 }

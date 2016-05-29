@@ -112,20 +112,24 @@ public class EventLocalServiceClp implements EventLocalService {
 
 		_methodParameterTypes19 = new String[] { "long", "long" };
 
-		_methodName20 = "findGroupEvents";
+		_methodName20 = "findAvailableSeats";
 
-		_methodParameterTypes20 = new String[] { "long", "long" };
+		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "searchEvents";
+		_methodName21 = "findGroupEvents";
 
-		_methodParameterTypes21 = new String[] {
+		_methodParameterTypes21 = new String[] { "long", "long" };
+
+		_methodName22 = "searchEvents";
+
+		_methodParameterTypes22 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "boolean", "int", "int"
 			};
 
-		_methodName22 = "searchEventsCount";
+		_methodName23 = "searchEventsCount";
 
-		_methodParameterTypes22 = new String[] {
+		_methodParameterTypes23 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "boolean"
 			};
@@ -701,13 +705,36 @@ public class EventLocalServiceClp implements EventLocalService {
 	}
 
 	@Override
+	public long findAvailableSeats(long eventId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { eventId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
 	public java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
 		long companyId, long groupId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20, new Object[] { companyId, groupId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { companyId, groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -732,8 +759,8 @@ public class EventLocalServiceClp implements EventLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] {
 						companyId,
 						
@@ -776,8 +803,8 @@ public class EventLocalServiceClp implements EventLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						companyId,
 						
@@ -854,4 +881,6 @@ public class EventLocalServiceClp implements EventLocalService {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

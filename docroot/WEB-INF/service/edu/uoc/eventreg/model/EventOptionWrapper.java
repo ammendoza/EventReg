@@ -371,6 +371,11 @@ public class EventOptionWrapper implements EventOption,
 	}
 
 	@Override
+	public long getAvailableSeats() {
+		return _eventOption.getAvailableSeats();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

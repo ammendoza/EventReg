@@ -1157,6 +1157,11 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 	}
 
 	@Override
+	public long getAvailableSeats() {
+		return _event.getAvailableSeats();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

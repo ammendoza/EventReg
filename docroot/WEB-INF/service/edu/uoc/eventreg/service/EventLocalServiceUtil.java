@@ -276,6 +276,10 @@ public class EventLocalServiceUtil {
 		return getService().findDayCount(companyId, groupId);
 	}
 
+	public static long findAvailableSeats(long eventId) {
+		return getService().findAvailableSeats(eventId);
+	}
+
 	public static java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
 		long companyId, long groupId) {
 		return getService().findGroupEvents(companyId, groupId);

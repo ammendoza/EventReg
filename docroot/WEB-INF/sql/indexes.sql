@@ -6,3 +6,5 @@ create index IX_9AC0463D on EVENTREG_Event (companyId, groupId);
 create index IX_52A4956E on EVENTREG_Event (title, description, location, status);
 
 create index IX_2A6FE975 on EVENTREG_EventOption (eventId);
+
+create index IX_6FE0A009 on EVENTREG_Image (eventId);

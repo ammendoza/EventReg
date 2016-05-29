@@ -27,6 +27,7 @@ import edu.uoc.eventreg.service.AttendeeService;
 import edu.uoc.eventreg.service.persistence.AttendeeFinder;
 import edu.uoc.eventreg.service.persistence.AttendeePersistence;
 import edu.uoc.eventreg.service.persistence.EventFinder;
+import edu.uoc.eventreg.service.persistence.EventOptionFinder;
 import edu.uoc.eventreg.service.persistence.EventOptionPersistence;
 import edu.uoc.eventreg.service.persistence.EventPersistence;
 import edu.uoc.eventreg.service.persistence.ImagePersistence;
@@ -256,6 +257,24 @@ public abstract class AttendeeServiceBaseImpl extends BaseServiceImpl
 	public void setEventOptionPersistence(
 		EventOptionPersistence eventOptionPersistence) {
 		this.eventOptionPersistence = eventOptionPersistence;
+	}
+
+	/**
+	 * Returns the event option finder.
+	 *
+	 * @return the event option finder
+	 */
+	public EventOptionFinder getEventOptionFinder() {
+		return eventOptionFinder;
+	}
+
+	/**
+	 * Sets the event option finder.
+	 *
+	 * @param eventOptionFinder the event option finder
+	 */
+	public void setEventOptionFinder(EventOptionFinder eventOptionFinder) {
+		this.eventOptionFinder = eventOptionFinder;
 	}
 
 	/**
@@ -507,6 +526,8 @@ public abstract class AttendeeServiceBaseImpl extends BaseServiceImpl
 	protected edu.uoc.eventreg.service.EventOptionService eventOptionService;
 	@BeanReference(type = EventOptionPersistence.class)
 	protected EventOptionPersistence eventOptionPersistence;
+	@BeanReference(type = EventOptionFinder.class)
+	protected EventOptionFinder eventOptionFinder;
 	@BeanReference(type = edu.uoc.eventreg.service.ImageLocalService.class)
 	protected edu.uoc.eventreg.service.ImageLocalService imageLocalService;
 	@BeanReference(type = edu.uoc.eventreg.service.ImageService.class)

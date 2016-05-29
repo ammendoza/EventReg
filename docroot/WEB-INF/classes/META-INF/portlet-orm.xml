@@ -92,6 +92,8 @@
 			<id name="imageId" />
 			<basic name="companyId" />
 			<basic name="groupId" />
+			<basic name="eventId" />
+			<basic name="dlFileEntryId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

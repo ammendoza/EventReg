@@ -51,6 +51,8 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		attributes.put("imageId", getImageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("eventId", getEventId());
+		attributes.put("dlFileEntryId", getDlFileEntryId());
 
 		return attributes;
 	}
@@ -73,6 +75,18 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long eventId = (Long)attributes.get("eventId");
+
+		if (eventId != null) {
+			setEventId(eventId);
+		}
+
+		String dlFileEntryId = (String)attributes.get("dlFileEntryId");
+
+		if (dlFileEntryId != null) {
+			setDlFileEntryId(dlFileEntryId);
 		}
 	}
 
@@ -154,6 +168,46 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public void setGroupId(long groupId) {
 		_image.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the event ID of this image.
+	*
+	* @return the event ID of this image
+	*/
+	@Override
+	public long getEventId() {
+		return _image.getEventId();
+	}
+
+	/**
+	* Sets the event ID of this image.
+	*
+	* @param eventId the event ID of this image
+	*/
+	@Override
+	public void setEventId(long eventId) {
+		_image.setEventId(eventId);
+	}
+
+	/**
+	* Returns the dl file entry ID of this image.
+	*
+	* @return the dl file entry ID of this image
+	*/
+	@Override
+	public java.lang.String getDlFileEntryId() {
+		return _image.getDlFileEntryId();
+	}
+
+	/**
+	* Sets the dl file entry ID of this image.
+	*
+	* @param dlFileEntryId the dl file entry ID of this image
+	*/
+	@Override
+	public void setDlFileEntryId(java.lang.String dlFileEntryId) {
+		_image.setDlFileEntryId(dlFileEntryId);
 	}
 
 	@Override

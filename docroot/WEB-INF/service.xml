@@ -109,13 +109,18 @@
 		<!-- Other fields -->
 		<column name="companyId" type="long" />
 		<column name="groupId" type="long" />
-		<column name="event" type="Collection" entity="Event" />
-		<column name="dlFileEntry" type="Collection" entity="com.liferay.portlet.documentlibrary.model.DLFileEntry" />
+		<column name="eventId" type="long" />
+		<column name="dlFileEntryId" type="String" />
 
 		<!-- Order -->
 		<order by="asc">
 			<order-column name="imageId" />
 		</order>
+		
+		<!-- Finders -->
+		<finder name="eventId" return-type="Collection">
+			<finder-column name="eventId" />
+		</finder>
 
 	</entity>
 </service-builder>

@@ -38,6 +38,140 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	 */
 
 	/**
+	* Returns all the images where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @return the matching images
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<edu.uoc.eventreg.model.Image> findByeventId(
+		long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the images where eventId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link edu.uoc.eventreg.model.impl.ImageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param eventId the event ID
+	* @param start the lower bound of the range of images
+	* @param end the upper bound of the range of images (not inclusive)
+	* @return the range of matching images
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<edu.uoc.eventreg.model.Image> findByeventId(
+		long eventId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the images where eventId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link edu.uoc.eventreg.model.impl.ImageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param eventId the event ID
+	* @param start the lower bound of the range of images
+	* @param end the upper bound of the range of images (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching images
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<edu.uoc.eventreg.model.Image> findByeventId(
+		long eventId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first image in the ordered set where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching image
+	* @throws edu.uoc.eventreg.NoSuchImageException if a matching image could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Image findByeventId_First(long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchImageException;
+
+	/**
+	* Returns the first image in the ordered set where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching image, or <code>null</code> if a matching image could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Image fetchByeventId_First(long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last image in the ordered set where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching image
+	* @throws edu.uoc.eventreg.NoSuchImageException if a matching image could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Image findByeventId_Last(long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchImageException;
+
+	/**
+	* Returns the last image in the ordered set where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching image, or <code>null</code> if a matching image could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Image fetchByeventId_Last(long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the images before and after the current image in the ordered set where eventId = &#63;.
+	*
+	* @param imageId the primary key of the current image
+	* @param eventId the event ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next image
+	* @throws edu.uoc.eventreg.NoSuchImageException if a image with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public edu.uoc.eventreg.model.Image[] findByeventId_PrevAndNext(
+		long imageId, long eventId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			edu.uoc.eventreg.NoSuchImageException;
+
+	/**
+	* Removes all the images where eventId = &#63; from the database.
+	*
+	* @param eventId the event ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByeventId(long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of images where eventId = &#63;.
+	*
+	* @param eventId the event ID
+	* @return the number of matching images
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByeventId(long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the image in the entity cache if it is enabled.
 	*
 	* @param image the image

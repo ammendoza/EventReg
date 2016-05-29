@@ -75,6 +75,8 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 		attributes.put("imageId", getImageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("eventId", getEventId());
+		attributes.put("dlFileEntryId", getDlFileEntryId());
 
 		return attributes;
 	}
@@ -97,6 +99,18 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long eventId = (Long)attributes.get("eventId");
+
+		if (eventId != null) {
+			setEventId(eventId);
+		}
+
+		String dlFileEntryId = (String)attributes.get("dlFileEntryId");
+
+		if (dlFileEntryId != null) {
+			setDlFileEntryId(dlFileEntryId);
 		}
 	}
 
@@ -162,6 +176,52 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 				Method method = clazz.getMethod("setGroupId", long.class);
 
 				method.invoke(_imageRemoteModel, groupId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getEventId() {
+		return _eventId;
+	}
+
+	@Override
+	public void setEventId(long eventId) {
+		_eventId = eventId;
+
+		if (_imageRemoteModel != null) {
+			try {
+				Class<?> clazz = _imageRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setEventId", long.class);
+
+				method.invoke(_imageRemoteModel, eventId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getDlFileEntryId() {
+		return _dlFileEntryId;
+	}
+
+	@Override
+	public void setDlFileEntryId(String dlFileEntryId) {
+		_dlFileEntryId = dlFileEntryId;
+
+		if (_imageRemoteModel != null) {
+			try {
+				Class<?> clazz = _imageRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDlFileEntryId", String.class);
+
+				method.invoke(_imageRemoteModel, dlFileEntryId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -241,6 +301,8 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 		clone.setImageId(getImageId());
 		clone.setCompanyId(getCompanyId());
 		clone.setGroupId(getGroupId());
+		clone.setEventId(getEventId());
+		clone.setDlFileEntryId(getDlFileEntryId());
 
 		return clone;
 	}
@@ -299,7 +361,7 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{imageId=");
 		sb.append(getImageId());
@@ -307,6 +369,10 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 		sb.append(getCompanyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", eventId=");
+		sb.append(getEventId());
+		sb.append(", dlFileEntryId=");
+		sb.append(getDlFileEntryId());
 		sb.append("}");
 
 		return sb.toString();
@@ -314,7 +380,7 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("edu.uoc.eventreg.model.Image");
@@ -332,6 +398,14 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>eventId</column-name><column-value><![CDATA[");
+		sb.append(getEventId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dlFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getDlFileEntryId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -341,6 +415,8 @@ public class ImageClp extends BaseModelImpl<Image> implements Image {
 	private long _imageId;
 	private long _companyId;
 	private long _groupId;
+	private long _eventId;
+	private String _dlFileEntryId;
 	private BaseModel<?> _imageRemoteModel;
 	private Class<?> _clpSerializerClass = edu.uoc.eventreg.service.ClpSerializer.class;
 }
