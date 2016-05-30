@@ -99,7 +99,7 @@
 			<liferay-ui:search-container-column-text
 				align="right">
 			<aui:button value="<%= (seats <= 0) ? \"agotado\" : \"register\" %>" href="<%= registerFormURL %>" disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
-		</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-column-text> 
 			
 		</liferay-ui:search-container-row>
 	
