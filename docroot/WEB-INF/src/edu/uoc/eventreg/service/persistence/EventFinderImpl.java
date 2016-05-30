@@ -48,7 +48,7 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements Event
 	    try {
 	        session = openSession();
 
-	        String sql = CustomSQLUtil.get(FIND_DAY_COUNT);
+	        String sql = CustomSQLUtil.get(FIND_AVAILABLE_SEATS);
 
 	        SQLQuery q = session.createSQLQuery(sql).addScalar("seats", Type.LONG);
 	        q.setCacheable(false);

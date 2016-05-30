@@ -28,13 +28,14 @@
 	String title = ParamUtil.getString(request, "title");
 	String description = ParamUtil.getString(request, "description");
 	String location = ParamUtil.getString(request, "location");
+	
 	int status = WorkflowConstants.STATUS_APPROVED;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d");
 	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM d k:mm");
 	SimpleDateFormat timeFormat = new SimpleDateFormat("k:mm");
 %>
 
-<liferay-ui:calendar year="2016" month="5" />
+
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="title" value="<%= title %>" />
@@ -47,10 +48,13 @@
 	emptyResultsMessage="there-are-no-events" 
 	displayTerms="<%= new EventDisplayTerms(renderRequest) %>" 
 	iteratorURL="<%= iteratorURL %>">
+	
+	<%
+		EventDisplayTerms displayTerms = (EventDisplayTerms) searchContainer.getDisplayTerms();
+	%>
 
 	<liferay-ui:search-container-results>
 		<%
-		EventDisplayTerms displayTerms = (EventDisplayTerms) searchContainer.getDisplayTerms();
 		if (displayTerms.isAdvancedSearch()) {
 			total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, title, description, location, status, displayTerms.isAndOperator());
 			results = EventLocalServiceUtil.searchEvents(companyId, groupId, title, description, location, status, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
@@ -72,6 +76,42 @@
 		
 		%>
 	</liferay-ui:search-container-results>
+	
+	
+	
+	
+	
+	<button class="btn pull-right" type="button" id="viewCalendar"><i class="icon-calendar"></i><liferay-ui:message key="view-calendar" /></button>
+	<div class="calendar-html-container">
+		<div id="calendarHtml">
+			<liferay-ui:calendar year="2016" month="5" headerPattern="MMMM yyyy" showAllPotentialWeeks="true" />
+		</div>
+	</div>
+	
+	
+	<aui:script use="aui-popover">
+		var trigger = A.one("#viewCalendar");
+
+	    var popover = new A.Popover(
+	      {
+	        align: {
+	          node: trigger
+	        },
+	        bodyContent: A.one("#calendarHtml"),
+	        headerContent: '<liferay-ui:message key="calendar" />',
+	        position: 'bottom'
+	      }
+	    ).render().hide();
+
+	    trigger.on(
+	      'click',
+	      function() {
+	        popover.set('visible', !popover.get('visible'));
+	      }
+	    );
+	</aui:script>
+	<liferay-ui:search-form servletContext="<%= this.getServletContext()%>"
+					 page="/html/registration/event_search.jsp" />
 		
 	<liferay-ui:search-container-row
 		className="edu.uoc.eventreg.model.Event"
@@ -86,7 +126,7 @@
 		%>
 				
 		<liferay-ui:search-container-column-text
-			name="title">
+			name="event">
 			
 				<span class="event-title">
 					<c:if test="<%= seats != 0 %>">
@@ -123,8 +163,8 @@
 						</c:otherwise>
 					</c:choose>
 				</span>
-				<c:if test="<%= seats < 5 %>">
-					<span class="seats"><liferay-ui:message key="last-available-seats" /></span>
+				<c:if test="<%= seats < 5 && seats > 0 %>">
+					<span class="pull-right text-error"><liferay-ui:message key="last-available-seats" /></span>
 				</c:if>
 		</liferay-ui:search-container-column-text>
 		
@@ -142,7 +182,7 @@
 		
 		<liferay-ui:search-container-column-text
 			align="right">
-				<aui:button value="<%= (seats == 0) ? \"agotado\" : \"register\" %>" href="<%= viewEventURL %>" cssClass="<%= (seats == 0) ? \"btn\" : \"btn btn-primary\" %>" />
+				<aui:button value="<%= (seats <= 0) ? \"agotado\" : \"register\" %>" href="<%= viewEventURL %>"  disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
 		</liferay-ui:search-container-column-text>
 		
 	</liferay-ui:search-container-row>

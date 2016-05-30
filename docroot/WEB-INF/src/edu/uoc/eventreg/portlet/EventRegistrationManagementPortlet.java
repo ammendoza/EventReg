@@ -70,7 +70,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 	
 	private void setStatistics(PortletRequest request,
 			List<Object[]> eventDayCount, List<Object[]> attendeeDayCount) {
-
+		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MILLISECOND, 0);
 		cal.set(Calendar.SECOND, 0);
@@ -78,7 +78,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		int eventIndex = 0;
 		int attendeeIndex = 0;
-		Date eventDate = (eventDayCount != null) ? (Date) eventDayCount.get(eventIndex)[0] : null;
+		Date eventDate = (eventDayCount != null && eventDayCount.get(0) != null) ? (Date) eventDayCount.get(eventIndex)[0] : cal.getTime();
 		Date attendeeDate = (Date) attendeeDayCount.get(attendeeIndex)[0];
 		String eventStats = "";
 		String attendeeStats = "";
@@ -195,7 +195,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		
 		int totalSeats = 0;
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		int hourCount = 0;
 		
 		if (Validator.isNull(id)) {

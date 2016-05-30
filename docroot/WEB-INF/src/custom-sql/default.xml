@@ -54,7 +54,7 @@
     	]]>
     </sql>
     
-     <sql id="edu.uoc.eventreg.service.persistence.EventFinder.findDayCount">
+     <sql id="edu.uoc.eventreg.service.persistence.EventFinder.findAvailableSeats">
     	<![CDATA[
     		SELECT 
     			(SELECT SUM(seats) FROM EVENTREG_EventOption WHERE eventId = ?)-COUNT(a.attendeeId) AS seats

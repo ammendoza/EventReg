@@ -18,23 +18,21 @@
 <% if (event != null) { %>
 
 	<div id="eventImages" class="carousel slide pull-right">
-	  <div class="carousel-inner">
 	  	<% 
-	  	boolean firstImage = true;
-	  	for (Image image: imageList) { %>
-		    <div class="item <%= firstImage ? "active" : StringPool.BLANK %>">
-		    	<img src="<%= EventRegistrationUtil.getImageUrl(image.getDlFileEntryId(), request) %>" alt="" />
-		    </div>
+	  	for (int i=0; i < imageList.size(); i++) { 
+	  		String imageURL = EventRegistrationUtil.getImageUrl(imageList.get(i).getDlFileEntryId(), request);
+	  	%>
+		    <a href="<%= imageURL %>" title="<%= event.getTitle(locale) %><liferay-ui:message key="image" /> <%= (i+1) %>">
+		    	<img src="<%= imageURL %>" alt="" class="img-polaroid" />
+		    </a>
 	    <% 
-	    	firstImage = false;
 	    } 
 	    %>
-	  </div>
-	  <a class="carousel-control left" href="#eventImages" data-slide="prev">&lsaquo;</a>
-	  <a class="carousel-control right" href="#eventImages" data-slide="next">&rsaquo;</a>
 	</div>
+	
+	<h2><%= event.getTitle(locale) %></h2>
 
-	<p class="address"><%= event.getAddress(locale) %> | <%= event.getLocation() %></p>
+	<p class="address"><%= event.getAddress(locale) %> | <%= event.getLocation(locale) %></p>
 	
 	<div class="description">
 		<%= event.getDescription(locale) %>
@@ -52,6 +50,9 @@
 			className="edu.uoc.eventreg.model.EventOption"
 			modelVar="option"
 		>
+			<%
+				long seats = option.getAvailableSeats();
+			%>
 			<portlet:actionURL var="registerFormURL" name="registerForm">
 				<portlet:param name="eventId" value="<%= String.valueOf(event.getEventId()) %>" />
 				<portlet:param name="eventOptionId" value="<%= String.valueOf(option.getEventOptionId()) %>"/>
@@ -92,12 +93,12 @@
 			
 			<liferay-ui:search-container-column-text
 				name="available-seats"
-				value="<%= String.valueOf(option.getAvailableSeats()) %>"
+				value="<%= String.valueOf(seats) %>"
 				/>
 			
 			<liferay-ui:search-container-column-text
 				align="right">
-			<aui:button value="register" href="<%= registerFormURL %>" cssClass="btn btn-primary" />
+			<aui:button value="<%= (seats <= 0) ? \"agotado\" : \"register\" %>" href="<%= registerFormURL %>" disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
 		</liferay-ui:search-container-column-text>
 			
 		</liferay-ui:search-container-row>
@@ -129,6 +130,14 @@
 		<script async defer
 		 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyTV7adn2NkYj-3iTLW-PVDy9YbQzL-dc&signed_in=true&callback=initMap"></script>
 	</c:if>
+	
+	<aui:script use="aui-image-viewer-base">
+		new A.ImageViewer(
+		      {
+		        links: '#eventImages a'
+		      }
+		    ).render();
+	</aui:script>
 	
 <% } else { %>
 

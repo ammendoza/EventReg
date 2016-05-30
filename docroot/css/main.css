@@ -16,7 +16,35 @@
 	#eventImages {
 		width:40%;
 		margin: 0 0 20px 20px;
+		
+		a {
+			width: 18%;
+			padding: 0 10px 0 10px;
+			float: right;
+		}
 	}
+	
+	.calendar-html-container {
+		display:none;
+	}
+
+	.address {
+		font-weight: bold;
+	}
+}
+
+#calendarHtml {
+	
+	.taglib-calendar {
+		float:right;
+		
+		.table th, .table td {
+			padding:0;
+			text-align: center;
+			vertical-align: middle;
+		}
+	}
+	
 }
 
 .event-management-portlet {
@@ -34,5 +62,12 @@
 		height: 100px;
 	}
 	
-	
+}
+
+.popover {
+	z-index: 1 !important;
+}
+
+.taglib-search-toggle .popover .arrow {
+	width:0 !important;
 }
