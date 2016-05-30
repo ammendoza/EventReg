@@ -1,5 +1,6 @@
 package edu.uoc.eventreg.portlet;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,6 +17,13 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -498,6 +506,48 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		}
 		
 		listImages(request, response);
+	}
+	
+	public void serveResource (ResourceRequest request, ResourceResponse response) {
+		
+		long eventId = ParamUtil.getLong(request, "eventId");
+		
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFSheet sheet = workbook.createSheet("Event #" + eventId);
+		
+		int rowNum = 0;
+		Row row = sheet.createRow(rowNum);
+		
+		row.createCell(0).setCellValue("Name");
+		row.createCell(1).setCellValue("Surname");
+		row.createCell(2).setCellValue("Company");
+		row.createCell(3).setCellValue("E-mail");
+		row.createCell(4).setCellValue("Phone");
+		
+		List<Attendee> list = AttendeeLocalServiceUtil.findByEvent(eventId);
+		
+		for (Attendee attendee : list) {
+			rowNum++;
+			row = sheet.createRow(rowNum);
+			
+			row.createCell(0).setCellValue(attendee.getName());
+			row.createCell(1).setCellValue(attendee.getSurname());
+			row.createCell(2).setCellValue(attendee.getCompany());
+			row.createCell(3).setCellValue(attendee.getEmail());
+			row.createCell(4).setCellValue(attendee.getPhone());
+			
+		}
+		
+		 response.setContentType("application/vnd.ms-excel");
+		 response.setProperty("Content-Disposition", "attachment; filename= user_export_" + Calendar.getInstance().getTimeInMillis() + ".xls");
+
+		 try {
+			workbook.write(response.getPortletOutputStream());
+			workbook.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		 
 	}
 
 }

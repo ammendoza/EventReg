@@ -77,6 +77,11 @@
 			<c:if test="<%= eventId != 0 %>">
 				<liferay-portlet:actionURL name="listAttendees" var="listAttendeesURL" />
 				<aui:nav-item href="<%= listAttendeesURL %>" iconCssClass="icon-th-list" label="view-registered" />
+				
+				<liferay-portlet:resourceURL var="exportListURL">
+					<portlet:param name="eventId" value="<%= String.valueOf(eventId) %>" />
+				</liferay-portlet:resourceURL>
+				<aui:nav-item href="<%= exportListURL %>" iconCssClass="icon-share-alt" label="export-list" />
 			</c:if>
 		</aui:nav>
 		

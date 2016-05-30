@@ -182,7 +182,7 @@
 		
 		<liferay-ui:search-container-column-text
 			align="right">
-				<aui:button value="<%= (seats <= 0) ? \"agotado\" : \"register\" %>" href="<%= viewEventURL %>"  disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
+				<aui:button value="<%= (seats <= 0) ? \"complete\" : \"register\" %>" href="<%= viewEventURL %>"  disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
 		</liferay-ui:search-container-column-text>
 		
 	</liferay-ui:search-container-row>

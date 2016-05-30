@@ -58,8 +58,7 @@
 				<portlet:param name="eventOptionId" value="<%= String.valueOf(option.getEventOptionId()) %>"/>
 			</portlet:actionURL>
 					
-			<liferay-ui:search-container-column-text
-				href="<%= registerFormURL %>">
+			<liferay-ui:search-container-column-text>
 			
 				<span class="event-title"><liferay-ui:message key="session" /> <%= optionNum %></span>
 				<%
@@ -98,7 +97,7 @@
 			
 			<liferay-ui:search-container-column-text
 				align="right">
-			<aui:button value="<%= (seats <= 0) ? \"agotado\" : \"register\" %>" href="<%= registerFormURL %>" disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
+			<aui:button value="<%= (seats <= 0) ? \"complete\" : \"register\" %>" href="<%= registerFormURL %>" disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
 		</liferay-ui:search-container-column-text> 
 			
 		</liferay-ui:search-container-row>
