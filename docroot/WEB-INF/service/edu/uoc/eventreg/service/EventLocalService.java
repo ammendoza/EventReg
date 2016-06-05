@@ -257,14 +257,18 @@ public interface EventLocalService extends BaseLocalService,
 	public java.util.List<edu.uoc.eventreg.model.Event> findGroupEvents(
 		long companyId, long groupId);
 
+	public java.util.List<edu.uoc.eventreg.model.Event> findPublicEvents(
+		long companyId, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<edu.uoc.eventreg.model.Event> searchEvents(
 		long companyId, long groupId, java.lang.String title,
 		java.lang.String description, java.lang.String location, int status,
-		boolean andSearch, int start, int end);
+		boolean nextEvents, boolean andSearch, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchEventsCount(long companyId, long groupId,
 		java.lang.String title, java.lang.String description,
-		java.lang.String location, int status, boolean andSearch);
+		java.lang.String location, int status, boolean nextEvents,
+		boolean andSearch);
 }

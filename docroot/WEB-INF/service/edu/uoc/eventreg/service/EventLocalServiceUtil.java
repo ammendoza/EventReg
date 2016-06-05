@@ -285,21 +285,27 @@ public class EventLocalServiceUtil {
 		return getService().findGroupEvents(companyId, groupId);
 	}
 
+	public static java.util.List<edu.uoc.eventreg.model.Event> findPublicEvents(
+		long companyId, long groupId) {
+		return getService().findPublicEvents(companyId, groupId);
+	}
+
 	public static java.util.List<edu.uoc.eventreg.model.Event> searchEvents(
 		long companyId, long groupId, java.lang.String title,
 		java.lang.String description, java.lang.String location, int status,
-		boolean andSearch, int start, int end) {
+		boolean nextEvents, boolean andSearch, int start, int end) {
 		return getService()
 				   .searchEvents(companyId, groupId, title, description,
-			location, status, andSearch, start, end);
+			location, status, nextEvents, andSearch, start, end);
 	}
 
 	public static int searchEventsCount(long companyId, long groupId,
 		java.lang.String title, java.lang.String description,
-		java.lang.String location, int status, boolean andSearch) {
+		java.lang.String location, int status, boolean nextEvents,
+		boolean andSearch) {
 		return getService()
 				   .searchEventsCount(companyId, groupId, title, description,
-			location, status, andSearch);
+			location, status, nextEvents, andSearch);
 	}
 
 	public static void clearService() {

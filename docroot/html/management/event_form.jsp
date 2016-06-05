@@ -75,75 +75,77 @@
 	
 	<h2><liferay-ui:message key="event-options" /></h2>
 	
-	<% for (EventOption option : eventOptions) { 
-
-		Calendar startDate = Calendar.getInstance();
-		startDate.setTime(option.getStartDate());
-		
-		Calendar endDate = Calendar.getInstance();
-		endDate.setTime(option.getEndDate());
+	<c:if test="<%= event != null %>">
+		<% for (EventOption option : eventOptions) { 
 	
-	%>
-		<div id="<portlet:namespace />event-options">
-			<div class="event-option">
-				<i class="icon-plus-sign pull-right"></i>
-				
-				<aui:input type="hidden" name="eventOptionId" value="<%= option.getEventOptionId() %>" />
+			Calendar startDate = Calendar.getInstance();
+			startDate.setTime(option.getStartDate());
+			
+			Calendar endDate = Calendar.getInstance();
+			endDate.setTime(option.getEndDate());
+		
+		%>
+			<div id="<portlet:namespace />event-options">
+				<div class="event-option">
+					<i class="icon-plus-sign pull-right"></i>
 					
-				<aui:field-wrapper label="start-date">
-					<aui:field-wrapper inlineField="true">
-						<liferay-ui:input-date 
-							name="startDate"
-							dayValue="<%= startDate.get(Calendar.DAY_OF_MONTH) %>"
-							monthValue="<%= startDate.get(Calendar.MONTH) %>"
-							yearValue="<%= startDate.get(Calendar.YEAR) %>"
-							/>
+					<aui:input type="hidden" name="eventOptionId" value="<%= option.getEventOptionId() %>" />
+						
+					<aui:field-wrapper label="start-date">
+						<aui:field-wrapper inlineField="true">
+							<liferay-ui:input-date 
+								name="startDate"
+								dayValue="<%= startDate.get(Calendar.DAY_OF_MONTH) %>"
+								monthValue="<%= startDate.get(Calendar.MONTH) %>"
+								yearValue="<%= startDate.get(Calendar.YEAR) %>"
+								/>
+						</aui:field-wrapper>
+							
+						<aui:field-wrapper inlineField="true">
+							<liferay-ui:input-time 
+								name="startHour"
+								hourParam="startHour"
+								amPmParam="startAmPm"
+								minuteParam="startMinute"
+								hourValue="<%= startDate.get(Calendar.HOUR) %>"
+								minuteValue="<%= startDate.get(Calendar.MINUTE) %>"
+								amPmValue="<%= startDate.get(Calendar.AM_PM) %>"
+								/>
+						</aui:field-wrapper>
 					</aui:field-wrapper>
 						
-					<aui:field-wrapper inlineField="true">
-						<liferay-ui:input-time 
-							name="startHour"
-							hourParam="startHour"
-							amPmParam="startAmPm"
-							minuteParam="startMinute"
-							hourValue="<%= startDate.get(Calendar.HOUR) %>"
-							minuteValue="<%= startDate.get(Calendar.MINUTE) %>"
-							amPmValue="<%= startDate.get(Calendar.AM_PM) %>"
-							/>
+					<aui:field-wrapper label="end-date">
+						<aui:field-wrapper inlineField="true">
+							<liferay-ui:input-date 
+								name="endDate" 
+								dayValue="<%= endDate.get(Calendar.DAY_OF_MONTH) %>"
+								monthValue="<%= endDate.get(Calendar.MONTH) %>"
+								yearValue="<%= endDate.get(Calendar.YEAR) %>"
+								/>
+						</aui:field-wrapper>
+						
+						<aui:field-wrapper inlineField="true">
+							<liferay-ui:input-time 
+								name="endHour"
+								hourParam="endHour"
+								amPmParam="endAmPm"
+								minuteParam="endMinute"
+								hourValue="<%= endDate.get(Calendar.HOUR) %>"
+								minuteValue="<%= endDate.get(Calendar.MINUTE) %>"
+								amPmValue="<%= endDate.get(Calendar.AM_PM) %>"
+								/>
+						</aui:field-wrapper>
 					</aui:field-wrapper>
-				</aui:field-wrapper>
-					
-				<aui:field-wrapper label="end-date">
-					<aui:field-wrapper inlineField="true">
-						<liferay-ui:input-date 
-							name="endDate" 
-							dayValue="<%= endDate.get(Calendar.DAY_OF_MONTH) %>"
-							monthValue="<%= endDate.get(Calendar.MONTH) %>"
-							yearValue="<%= endDate.get(Calendar.YEAR) %>"
-							/>
-					</aui:field-wrapper>
-					
-					<aui:field-wrapper inlineField="true">
-						<liferay-ui:input-time 
-							name="endHour"
-							hourParam="endHour"
-							amPmParam="endAmPm"
-							minuteParam="endMinute"
-							hourValue="<%= endDate.get(Calendar.HOUR) %>"
-							minuteValue="<%= endDate.get(Calendar.MINUTE) %>"
-							amPmValue="<%= endDate.get(Calendar.AM_PM) %>"
-							/>
-					</aui:field-wrapper>
-				</aui:field-wrapper>
-					
-				<aui:input 
-					name="seats"
-					value="<%= option.getSeats() %>">
-					<aui:validator name="digits" />
-				</aui:input>
+						
+					<aui:input 
+						name="seats"
+						value="<%= option.getSeats() %>">
+						<aui:validator name="digits" />
+					</aui:input>
+				</div>
 			</div>
-		</div>
-	<% } %>
+		<% } %>
+	</c:if>
 	
 	<c:if test="<%= event == null %>">
 		<div id="<portlet:namespace />event-options">

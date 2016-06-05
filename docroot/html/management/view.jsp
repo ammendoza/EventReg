@@ -33,8 +33,8 @@
 		<%
 		EventDisplayTerms displayTerms = (EventDisplayTerms) searchContainer.getDisplayTerms();
 		if (displayTerms.isAdvancedSearch()) {
-			total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, title, description, location, status, displayTerms.isAndOperator());
-			results = EventLocalServiceUtil.searchEvents(companyId, groupId, title, description, location, status, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+			total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, title, description, location, status, false, displayTerms.isAndOperator());
+			results = EventLocalServiceUtil.searchEvents(companyId, groupId, title, description, location, status, false, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
 		} else {
 			String searchkeywords = displayTerms.getKeywords().trim();
 			
@@ -43,8 +43,8 @@
 				total = results.size();
 				results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
 			} else {
-				total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false);
-				results = EventLocalServiceUtil.searchEvents(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false, searchContainer.getStart(), searchContainer.getEnd());
+				total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false, false);
+				results = EventLocalServiceUtil.searchEvents(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false, false, searchContainer.getStart(), searchContainer.getEnd());
 			}
 		}
 		

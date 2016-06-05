@@ -14,14 +14,18 @@
 
 package edu.uoc.eventreg.service.impl;
 
+import java.util.Calendar;
 import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import edu.uoc.eventreg.model.Event;
 import edu.uoc.eventreg.service.EventLocalServiceUtil;
@@ -72,11 +76,35 @@ public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Event> searchEvents (long companyId, long groupId, String title, String description, String location, int status, boolean andSearch, int start, int end) {
+	public List<Event> findPublicEvents (long companyId, long groupId) {
 			
 		List<Event> events = null;
 		
-		DynamicQuery dynamicQuery = searchEventsQuery(companyId, groupId, title, description, location, status, andSearch);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Event.class, getClassLoader());
+		Junction junction = RestrictionsFactoryUtil.conjunction();
+		junction.add(RestrictionsFactoryUtil.eq("companyId", companyId));
+		junction.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+		junction.add(RestrictionsFactoryUtil.eq("status", WorkflowConstants.STATUS_APPROVED));
+		junction.add(RestrictionsFactoryUtil.gt("startDate", Calendar.getInstance().getTime()));
+		
+		dynamicQuery.add(junction);
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("startDate"));
+		
+		try {
+			events = (List<Event>) EventLocalServiceUtil.dynamicQuery(dynamicQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+			
+		return events;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Event> searchEvents (long companyId, long groupId, String title, String description, String location, int status, boolean nextEvents, boolean andSearch, int start, int end) {
+			
+		List<Event> events = null;
+		
+		DynamicQuery dynamicQuery = searchEventsQuery(companyId, groupId, title, description, location, status, nextEvents, andSearch);
 		
 		try {
 			events = (List<Event>) EventLocalServiceUtil.dynamicQuery(dynamicQuery, start, end);
@@ -87,10 +115,10 @@ public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 		return events;
 	}
 	
-	public int searchEventsCount (long companyId, long groupId, String title, String description, String location, int status, boolean andSearch) {
+	public int searchEventsCount (long companyId, long groupId, String title, String description, String location, int status, boolean nextEvents, boolean andSearch) {
 
 		int count = 0;
-		DynamicQuery dynamicQuery = searchEventsQuery(companyId, groupId, title, description, location, status, andSearch);
+		DynamicQuery dynamicQuery = searchEventsQuery(companyId, groupId, title, description, location, status, nextEvents, andSearch);
 			
 		try {
 			count = (int) EventLocalServiceUtil.dynamicQueryCount(dynamicQuery);
@@ -101,7 +129,9 @@ public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 		return count;
 	}
 	
-	private DynamicQuery searchEventsQuery (long companyId, long groupId, String title, String description, String location, int status, boolean andSearch) {
+	private DynamicQuery searchEventsQuery (long companyId, long groupId, String title, String description, String location, int status, boolean nextEvents, boolean andSearch) {
+		
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Event.class, getClassLoader());
 		
 		Junction junction = null;
 		if(andSearch)
@@ -125,9 +155,13 @@ public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 		groupJunction.add(junction);
 		groupJunction.add(RestrictionsFactoryUtil.eq("companyId", companyId));
 		groupJunction.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+
+		if (nextEvents) {
+			Calendar cal = Calendar.getInstance();
+			groupJunction.add(RestrictionsFactoryUtil.gt("startDate", cal.getTime()));
+		}
 		
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Event.class, getClassLoader());
-		dynamicQuery.add(junction);
+		dynamicQuery.add(groupJunction);
 
 		return dynamicQuery;
 	}

@@ -120,18 +120,22 @@ public class EventLocalServiceClp implements EventLocalService {
 
 		_methodParameterTypes21 = new String[] { "long", "long" };
 
-		_methodName22 = "searchEvents";
+		_methodName22 = "findPublicEvents";
 
-		_methodParameterTypes22 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int", "boolean", "int", "int"
-			};
+		_methodParameterTypes22 = new String[] { "long", "long" };
 
-		_methodName23 = "searchEventsCount";
+		_methodName23 = "searchEvents";
 
 		_methodParameterTypes23 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int", "boolean"
+				"java.lang.String", "int", "boolean", "boolean", "int", "int"
+			};
+
+		_methodName24 = "searchEventsCount";
+
+		_methodParameterTypes24 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int", "boolean", "boolean"
 			};
 	}
 
@@ -752,15 +756,39 @@ public class EventLocalServiceClp implements EventLocalService {
 	}
 
 	@Override
-	public java.util.List<edu.uoc.eventreg.model.Event> searchEvents(
-		long companyId, long groupId, java.lang.String title,
-		java.lang.String description, java.lang.String location, int status,
-		boolean andSearch, int start, int end) {
+	public java.util.List<edu.uoc.eventreg.model.Event> findPublicEvents(
+		long companyId, long groupId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+					_methodParameterTypes22, new Object[] { companyId, groupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<edu.uoc.eventreg.model.Event>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<edu.uoc.eventreg.model.Event> searchEvents(
+		long companyId, long groupId, java.lang.String title,
+		java.lang.String description, java.lang.String location, int status,
+		boolean nextEvents, boolean andSearch, int start, int end) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						companyId,
 						
@@ -773,6 +801,8 @@ public class EventLocalServiceClp implements EventLocalService {
 					ClpSerializer.translateInput(location),
 						
 					status,
+						
+					nextEvents,
 						
 					andSearch,
 						
@@ -799,12 +829,13 @@ public class EventLocalServiceClp implements EventLocalService {
 	@Override
 	public int searchEventsCount(long companyId, long groupId,
 		java.lang.String title, java.lang.String description,
-		java.lang.String location, int status, boolean andSearch) {
+		java.lang.String location, int status, boolean nextEvents,
+		boolean andSearch) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						companyId,
 						
@@ -817,6 +848,8 @@ public class EventLocalServiceClp implements EventLocalService {
 					ClpSerializer.translateInput(location),
 						
 					status,
+						
+					nextEvents,
 						
 					andSearch
 					});
@@ -883,4 +916,6 @@ public class EventLocalServiceClp implements EventLocalService {
 	private String[] _methodParameterTypes22;
 	private String _methodName23;
 	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
 }

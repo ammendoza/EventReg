@@ -1,6 +1,5 @@
 package edu.uoc.eventreg.portlet;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,7 +21,6 @@ import javax.portlet.ResourceResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -150,6 +148,12 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		long companyId = themeDisplay.getCompanyId();
 		long groupId = themeDisplay.getDoAsGroupId();
+		
+		System.out.println(titleMap.size());
+
+		if (titleMap.size() >= 0) {
+			
+		}
 		
 		Event event = null;
 		if (Validator.isNull(id)) {

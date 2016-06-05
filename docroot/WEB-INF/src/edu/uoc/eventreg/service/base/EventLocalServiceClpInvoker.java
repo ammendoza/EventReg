@@ -120,18 +120,22 @@ public class EventLocalServiceClpInvoker {
 
 		_methodParameterTypes66 = new String[] { "long", "long" };
 
-		_methodName67 = "searchEvents";
+		_methodName67 = "findPublicEvents";
 
-		_methodParameterTypes67 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int", "boolean", "int", "int"
-			};
+		_methodParameterTypes67 = new String[] { "long", "long" };
 
-		_methodName68 = "searchEventsCount";
+		_methodName68 = "searchEvents";
 
 		_methodParameterTypes68 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int", "boolean"
+				"java.lang.String", "int", "boolean", "boolean", "int", "int"
+			};
+
+		_methodName69 = "searchEventsCount";
+
+		_methodParameterTypes69 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int", "boolean", "boolean"
 			};
 	}
 
@@ -255,24 +259,32 @@ public class EventLocalServiceClpInvoker {
 
 		if (_methodName67.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+			return EventLocalServiceUtil.findPublicEvents(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName68.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
 			return EventLocalServiceUtil.searchEvents(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
 				(java.lang.String)arguments[4],
 				((Integer)arguments[5]).intValue(),
 				((Boolean)arguments[6]).booleanValue(),
-				((Integer)arguments[7]).intValue(),
-				((Integer)arguments[8]).intValue());
+				((Boolean)arguments[7]).booleanValue(),
+				((Integer)arguments[8]).intValue(),
+				((Integer)arguments[9]).intValue());
 		}
 
-		if (_methodName68.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+		if (_methodName69.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
 			return EventLocalServiceUtil.searchEventsCount(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
 				(java.lang.String)arguments[4],
 				((Integer)arguments[5]).intValue(),
-				((Boolean)arguments[6]).booleanValue());
+				((Boolean)arguments[6]).booleanValue(),
+				((Boolean)arguments[7]).booleanValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -324,4 +336,6 @@ public class EventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes67;
 	private String _methodName68;
 	private String[] _methodParameterTypes68;
+	private String _methodName69;
+	private String[] _methodParameterTypes69;
 }

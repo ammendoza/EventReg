@@ -297,20 +297,27 @@ public class EventLocalServiceWrapper implements EventLocalService,
 	}
 
 	@Override
+	public java.util.List<edu.uoc.eventreg.model.Event> findPublicEvents(
+		long companyId, long groupId) {
+		return _eventLocalService.findPublicEvents(companyId, groupId);
+	}
+
+	@Override
 	public java.util.List<edu.uoc.eventreg.model.Event> searchEvents(
 		long companyId, long groupId, java.lang.String title,
 		java.lang.String description, java.lang.String location, int status,
-		boolean andSearch, int start, int end) {
+		boolean nextEvents, boolean andSearch, int start, int end) {
 		return _eventLocalService.searchEvents(companyId, groupId, title,
-			description, location, status, andSearch, start, end);
+			description, location, status, nextEvents, andSearch, start, end);
 	}
 
 	@Override
 	public int searchEventsCount(long companyId, long groupId,
 		java.lang.String title, java.lang.String description,
-		java.lang.String location, int status, boolean andSearch) {
+		java.lang.String location, int status, boolean nextEvents,
+		boolean andSearch) {
 		return _eventLocalService.searchEventsCount(companyId, groupId, title,
-			description, location, status, andSearch);
+			description, location, status, nextEvents, andSearch);
 	}
 
 	/**

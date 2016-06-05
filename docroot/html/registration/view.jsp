@@ -56,18 +56,18 @@
 	<liferay-ui:search-container-results>
 		<%
 		if (displayTerms.isAdvancedSearch()) {
-			total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, title, description, location, status, displayTerms.isAndOperator());
-			results = EventLocalServiceUtil.searchEvents(companyId, groupId, title, description, location, status, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+			total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, title, description, location, status, true, displayTerms.isAndOperator());
+			results = EventLocalServiceUtil.searchEvents(companyId, groupId, title, description, location, status, true, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
 		} else {
 			String searchkeywords = displayTerms.getKeywords().trim();
 			
 			if (searchkeywords.isEmpty()) {
-				results = EventLocalServiceUtil.findGroupEvents(companyId, groupId);
+				results = EventLocalServiceUtil.findPublicEvents(companyId, groupId);
 				total = results.size();
 				results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
 			} else {
-				total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false);
-				results = EventLocalServiceUtil.searchEvents(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, false, searchContainer.getStart(), searchContainer.getEnd());
+				total = EventLocalServiceUtil.searchEventsCount(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, true, false);
+				results = EventLocalServiceUtil.searchEvents(companyId, groupId, searchkeywords, searchkeywords, searchkeywords, 0, true, false, searchContainer.getStart(), searchContainer.getEnd());
 			}
 		}
 		
