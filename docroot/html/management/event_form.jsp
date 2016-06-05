@@ -229,3 +229,23 @@
 		$clone.appendTo("#<portlet:namespace />event-options");
 	});
 </script>
+
+<aui:script use="aui-form-validator">
+	new A.FormValidator(
+	      {
+	        boundingBox: '#<portlet:namespace />fm',
+	        rules: {
+	        	<portlet:namespace />title: {
+	            	required: true
+	        	},
+	        	<portlet:namespace />location: {
+	            	required: true
+	        	},
+	        	<portlet:namespace />description_<%= request.getLocale() %>: {
+	            	required: true
+	        	}
+	        }
+	      }
+	    );	
+
+</aui:script>

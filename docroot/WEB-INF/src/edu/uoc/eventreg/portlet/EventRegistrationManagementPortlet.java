@@ -149,12 +149,6 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		long companyId = themeDisplay.getCompanyId();
 		long groupId = themeDisplay.getDoAsGroupId();
 		
-		System.out.println(titleMap.size());
-
-		if (titleMap.size() >= 0) {
-			
-		}
-		
 		Event event = null;
 		if (Validator.isNull(id)) {
 			event = new EventImpl();
