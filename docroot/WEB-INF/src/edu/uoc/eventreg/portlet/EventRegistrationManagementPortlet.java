@@ -1,6 +1,7 @@
 package edu.uoc.eventreg.portlet;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,7 +67,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		List<Object[]> eventDayCount = EventLocalServiceUtil.findDayCount(companyId, groupId);
 		List<Object[]> attendeeDayCount = AttendeeLocalServiceUtil.findDayCount(companyId, groupId);
 		
-		setStatistics(request, eventDayCount, attendeeDayCount);
+		setStatistics(request, eventDayCount, attendeeDayCount, ParamUtil.getString(request, "lastDay"));
 		
 		request.setAttribute("companyId", companyId);
 		request.setAttribute("groupId", groupId);
@@ -75,13 +76,32 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 	}
 	
 	private void setStatistics(PortletRequest request,
-			List<Object[]> eventDayCount, List<Object[]> attendeeDayCount) {
+			List<Object[]> eventDayCount, List<Object[]> attendeeDayCount, String dateParam) {
+		
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = null;
+		Calendar lastDay = Calendar.getInstance();
+		if (dateParam != null && !dateParam.isEmpty()) {
+			try {
+				date = formatter.parse(dateParam);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			lastDay.setTime(date);
+		}
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MILLISECOND, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
+		if (lastDay != null) {
+			cal.set(Calendar.DAY_OF_MONTH, lastDay.get(Calendar.DAY_OF_MONTH));
+			cal.set(Calendar.MONTH, lastDay.get(Calendar.MONTH));
+			cal.set(Calendar.YEAR, lastDay.get(Calendar.YEAR));
+		}
+		
 		int eventIndex = 0;
 		int attendeeIndex = 0;
 		Date eventDate = (eventDayCount != null && eventDayCount.get(0) != null) ? (Date) eventDayCount.get(eventIndex)[0] : cal.getTime();
@@ -94,7 +114,9 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 			cal.add(Calendar.DAY_OF_MONTH, -1);
 			
 			if (i != 0) {
-				eventStats += ",";
+				if (eventDayCount != null) {
+					eventStats += ",";
+				}
 				attendeeStats += ",";
 				categoryStats += ",";
 			}
@@ -106,7 +128,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 				eventIndex++;
 				if (eventIndex < eventDayCount.size())
 					eventDate = (Date) eventDayCount.get(eventIndex)[0];
-			} else {
+			} else if (eventDayCount != null) {
 				eventStats += "0";
 			}
 			
@@ -120,6 +142,26 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 			}
 			
 		}
+
+		Calendar prevStats = Calendar.getInstance();
+		Calendar nextStats = Calendar.getInstance();
+		
+		if (lastDay != null) {
+			prevStats.setTime(lastDay.getTime());
+			nextStats.setTime(lastDay.getTime());
+		}
+
+		prevStats.add(Calendar.DAY_OF_MONTH, -31);
+		String prevStatsLink = formatter.format(prevStats.getTime());
+
+		nextStats.add(Calendar.DAY_OF_MONTH, 31);
+		String nextStatsLink = "";
+		if (nextStats.before(Calendar.getInstance())) {
+			nextStatsLink = formatter.format(nextStats.getTime());
+		}
+		
+		request.setAttribute("prevStatsLink", prevStatsLink);
+		request.setAttribute("nextStatsLink", nextStatsLink);
 		
 		request.setAttribute("categoryStats", categoryStats);
 		request.setAttribute("eventStats", eventStats);
@@ -327,10 +369,11 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 	public void eventStats (ActionRequest request, ActionResponse response) {
 		
 		long eventId = ParamUtil.getLong(request, "eventId");
-
 		List<Object[]> attendeeDayCount = AttendeeLocalServiceUtil.findDayCount(eventId);
 		
-		setStatistics(request, null, attendeeDayCount);
+		setStatistics(request, null, attendeeDayCount, ParamUtil.getString(request, "lastDay"));
+		
+		request.setAttribute("eventId", String.valueOf(eventId));
 		
 		response.setRenderParameter("mvcPath", "/html/management/event_stats.jsp");
 	}

@@ -2,9 +2,6 @@
 <%@ page import="edu.uoc.eventreg.portlet.search.EventDisplayTerms" %>
 <%@ include file="/html/init.jsp" %>
 <% 
-	String eventStats = (String) request.getAttribute("eventStats");
-	String attendeeStats = (String) request.getAttribute("attendeeStats");
-	String categoryStats = (String) request.getAttribute("categoryStats");
 	long companyId = (Long) request.getAttribute("companyId");
 	long groupId = (Long) request.getAttribute("groupId");
 	Locale locale = request.getLocale();
@@ -79,41 +76,7 @@
 		</c:if>
 	</aui:nav-bar>
 	
-	<script src="http://code.highcharts.com/highcharts.js"></script>
-	<div id="container" style="height: 300px"></div>
-	<script type="text/javascript">
-		$(function () {
-		    $('#container').highcharts({
-		        chart: {
-		            type: 'area'
-		        },
-		        title:{
-		            text: null
-		        },
-		        xAxis: {
-		            categories: [<%= categoryStats %>],
-		            reversed: true
-		        },
-		        yAxis: {
-		            title: {
-		                text: null
-		            }
-		        },
-		        plotOptions: {
-		            area: {
-		                fillOpacity: 0.5
-		            }
-		        },
-		        series: [{
-		            name: '<liferay-ui:message key="users-registered" />',
-		            data: [<%= attendeeStats %>]
-		        }, {
-		            name: '<liferay-ui:message key="events" />',
-		            data: [<%= eventStats %>]
-		        }],
-		    });
-		});
-	</script>
+	<jsp:include page="/html/management/event_stats.jsp" />
 		
 	<liferay-ui:search-container-row
 		className="edu.uoc.eventreg.model.Event"
