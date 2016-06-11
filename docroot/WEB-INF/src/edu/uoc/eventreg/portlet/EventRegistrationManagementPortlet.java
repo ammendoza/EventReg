@@ -42,7 +42,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.liferay.util.mail.MailEngine;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMessages;
 
 import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.model.Event;
