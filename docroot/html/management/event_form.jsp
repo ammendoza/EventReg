@@ -5,6 +5,9 @@
 	List<EventOption> eventOptions = (List<EventOption>) request.getAttribute("eventOptions");
 	Calendar cal = Calendar.getInstance();
 %>
+
+<liferay-ui:error key="error-start-date-before-end-date" message="error-start-date-before-end-date" />
+
 <liferay-portlet:actionURL name="saveEvent" var="formActionURL" />
 
 <h2>

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.liferay.util.mail.MailEngine;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMessages;
 
 import edu.uoc.eventreg.model.Attendee;
 import edu.uoc.eventreg.model.Event;
@@ -101,6 +103,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 			cal.set(Calendar.MONTH, lastDay.get(Calendar.MONTH));
 			cal.set(Calendar.YEAR, lastDay.get(Calendar.YEAR));
 		}
+		cal.add(Calendar.DAY_OF_MONTH, -1);
 		
 		int eventIndex = 0;
 		int attendeeIndex = 0;
@@ -110,8 +113,30 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		String attendeeStats = "";
 		String categoryStats = "";
 		
+		if (!eventDate.before(cal.getTime())) {
+			for (int i=0; i < eventDayCount.size(); i++) {
+				eventDate = (Date) eventDayCount.get(i)[0];
+				if (eventDate.before(cal.getTime())) {
+					eventIndex = i;
+					break;
+				}
+			}
+		}
+		
+		if (!attendeeDate.before(cal.getTime())) {
+			for (int i=0; i < attendeeDayCount.size(); i++) {
+				attendeeDate = (Date) attendeeDayCount.get(i)[0];
+				if (attendeeDate.before(cal.getTime())) {
+					attendeeIndex = i;
+					break;
+				}
+			}
+		}
+		
 		for (int i=0; i<=30; i++) {
-			cal.add(Calendar.DAY_OF_MONTH, -1);
+			if (i > 0) {
+				cal.add(Calendar.DAY_OF_MONTH, -1);
+			}
 			
 			if (i != 0) {
 				if (eventDayCount != null) {
@@ -295,23 +320,30 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 
 					Date startDate = formatter.parse(startDates[i] + " " + startHours[hourCount]);
 					Date endDate = formatter.parse(endDates[i] + " " + endHours[hourCount]);
-					eventOption.setStartDate(startDate);
-					eventOption.setEndDate(endDate);
 					
-					if (minDate == null || minDate.compareTo(startDate) == 1)
-						minDate = startDate;
+					if (startDate.before(endDate)) {
 					
-					if (maxDate == null || maxDate.compareTo(endDate) == -1)
-						maxDate = endDate;
-					
-					int seatNum = Integer.parseInt(seats[i]);
-					eventOption.setSeats(seatNum);
-					totalSeats += seatNum;
-					
-					if (eventOptionId == 0) {
-						EventOptionLocalServiceUtil.addEventOption(eventOption);
+						eventOption.setStartDate(startDate);
+						eventOption.setEndDate(endDate);
+						
+						
+						if (minDate == null || minDate.compareTo(startDate) == 1)
+							minDate = startDate;
+						
+						if (maxDate == null || maxDate.compareTo(endDate) == -1)
+							maxDate = endDate;
+						
+						int seatNum = Integer.parseInt(seats[i]);
+						eventOption.setSeats(seatNum);
+						totalSeats += seatNum;
+						
+						if (eventOptionId == 0) {
+							EventOptionLocalServiceUtil.addEventOption(eventOption);
+						} else {
+							eventOption.persist();
+						}
 					} else {
-						eventOption.persist();
+						SessionErrors.add(request, "error-start-date-before-end-date");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -323,15 +355,19 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		}
 		
 		try {
-			event.setStartDate(minDate);
-			event.setEndDate(maxDate);
-			
-			event.persist();
+			if (SessionErrors.isEmpty(request)) {
+				event.setStartDate(minDate);
+				event.setEndDate(maxDate);
+				
+				event.persist();
+				
+				SessionMessages.add(request, "event-added-successfuly");
+			} else {
+				editEventForm(request, response);
+			}
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		
-		SessionMessages.add(request, "event-added-successfuly");
 		
 	}
 	
