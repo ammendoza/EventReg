@@ -205,6 +205,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(request, "description");
 		Map<Locale, String> addressMap = LocalizationUtil.getLocalizationMap(request, "address");
 		Map<Locale, String> locationMap = LocalizationUtil.getLocalizationMap(request, "location");
+		double price = ParamUtil.getDouble(request, "price");
 		String coordX = ParamUtil.getString(request, "coord-x");
 		String coordY = ParamUtil.getString(request, "coord-y");
 		boolean requiresApproval = ParamUtil.getBoolean(request, "requires-approval");
@@ -230,6 +231,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		event.setDescriptionMap(descriptionMap);
 		event.setAddressMap(addressMap);
 		event.setLocationMap(locationMap);
+		event.setPrice(price);
 		event.setCoordX(coordX);
 		event.setCoordY(coordY);
 		event.setRequiresApproval(requiresApproval);
@@ -320,7 +322,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 					Date startDate = formatter.parse(startDates[i] + " " + startHours[hourCount]);
 					Date endDate = formatter.parse(endDates[i] + " " + endHours[hourCount]);
 					
-					if (startDate.before(endDate)) {
+					if (startDate.before(endDate) || startDate.equals(endDate)) {
 					
 						eventOption.setStartDate(startDate);
 						eventOption.setEndDate(endDate);

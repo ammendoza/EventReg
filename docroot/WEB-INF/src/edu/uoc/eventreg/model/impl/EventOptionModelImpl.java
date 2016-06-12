@@ -74,8 +74,8 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 		};
 	public static final String TABLE_SQL_CREATE = "create table EVENTREG_EventOption (eventOptionId LONG not null primary key,companyId LONG,groupId LONG,startDate DATE null,endDate DATE null,seats INTEGER,eventId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_EventOption";
-	public static final String ORDER_BY_JPQL = " ORDER BY eventOption.startDate DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_EventOption.startDate DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY eventOption.startDate ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_EventOption.startDate ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -371,8 +371,6 @@ public class EventOptionModelImpl extends BaseModelImpl<EventOption>
 		int value = 0;
 
 		value = DateUtil.compareTo(getStartDate(), eventOption.getStartDate());
-
-		value = value * -1;
 
 		if (value != 0) {
 			return value;

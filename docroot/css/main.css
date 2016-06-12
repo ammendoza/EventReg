@@ -2,6 +2,10 @@
 
 .event-registration-portlet {
 	
+	.portlet-body {
+		position:relative;
+	}
+	
 	.event-title {
 		font-weight: 700;
 		font-size: 1.1em;
@@ -16,6 +20,9 @@
 	#eventImages {
 		width:40%;
 		margin: 0 0 20px 20px;
+		position: absolute;
+		top: 0;
+		right: 0;
 		
 		a {
 			width: 18%;
@@ -70,4 +77,14 @@
 
 .taglib-search-toggle .popover .arrow {
 	width:0 !important;
+}
+
+@media (max-width: 768px) {
+	.event-registration-portlet {
+		#eventImages {
+			width: 100%;
+			position: relative;
+			margin: 0 0 0 20px;
+		}
+	}
 }

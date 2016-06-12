@@ -54,7 +54,7 @@
 		<column name="eventId" type="long" />
 
 		<!-- Order -->
-		<order by="desc">
+		<order by="asc">
 			<order-column name="startDate" />
 		</order>
 		

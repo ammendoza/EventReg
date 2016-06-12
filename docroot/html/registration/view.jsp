@@ -77,39 +77,6 @@
 		%>
 	</liferay-ui:search-container-results>
 	
-	
-	
-	
-	
-	<button class="btn pull-right" type="button" id="viewCalendar"><i class="icon-calendar"></i><liferay-ui:message key="view-calendar" /></button>
-	<div class="calendar-html-container">
-		<div id="calendarHtml">
-			<liferay-ui:calendar year="2016" month="5" headerPattern="MMMM yyyy" showAllPotentialWeeks="true" />
-		</div>
-	</div>
-	
-	
-	<aui:script use="aui-popover">
-		var trigger = A.one("#viewCalendar");
-
-	    var popover = new A.Popover(
-	      {
-	        align: {
-	          node: trigger
-	        },
-	        bodyContent: A.one("#calendarHtml"),
-	        headerContent: '<liferay-ui:message key="calendar" />',
-	        position: 'bottom'
-	      }
-	    ).render().hide();
-
-	    trigger.on(
-	      'click',
-	      function() {
-	        popover.set('visible', !popover.get('visible'));
-	      }
-	    );
-	</aui:script>
 	<liferay-ui:search-form servletContext="<%= this.getServletContext()%>"
 					 page="/html/registration/event_search.jsp" />
 		
@@ -175,14 +142,14 @@
 						<liferay-ui:message key="free" />
 					</c:when>
 					<c:otherwise>
-						<%= event.getPrice() %>
+						<%= NumberFormat.getCurrencyInstance(locale).format(event.getPrice()) %>
 					</c:otherwise>
 				</c:choose>
 		</liferay-ui:search-container-column-text>
 		
 		<liferay-ui:search-container-column-text
 			align="right">
-				<aui:button value="<%= (seats <= 0) ? \"complete\" : \"register\" %>" href="<%= viewEventURL %>"  disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
+				<aui:button value="<%= (seats <= 0) ? \"complete\" : \"register\" %>" href="<%= viewEventURL %>"  disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn pull-right\" : \"btn btn-primary pull-right\" %>" />
 		</liferay-ui:search-container-column-text>
 		
 	</liferay-ui:search-container-row>

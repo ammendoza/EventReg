@@ -16,23 +16,37 @@
 %>
 
 <% if (event != null) { %>
+	<h2><%= event.getTitle(locale) %></h2>
 
-	<div id="eventImages" class="carousel slide pull-right">
+	<p class="address">
+		<%= event.getAddress(locale) %> | 
+		<%= event.getLocation(locale) %> (<a href="#map"><liferay-ui:message key="view-map" /></a>)
+	</p>
+	<p class="price"> 
+		<span class="label">
+		<c:choose>
+			<c:when test="<%= event.getPrice() == 0 %>">
+				<liferay-ui:message key="free" />
+			</c:when>
+			<c:otherwise>
+				<%= NumberFormat.getCurrencyInstance(locale).format(event.getPrice()) %>
+			</c:otherwise>
+		</c:choose>
+		</span>
+	</p>
+	
+	<div id="eventImages" class="pull-right">
 	  	<% 
 	  	for (int i=0; i < imageList.size(); i++) { 
 	  		String imageURL = EventRegistrationUtil.getImageUrl(imageList.get(i).getDlFileEntryId(), request);
 	  	%>
-		    <a href="<%= imageURL %>" title="<%= event.getTitle(locale) %><liferay-ui:message key="image" /> <%= (i+1) %>">
+		    <a href="<%= imageURL %>" title="<%= event.getTitle(locale) %> <liferay-ui:message key="image" /> <%= (i+1) %>">
 		    	<img src="<%= imageURL %>" alt="" class="img-polaroid" />
 		    </a>
 	    <% 
 	    } 
 	    %>
 	</div>
-	
-	<h2><%= event.getTitle(locale) %></h2>
-
-	<p class="address"><%= event.getAddress(locale) %> | <%= event.getLocation(locale) %></p>
 	
 	<div class="description">
 		<%= event.getDescription(locale) %>
@@ -97,7 +111,7 @@
 			
 			<liferay-ui:search-container-column-text
 				align="right">
-			<aui:button value="<%= (seats <= 0) ? \"complete\" : \"register\" %>" href="<%= registerFormURL %>" disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn\" : \"btn btn-primary\" %>" />
+			<aui:button value="<%= (seats <= 0) ? \"complete\" : \"register\" %>" href="<%= registerFormURL %>" disabled="<%= (seats <= 0) %>" cssClass="<%= (seats <= 0) ? \"btn pull-right\" : \"btn btn-primary pull-right\" %>" />
 		</liferay-ui:search-container-column-text> 
 			
 		</liferay-ui:search-container-row>
@@ -114,7 +128,7 @@
 			  var myLatLng = {lat: <%= event.getCoordY() %>,  lng: <%= event.getCoordX() %>};
 			
 			  var map = new google.maps.Map(document.getElementById('map'), {
-			    zoom: 4,
+			    zoom: 15,
 			    center: myLatLng
 			  });
 			

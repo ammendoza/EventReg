@@ -5,6 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="java.text.NumberFormat" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>

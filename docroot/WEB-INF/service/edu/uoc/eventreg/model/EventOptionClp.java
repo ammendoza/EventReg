@@ -397,8 +397,6 @@ public class EventOptionClp extends BaseModelImpl<EventOption>
 
 		value = DateUtil.compareTo(getStartDate(), eventOption.getStartDate());
 
-		value = value * -1;
-
 		if (value != 0) {
 			return value;
 		}

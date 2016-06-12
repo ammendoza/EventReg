@@ -43,6 +43,12 @@
 			/>
 	</aui:field-wrapper>
 	
+	<aui:input
+			name="price" 
+			value="<%= (event != null)? event.getPrice() : \"0.0\" %>">
+			<aui:validator name="number" />
+		</aui:input>
+	
 	<aui:field-wrapper label="address">
 		<liferay-ui:input-localized 
 			name="address" 
@@ -53,14 +59,16 @@
 	<aui:input 
 		name="coord-y" 
 		type="text" 
-		value="<%= (event != null)? event.getCoordY() : StringPool.BLANK %>"
-		/>
+		value="<%= (event != null)? event.getCoordY() : StringPool.BLANK %>">
+			<aui:validator name="number" />
+	</aui:input>
 	
 	<aui:input 
 		name="coord-x" 
 		type="text" 
-		value="<%= (event != null)? event.getCoordX() : StringPool.BLANK %>"
-		/>
+		value="<%= (event != null)? event.getCoordX() : StringPool.BLANK %>">
+			<aui:validator name="number" />
+	</aui:input>
 	
 	<aui:field-wrapper label="description" required="true">
 		<liferay-ui:input-localized 
