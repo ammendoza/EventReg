@@ -44,6 +44,7 @@
 			
 						<portlet:actionURL var="deleteImageURL" name="deleteImage">
 							<portlet:param name="imageId" value="<%= String.valueOf(image.getImageId()) %>"/>
+							<portlet:param name="eventId" value="<%= String.valueOf(image.getEventId()) %>" />
 						</portlet:actionURL>
 			
 						<liferay-ui:icon

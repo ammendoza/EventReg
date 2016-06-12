@@ -22,6 +22,8 @@
 		<dt><liferay-ui:message key="phone" /></dt>
 		<dd><%= attendee.getPhone() %>
 	</c:if>
-	<dt><liferay-ui:message key="reservation-code" /></dt>
+	<dt><liferay-ui:message key="registration-code" /></dt>
 	<dd><%= attendee.getReservationCode() %>
+	<dt><liferay-ui:message key="register-date" /></dt>
+	<dd><%= attendee.getRegisterDate() %></dd>
 </dl>

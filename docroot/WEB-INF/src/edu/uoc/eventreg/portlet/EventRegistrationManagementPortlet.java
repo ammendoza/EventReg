@@ -112,7 +112,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		String attendeeStats = "";
 		String categoryStats = "";
 		
-		if (!eventDate.before(cal.getTime())) {
+		if (eventDayCount != null && !eventDate.before(cal.getTime())) {
 			for (int i=0; i < eventDayCount.size(); i++) {
 				eventDate = (Date) eventDayCount.get(i)[0];
 				if (eventDate.before(cal.getTime())) {
@@ -122,7 +122,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 			}
 		}
 		
-		if (!attendeeDate.before(cal.getTime())) {
+		if (attendeeDayCount != null &&  !attendeeDate.before(cal.getTime())) {
 			for (int i=0; i < attendeeDayCount.size(); i++) {
 				attendeeDate = (Date) attendeeDayCount.get(i)[0];
 				if (attendeeDate.before(cal.getTime())) {
@@ -423,6 +423,7 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 		request.setAttribute("groupId", themeDisplay.getDoAsGroupId());
 		request.setAttribute("eventId", eventId);
 		
+		response.setRenderParameters(request.getParameterMap());
 		response.setRenderParameter("mvcPath", "/html/management/attendee_list.jsp");
 	}
 	

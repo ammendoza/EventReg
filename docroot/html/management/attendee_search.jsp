@@ -7,7 +7,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 AttendeeDisplayTerms displayTerms = (AttendeeDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<liferay-portlet:renderURL var="searchFormURL" />
+<liferay-portlet:actionURL name="listAttendees" var="searchFormURL" />
 
 <aui:form action="<%= searchFormURL %>" method="post" name="searchForm">
 	<liferay-ui:search-toggle
