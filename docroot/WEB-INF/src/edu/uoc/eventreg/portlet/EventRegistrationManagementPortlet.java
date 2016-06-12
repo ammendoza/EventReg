@@ -452,9 +452,11 @@ public class EventRegistrationManagementPortlet extends MVCPortlet {
 	public void changeAttendeeStatus(ActionRequest request, ActionResponse response){
 		
 		long attendeeId = ParamUtil.getLong(request, "attendeeId");
+		long eventId = ParamUtil.getLong(request, "eventId");
 		int status = ParamUtil.getInteger(request, "status");
 		
 		request.setAttribute("attendeeId", attendeeId);
+		request.setAttribute("eventId", eventId);
 		request.setAttribute("status", status);
 		response.setRenderParameter("mvcPath", "/html/management/attendee_send_email.jsp");
 		

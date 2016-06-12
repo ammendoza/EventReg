@@ -7,6 +7,7 @@
     		FROM EVENTREG_Attendee a
     		INNER JOIN EVENTREG_EventOption e ON e.eventOptionId = a.eventOptionId
     		WHERE e.eventId = ?
+    		ORDER BY a.registerDate DESC
     	]]>
 
     </sql>

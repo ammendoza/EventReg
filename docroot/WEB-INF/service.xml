@@ -85,8 +85,8 @@
 		<column name="managedBy" type="long" />
 
 		<!-- Order -->
-		<order by="asc">
-			<order-column name="surname" />
+		<order by="desc">
+			<order-column name="registerDate" />
 		</order>
 		
 		<!-- Finders -->

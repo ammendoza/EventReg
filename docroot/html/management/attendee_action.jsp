@@ -9,6 +9,8 @@
 		attendee = (Attendee)row.getObject();
 		attendeeId = String.valueOf(attendee.getAttendeeId());
 	}
+	
+	long eventId = (Long) request.getAttribute("eventId");
 %>
 
 <span class="entry-action overlay">
@@ -26,6 +28,7 @@
 			<c:if test="<%= attendee.getStatus() == WorkflowConstants.STATUS_PENDING %>">
 				<portlet:actionURL var="approveAttendeeURL" name="changeAttendeeStatus">
 					<portlet:param name="attendeeId" value="<%= attendeeId %>"/>
+					<portlet:param name="eventId" value="<%= String.valueOf(eventId) %>" />
 					<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>" />
 				</portlet:actionURL>
 	
@@ -37,6 +40,7 @@
 	
 				<portlet:actionURL var="rejectAttendeeURL" name="changeAttendeeStatus">
 					<portlet:param name="attendeeId" value="<%= attendeeId %>"/>
+					<portlet:param name="eventId" value="<%= String.valueOf(eventId) %>" />
 					<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_DENIED) %>" />
 				</portlet:actionURL>
 	

@@ -2,6 +2,7 @@
 
 <%
 	long attendeeId = (Long) request.getAttribute("attendeeId");
+	long eventId = (Long) request.getAttribute("eventId");
 	int status = (Integer) request.getAttribute("status");
 	Locale locale = request.getLocale();
 %>
@@ -23,6 +24,7 @@
 
 	<p><liferay-ui:message key="attendee-form-info" /> <strong><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(status) %>" /></strong>.</p>
 	
+	<aui:input name="eventId" type="hidden" value="<%= eventId %>" />
 	<aui:input name="attendeeId" type="hidden" value="<%= attendeeId %>" />
 	<aui:input name="status" type="hidden" value="<%= status %>" />
 	

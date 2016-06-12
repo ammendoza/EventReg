@@ -16,6 +16,7 @@ package edu.uoc.eventreg.model;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BaseModel;
@@ -561,7 +562,9 @@ public class AttendeeClp extends BaseModelImpl<Attendee> implements Attendee {
 	public int compareTo(Attendee attendee) {
 		int value = 0;
 
-		value = getSurname().compareTo(attendee.getSurname());
+		value = DateUtil.compareTo(getRegisterDate(), attendee.getRegisterDate());
+
+		value = value * -1;
 
 		if (value != 0) {
 			return value;

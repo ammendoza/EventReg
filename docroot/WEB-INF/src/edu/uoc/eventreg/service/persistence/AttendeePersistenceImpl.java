@@ -100,7 +100,7 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 			new String[] { Long.class.getName(), Long.class.getName() },
 			AttendeeModelImpl.COMPANYID_COLUMN_BITMASK |
 			AttendeeModelImpl.GROUPID_COLUMN_BITMASK |
-			AttendeeModelImpl.SURNAME_COLUMN_BITMASK);
+			AttendeeModelImpl.REGISTERDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPATTENDEES = new FinderPath(AttendeeModelImpl.ENTITY_CACHE_ENABLED,
 			AttendeeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupAttendees",
@@ -633,7 +633,7 @@ public class AttendeePersistenceImpl extends BasePersistenceImpl<Attendee>
 			new String[] { String.class.getName(), Long.class.getName() },
 			AttendeeModelImpl.EMAIL_COLUMN_BITMASK |
 			AttendeeModelImpl.EVENTOPTIONID_COLUMN_BITMASK |
-			AttendeeModelImpl.SURNAME_COLUMN_BITMASK);
+			AttendeeModelImpl.REGISTERDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_EMAILANDEVENTOPTION = new FinderPath(AttendeeModelImpl.ENTITY_CACHE_ENABLED,
 			AttendeeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

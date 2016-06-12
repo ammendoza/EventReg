@@ -16,6 +16,7 @@ package edu.uoc.eventreg.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -80,8 +81,8 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 		};
 	public static final String TABLE_SQL_CREATE = "create table EVENTREG_Attendee (attendeeId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,surname VARCHAR(75) null,company VARCHAR(75) null,email VARCHAR(75) null,phone VARCHAR(75) null,registerDate DATE null,reservationCode VARCHAR(75) null,status INTEGER,eventOptionId LONG,managedBy LONG)";
 	public static final String TABLE_SQL_DROP = "drop table EVENTREG_Attendee";
-	public static final String ORDER_BY_JPQL = " ORDER BY attendee.surname ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Attendee.surname ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY attendee.registerDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY EVENTREG_Attendee.registerDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -98,7 +99,7 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	public static long EMAIL_COLUMN_BITMASK = 2L;
 	public static long EVENTOPTIONID_COLUMN_BITMASK = 4L;
 	public static long GROUPID_COLUMN_BITMASK = 8L;
-	public static long SURNAME_COLUMN_BITMASK = 16L;
+	public static long REGISTERDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -374,8 +375,6 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public void setSurname(String surname) {
-		_columnBitmask = -1L;
-
 		_surname = surname;
 	}
 
@@ -445,6 +444,8 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 
 	@Override
 	public void setRegisterDate(Date registerDate) {
+		_columnBitmask = -1L;
+
 		_registerDate = registerDate;
 	}
 
@@ -563,7 +564,9 @@ public class AttendeeModelImpl extends BaseModelImpl<Attendee>
 	public int compareTo(Attendee attendee) {
 		int value = 0;
 
-		value = getSurname().compareTo(attendee.getSurname());
+		value = DateUtil.compareTo(getRegisterDate(), attendee.getRegisterDate());
+
+		value = value * -1;
 
 		if (value != 0) {
 			return value;
